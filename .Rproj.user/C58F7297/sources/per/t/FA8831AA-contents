@@ -1,0 +1,26 @@
+project:
+  type: website
+
+website:
+  title: "DSAN 5600"
+  navbar:
+    left:
+      - about.qmd
+      - introduction.qmd
+      - data_sources.qmd
+      - data_visualization.qmd
+      - exploratory_data_analysis.qmd
+      - arma_arima_sarima_models.qmd
+      - spectral_analysis.qmd
+      - financial_time_series_models.qmd
+      - deep_learning_for_ts.qmd
+      - conclusions.qmd
+
+format:
+  html:
+    theme: lumen
+    css: styles.css
+    toc: true
+
+editor: visual
+

@@ -1,0 +1,41 @@
+{
+  "index.qmd": {
+    "index.html": "0c51e988"
+  },
+  "about.qmd": {
+    "about.html": "9bab803a"
+  },
+  "introduction.qmd": {
+    "introduction.html": "523999bb"
+  },
+  "financial_time_series_models.qmd": {
+    "financial_time_series_models.html": "93065866"
+  },
+  "arimax_sarimax_var.qmd": {
+    "arimax_sarimax_var.html": "5df2f574"
+  },
+  "data_visualization.qmd": {
+    "data_visualization.html": "2967ad86"
+  },
+  "exploratory_data_analysis.qmd": {
+    "exploratory_data_analysis.html": "9c0f6ed5"
+  },
+  "arma_arima_sarima_models.qmd": {
+    "arma_arima_sarima_models.html": "82ca50da"
+  },
+  "conclusions.qmd": {
+    "conclusions.html": "94fde29d"
+  },
+  "spectral_analysis.qmd": {
+    "spectral_analysis.html": "4b4d09d2"
+  },
+  "deep_learning_for_ts.qmd": {
+    "deep_learning_for_ts.html": "bc908f2b"
+  },
+  "data_sources.qmd": {
+    "data_sources.html": "7ae71ae8"
+  },
+  "data_viz_in_ts.qmd": {
+    "data_viz_in_ts.html": "0175c03f"
+  }
+}
