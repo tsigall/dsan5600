@@ -15,6 +15,7 @@ website:
       - financial_time_series_models.qmd
       - deep_learning_for_ts.qmd
       - conclusions.qmd
+      - dv.qmd
 
 format:
   html:
