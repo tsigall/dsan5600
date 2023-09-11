@@ -196,17 +196,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Try to reproduce the Data Vizes similar to in Lab0/1 “Data Viz Examples” but with a</li>
 </ol>
+<!-- -->
 <ol type="a">
-<li>different set of stock prices. (use the quantmod package to get stock prices from yahoo finance <a href="https://finance.yahoo.com/lookup/">https://finance.yahoo.com/lookup/</a>)</li>
-<li>Plot the climate data (climate.csv) using plotly. <a href="https://plotly.com/r/">https://plotly.com/r/</a></li>
-<li>Get any economic data / macroeconomic indicators and plot using plotly <a href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a> <a href="https://www.bea.gov/">https://www.bea.gov/</a></li>
+<li>different set of stock prices. (use the quantmod package to get stock prices from yahoo finance <a href="https://finance.yahoo.com/lookup/" class="uri">https://finance.yahoo.com/lookup/</a>)</li>
+<li>Plot the climate data (climate.csv) using plotly. <a href="https://plotly.com/r/" class="uri">https://plotly.com/r/</a></li>
+<li>Get any economic data / macroeconomic indicators and plot using plotly <a href="https://fred.stlouisfed.org/" class="uri">https://fred.stlouisfed.org/</a> <a href="https://www.bea.gov/" class="uri">https://www.bea.gov/</a></li>
 </ol>
+<!-- -->
 <ol start="2" type="1">
 <li><p>Make only the plots visible in your webpage. (set echo=FALSE in your R code chunck)</p></li>
 <li><p>Add interpretations to all the plots in the webpage.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add graphs here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: xts</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: zoo</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'zoo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: TTR</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'quantmod':
+  method            from
+  as.zoo.data.frame zoo </code></pre>
+</div>
 </div>
 
 

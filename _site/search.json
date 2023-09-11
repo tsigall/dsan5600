@@ -11,7 +11,7 @@
     "href": "dv.html",
     "title": "Data Vizes in TS",
     "section": "",
-    "text": "Try to reproduce the Data Vizes similar to in Lab0/1 “Data Viz Examples” but with a\n\n\ndifferent set of stock prices. (use the quantmod package to get stock prices from yahoo finance https://finance.yahoo.com/lookup/)\nPlot the climate data (climate.csv) using plotly. https://plotly.com/r/\nGet any economic data / macroeconomic indicators and plot using plotly https://fred.stlouisfed.org/ https://www.bea.gov/\n\n\nMake only the plots visible in your webpage. (set echo=FALSE in your R code chunck)\nAdd interpretations to all the plots in the webpage.\n\n\n# add graphs here"
+    "text": "Try to reproduce the Data Vizes similar to in Lab0/1 “Data Viz Examples” but with a\n\n\n\ndifferent set of stock prices. (use the quantmod package to get stock prices from yahoo finance https://finance.yahoo.com/lookup/)\nPlot the climate data (climate.csv) using plotly. https://plotly.com/r/\nGet any economic data / macroeconomic indicators and plot using plotly https://fred.stlouisfed.org/ https://www.bea.gov/\n\n\n\nMake only the plots visible in your webpage. (set echo=FALSE in your R code chunck)\nAdd interpretations to all the plots in the webpage.\n\n\nlibrary(quantmod)\n\nLoading required package: xts\n\n\nLoading required package: zoo\n\n\n\nAttaching package: 'zoo'\n\n\nThe following objects are masked from 'package:base':\n\n    as.Date, as.Date.numeric\n\n\nLoading required package: TTR\n\n\nRegistered S3 method overwritten by 'quantmod':\n  method            from\n  as.zoo.data.frame zoo"
   },
   {
     "objectID": "about.html",

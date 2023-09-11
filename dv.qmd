@@ -2,16 +2,17 @@
 title: "Data Vizes in TS"
 ---
 
-1. Try to reproduce the Data Vizes similar to in Lab0/1 “Data Viz Examples” but with a
+1.  Try to reproduce the Data Vizes similar to in Lab0/1 "Data Viz Examples" but with a
 
-a. different set of stock prices. (use the quantmod package to get stock prices from yahoo finance [https://finance.yahoo.com/lookup/](https://finance.yahoo.com/lookup/))
-b. Plot the climate data (climate.csv) using plotly. [https://plotly.com/r/](https://plotly.com/r/)
-c. Get any economic data / macroeconomic indicators and plot using plotly [https://fred.stlouisfed.org/](https://fred.stlouisfed.org/) [https://www.bea.gov/](https://www.bea.gov/)
+a.  different set of stock prices. (use the quantmod package to get stock prices from yahoo finance <https://finance.yahoo.com/lookup/>)
+b.  Plot the climate data (climate.csv) using plotly. <https://plotly.com/r/>
+c.  Get any economic data / macroeconomic indicators and plot using plotly <https://fred.stlouisfed.org/> <https://www.bea.gov/>
 
-2. Make only the plots visible in your webpage. (set echo=FALSE in your R code chunck)
+2.  Make only the plots visible in your webpage. (set echo=FALSE in your R code chunk)
 
-3. Add interpretations to all the plots in the webpage.
+3.  Add interpretations to all the plots in the webpage.
 
-```{r}
-# add graphs here
+```{r echo = FALSE}
+library(quantmod)
+
 ```
