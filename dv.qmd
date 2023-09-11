@@ -8,10 +8,18 @@ a.  different set of stock prices. (use the quantmod package to get stock prices
 b.  Plot the climate data (climate.csv) using plotly. <https://plotly.com/r/>
 c.  Get any economic data / macroeconomic indicators and plot using plotly <https://fred.stlouisfed.org/> <https://www.bea.gov/>
 
+
 2.  Make only the plots visible in your webpage. (set echo=FALSE in your R code chunk)
 
 3.  Add interpretations to all the plots in the webpage.
 
 ```{r echo = FALSE}
+
+```
+2.  Make only the plots visible in your webpage. (set echo=FALSE in your R code chunck)
+
+3.  Add interpretations to all the plots in the webpage.
+
+```{r}
 library(quantmod)
 ```
