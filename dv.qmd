@@ -1,25 +1,67 @@
 ---
 title: "Data Vizes in TS"
+editor_options: 
+  chunk_output_type: inline
 ---
 
-1.  Try to reproduce the Data Vizes similar to in Lab0/1 "Data Viz Examples" but with a
-
-a.  different set of stock prices. (use the quantmod package to get stock prices from yahoo finance <https://finance.yahoo.com/lookup/>)
-b.  Plot the climate data (climate.csv) using plotly. <https://plotly.com/r/>
-c.  Get any economic data / macroeconomic indicators and plot using plotly <https://fred.stlouisfed.org/> <https://www.bea.gov/>
-
-
-2.  Make only the plots visible in your webpage. (set echo=FALSE in your R code chunk)
-
-3.  Add interpretations to all the plots in the webpage.
+```{r include = FALSE}
+library(ggplot2)
+library(quantmod)
+library(plotly)
+```
 
 ```{r echo = FALSE}
+tickers <- c("XOM", "CVX", "SHEL", "TTE", "COP")
 
+for (i in tickers){
+  getSymbols(i,
+             from = "2023-01-01",
+             to = "2023-09-01")}
+
+stock <- data.frame(XOM$XOM.Adjusted,
+                    CVX$CVX.Adjusted,
+                    SHEL$SHEL.Adjusted,
+                    TTE$TTE.Adjusted,
+                    COP$COP.Adjusted)
+
+stock <- data.frame(stock,rownames(stock))
+colnames(stock) <- append(tickers,'Dates')
+
+stock$Dates<-as.Date(stock$Dates,"%Y-%m-%d")
+
+ggplot(stock, aes(x = Dates)) +
+  geom_line(aes(y = XOM, color = "XOM")) +
+  geom_line(aes(y = CVX, color = "CVX")) +
+  geom_line(aes(y = SHEL, color = "SHEL")) +
+  geom_line(aes(y = TTE, color = "TTE")) +
+  geom_line(aes(y = COP, color = "COP")) + 
+  labs(title = "Stock Prices for the 5 Largest Energy Companies",
+       subtitle = "2023 YTD, by Market Cap",
+       x = "Date",
+       y = "Adjusted Closing Prices") +
+  guides(colour=guide_legend(title="Ticker Symbol"))
 ```
-2.  Make only the plots visible in your webpage. (set echo=FALSE in your R code chunck)
 
-3.  Add interpretations to all the plots in the webpage.
+This graph shows the adjusted closing price for each of the five largest energy companies by market share. They all follow a similar pattern which is to be expected as they are in the same industry. However, it seems like Chevron (CVX) is the most volatile, though this could be due to it being the highest price per share. They are all fairly even on the year, being at a similar place now as they were at the start of the year, though Chevron is down, another difference between it and the rest of the group.
 
-```{r}
-library(quantmod)
+```{r echo = FALSE}
+wt <- read.csv("../datasets/climate.csv")
+arboretum <- wt[169:439,]
+
+plot_ly(x = arboretum$DATE, y = arboretum$TOBS, type = 'scatter', mode = 'lines') %>%
+  layout(title = "Temperature at the National Arboretum from 1/1/21 to 9/30/21",
+         xaxis = list(title = "Date"),
+         yaxis = list (title = "Temperature at Time of Observation (degrees F)"))
 ```
+This graph shows the temperature at the National Arboretum from January through September in 2021. It follows a predictable pattern, with the highest temps in the summer and lowest in the winter. The lowest temps seem normal, but the high temps seem low. 83 was the highest temp recorded, which is much lower than temps we are having now, for example. This may have something to do with the time it was recorded, as if it was early in the morning then the low temps would be accurate but it would get hotter throughout the day, meaning the high temps are not accurate. 
+
+```{r echo = FALSE}
+unrate <- read.csv("../datasets/UNRATE.csv")
+
+plot_ly(x = unrate$DATE, y = unrate$UNRATE, type = 'scatter', mode = 'lines') %>%
+  layout(title = "United States Unemployment Rate Over Time",
+         xaxis = list(title = "Date"),
+         yaxis = list(title = "Unemployment Rate"))
+```
+
+This graph shows the unemployment rate (percentage of people who are unemployed) in the United States since 1948. Various economic events can be seen, such as the 2008 recession and most notably, the COVID pandemic. There are large spikes in unemployment rate, followed by a more gradual decrease each time. Knowing this, we can assume there was a recession like event in late 1982 when there was a spike even higher than then one in 2008. 
