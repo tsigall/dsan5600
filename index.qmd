@@ -4,9 +4,11 @@ title: "Time Series"
 
 # What is a Time Series?
 
--   Any metric that is measured over regular time intervals makes a Time Series. A time series is a sequence of data points or observations collected or recorded over a period of time at specific, equally spaced intervals. Each data point in a time series is associated with a particular time stamp or time period, making it possible to analyze and study how a particular variable or phenomenon changes over time. Time series data can be found in various domains and can represent a wide range of phenomena, including financial data, economic indicators, weather measurements, stock prices, sales figures, and more.
-    -   Example: Weather data, Stock prices, Industry forecasts, etc are some of the common ones. The analysis of experimental data that have been observed at different points in time leads to new and unique problems in statistical modeling and inference.
--   The obvious correlation introduced by the sampling of adjacent points in time can severely restrict the applicability of the many conventional statistical methods traditionally dependent on the assumption that these adjacent observations are independent and identically distributed.
+Any metric that is measured over regular time intervals makes a Time Series. A time series is a sequence of data points or observations collected or recorded over a period of time at specific, equally spaced intervals. Each data point in a time series is associated with a particular time stamp or time period, making it possible to analyze and study how a particular variable or phenomenon changes over time. Time series data can be found in various domains and can represent a wide range of phenomena, including financial data, economic indicators, weather measurements, stock prices, sales figures, and more.
+
+Example: Weather data, Stock prices, Industry forecasts, etc are some of the common ones. The analysis of experimental data that have been observed at different points in time leads to new and unique problems in statistical modeling and inference.
+
+The obvious correlation introduced by the sampling of adjacent points in time can severely restrict the applicability of the many conventional statistical methods traditionally dependent on the assumption that these adjacent observations are independent and identically distributed.
 
 **Key characteristics of time series data include:**
 

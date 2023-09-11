@@ -19,9 +19,10 @@ website:
 
 format:
   html:
-    theme: sandstone
+    theme: litera
     css: styles.css
     toc: true
+    fontsize: 1em
 
 editor: visual
 
