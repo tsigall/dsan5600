@@ -14,5 +14,4 @@ c.  Get any economic data / macroeconomic indicators and plot using plotly <http
 
 ```{r echo = FALSE}
 library(quantmod)
-
 ```
