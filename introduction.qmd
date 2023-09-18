@@ -1,3 +1,14 @@
 ---
 title: "Introduction"
 ---
+
+# Topic Explanation
+The Introduction page offers a succinct elucidation of the central topic or area of focus. It provides a general understanding of the subject matter without delving into the specifics of datasets, variables, methods, or models.
+
+# Big Picture
+
+# Literature Review
+
+# Analytical Angles
+
+# Guiding Questions

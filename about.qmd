@@ -2,4 +2,6 @@
 title: "About"
 ---
 
-About this site, testing
+# Thomas Sigall
+
+Georgetown DSAN

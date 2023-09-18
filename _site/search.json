@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "data_sources.html",
+    "href": "data_sources.html",
+    "title": "Data Sources",
+    "section": "",
+    "text": "Explain all methods and sources for your data.\nAdd a small description"
+  },
+  {
     "objectID": "dv.html",
     "href": "dv.html",
     "title": "Data Vizes in TS",
@@ -7,11 +14,18 @@
     "text": "This graph shows the adjusted closing price for each of the five largest energy companies by market share. They all follow a similar pattern which is to be expected as they are in the same industry. However, it seems like Chevron (CVX) is the most volatile, though this could be due to it being the highest price per share. They are all fairly even on the year, being at a similar place now as they were at the start of the year, though Chevron is down, another difference between it and the rest of the group.\n\n\n\n\n\n\nThis graph shows the temperature at the National Arboretum from January through September in 2021. It follows a predictable pattern, with the highest temps in the summer and lowest in the winter. The lowest temps seem normal, but the high temps seem low. 83 was the highest temp recorded, which is much lower than temps we are having now, for example. This may have something to do with the time it was recorded, as if it was early in the morning then the low temps would be accurate but it would get hotter throughout the day, meaning the high temps are not accurate.\n\n\n\n\n\n\nThis graph shows the unemployment rate (percentage of people who are unemployed) in the United States since 1948. Various economic events can be seen, such as the 2008 recession and most notably, the COVID pandemic. There are large spikes in unemployment rate, followed by a more gradual decrease each time. Knowing this, we can assume there was a recession like event in late 1982 when there was a spike even higher than then one in 2008."
   },
   {
+    "objectID": "introduction.html",
+    "href": "introduction.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Topic Explanation\nThe Introduction page offers a succinct elucidation of the central topic or area of focus. It provides a general understanding of the subject matter without delving into the specifics of datasets, variables, methods, or models.\n\n\nBig Picture\n\n\nLiterature Review\n\n\nAnalytical Angles\n\n\nGuiding Questions"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site, testing"
+    "text": "Thomas Sigall\nGeorgetown DSAN"
   },
   {
     "objectID": "index.html",
