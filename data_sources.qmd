@@ -1,6 +1,47 @@
 ---
 title: "Data Sources"
+bibliography: reference.bib
 ---
+```{r include = FALSE}
+library(plotly)
+```
 
-- Explain all methods and sources for your data.
-- Add a small description
+The data needed for this project can be divided as such:
+```{mermaid}
+flowchart TD
+raw(Raw Crime Data)
+individuals("Victimization and Recidivism")
+government(Government Programs) 
+economy(Economic Data)
+
+```
+
+# Raw Crime Data
+The Socrata Open Data API (SODA) gives access to many sources of government data, including crime data over long periods of time. Large cities across the country maintain their own sites and databases which are accesible through this API.
+
+[![](data/chicago-data-portal.png)](https://data.cityofchicago.org/)
+[![](data/nyc-open-data-logo.svg){width=50%}](https://opendata.cityofnewyork.us/)
+
+# Victims and Recidivism
+The National Crime Victimization Survey (NCVS) Series is an important source of information on criminal victimization.
+
+[![](data/NCVS-Logo.jpeg){width=50% fig-align="center"}](https://bjs.ojp.gov/data-collection/ncvs)
+
+Other more specific studies such as "Gender, Mental Illness, and Crime in the United States" [@thompson_gender_2011] help to give more detail on why crimes were commited by getting more detail on the individuals who commited them. In addition there is a useful [dataset](https://data.ojp.usdoj.gov/Courts/NIJ-s-Recidivism-Challenge-Full-Dataset/ynf5-u8nk) published by the Department of Justice with recidivism data, meaning data specifically looking at which criminals commit crimes again once they are out of prison and which ones do not. 
+
+# Government Programs
+Detailed time-series data is not critical here, but rather an understanding of which government programs were executed at what times and by which levels of government. This information provides context to the other datasets such as those on raw crime stats. An important part of the analysis will be comparing the raw data before, during and after these government programs.
+
+# Economic Data
+Economic data can be accessed in similar ways as crime data, as the data needed for this project is maintained by the government. For example, comparing unemployment rate against crime rate could be a useful comparison. This unemployment data would be obtained from [FRED](https://fred.stlouisfed.org/). An example with data from [here](https://fred.stlouisfed.org/series/UNRATE) can be seen below. 
+
+```{r echo = FALSE}
+unrate <- read.csv("../datasets/UNRATE.csv")
+
+plot_ly(x = unrate$DATE, y = unrate$UNRATE, type = 'scatter', mode = 'lines') %>%
+  layout(title = "United States Unemployment Rate Over Time",
+         xaxis = list(title = "Date"),
+         yaxis = list(title = "Unemployment Rate"))
+```
+
+# References

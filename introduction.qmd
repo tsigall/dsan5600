@@ -1,14 +1,49 @@
 ---
 title: "Introduction"
+bibliography: reference.bib
 ---
 
-# Topic Explanation
-The Introduction page offers a succinct elucidation of the central topic or area of focus. It provides a general understanding of the subject matter without delving into the specifics of datasets, variables, methods, or models.
+# Crime
+The broad topic I would like to look at is crime. Time-series data for crime throughout the United States is readily available and the variety of attempts the government has made over the years makes looking at how crime has changed over those years an interesting task. 
 
 # Big Picture
+Determining which attempts by the government at city, state, and national levels have been successful and which attempts have been unsuccessful is an incredibly important task. Doing this will help the government to make better decisions to not only keep people safe, but also put their citizens in the best position to life prosperous lives, arguably the most important role the government can play.
+
+Understanding why criminals commit the crimes they do can help keep citizens safe, but it can also help potential criminals find a better path in life. Being aware of signals that suggest a crime is likely to be commited can help to stop those crimes before they happen. We can also use these data to help address problems that led criminals to commit crimes in the first place. Rehabilitation is an often overlooked part of the criminal justice process and something that can be addressed if we know more about why poeple commit the crimes they do.
 
 # Literature Review
+There have been countless attempts to understand crime over the years, one interesting one being found in the Handbook of Labor Economics titled "The economics of crime" by Richard B. Freeman. He takes an interesting look at crime through an economic lens, describing this attempt as focusing on "...the effect of incentives on criminal behavior, the way decisions interact in a market setting; and the use of a benefit-cost framework to assess alternative strategies to reduce crime [@freeman_chapter_1999]. This is a useful approach when looking at time-series data as economic data is possibly the most widely used application of such data. 
+
+This approach can also be seen when analyzing crime alongside the economy, as this can reveal many motivating factors for committing crime. A 2002 paper demonstrated how the declining labor market in the 1980's, for example, coincided with increasing crime rates among young men during the same time period. The opposite trend was observed in the following decade [@gould_crime_2002]. Papers like these help to bridge the gap between the economy and crime and demonstrate how multi-disciplinary the subject truly is.
 
 # Analytical Angles
+```{mermaid}
+flowchart TD
+
+crime(Crime) --> types(Types of Crime)
+crime --> policy(Policy Impact)
+crime --> reasons(Reasons for Crime)
+crime --> rehab(Rehabilitation)
+crime --> economy(The Economy)
+
+types --> types2(Violent vs. Non-Violent)
+policy --> policy2(Government Action)
+reasons --> reasons2(Drugs, Mental Health,\n Economic Situation, etc.)
+rehab --> rehab2(How to Help Criminals)
+economy --> economy2(Economic Influences\n on Crime)
+
+```
 
 # Guiding Questions
+1. How can we use the economy as a means by which to analyze crime data?
+2. What are some metrics we can use to determine the effectiveness of government action?
+3. Are there changes that we need to make in how we sentence criminals?
+4. Is it more effective to try and stop crimes before they are commited or to help those who commit crimes after they do so?
+5. What ethical concerns do we need to be aware of if we are attempting to predict who will commit crimes?
+6. Is action needed the most at the city, state, or federal level?
+7. In terms of rehabilitation, are there some people who are simply beyond help?
+8. Is it worth looking at other countries to see what works and what doesn't? Or are all countries more or less the same in their relationship with crime?
+9. Which area of crime would be the most effective to attempt reform in?
+10. Could we quantify the negative effect different crimes have on society?
+
+# References

@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -59,6 +78,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -141,11 +163,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#topic-explanation" id="toc-topic-explanation" class="nav-link active" data-scroll-target="#topic-explanation">Topic Explanation</a></li>
+  <li><a href="#crime" id="toc-crime" class="nav-link active" data-scroll-target="#crime">Crime</a></li>
   <li><a href="#big-picture" id="toc-big-picture" class="nav-link" data-scroll-target="#big-picture">Big Picture</a></li>
   <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">Literature Review</a></li>
   <li><a href="#analytical-angles" id="toc-analytical-angles" class="nav-link" data-scroll-target="#analytical-angles">Analytical Angles</a></li>
   <li><a href="#guiding-questions" id="toc-guiding-questions" class="nav-link" data-scroll-target="#guiding-questions">Guiding Questions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -169,26 +192,76 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="topic-explanation" class="level1">
-<h1>Topic Explanation</h1>
-<p>The Introduction page offers a succinct elucidation of the central topic or area of focus. It provides a general understanding of the subject matter without delving into the specifics of datasets, variables, methods, or models.</p>
+<section id="crime" class="level1">
+<h1>Crime</h1>
+<p>The broad topic I would like to look at is crime. Time-series data for crime throughout the United States is readily available and the variety of attempts the government has made over the years makes looking at how crime has changed over those years an interesting task.</p>
 </section>
 <section id="big-picture" class="level1">
 <h1>Big Picture</h1>
+<p>Determining which attempts by the government at city, state, and national levels have been successful and which attempts have been unsuccessful is an incredibly important task. Doing this will help the government to make better decisions to not only keep people safe, but also put their citizens in the best position to life prosperous lives, arguably the most important role the government can play.</p>
+<p>Understanding why criminals commit the crimes they do can help keep citizens safe, but it can also help potential criminals find a better path in life. Being aware of signals that suggest a crime is likely to be commited can help to stop those crimes before they happen. We can also use these data to help address problems that led criminals to commit crimes in the first place. Rehabilitation is an often overlooked part of the criminal justice process and something that can be addressed if we know more about why poeple commit the crimes they do.</p>
 </section>
 <section id="literature-review" class="level1">
 <h1>Literature Review</h1>
+<p>There have been countless attempts to understand crime over the years, one interesting one being found in the Handbook of Labor Economics titled “The economics of crime” by Richard B. Freeman. He takes an interesting look at crime through an economic lens, describing this attempt as focusing on “…the effect of incentives on criminal behavior, the way decisions interact in a market setting; and the use of a benefit-cost framework to assess alternative strategies to reduce crime <span class="citation" data-cites="freeman_chapter_1999">(<a href="#ref-freeman_chapter_1999" role="doc-biblioref">Freeman 1999</a>)</span>. This is a useful approach when looking at time-series data as economic data is possibly the most widely used application of such data.</p>
+<p>This approach can also be seen when analyzing crime alongside the economy, as this can reveal many motivating factors for committing crime. A 2002 paper demonstrated how the declining labor market in the 1980’s, for example, coincided with increasing crime rates among young men during the same time period. The opposite trend was observed in the following decade <span class="citation" data-cites="gould_crime_2002">(<a href="#ref-gould_crime_2002" role="doc-biblioref">Gould, Weinberg, and Mustard 2002</a>)</span>. Papers like these help to bridge the gap between the economy and crime and demonstrate how multi-disciplinary the subject truly is.</p>
 </section>
 <section id="analytical-angles" class="level1">
 <h1>Analytical Angles</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+
+crime(Crime) --&gt; types(Types of Crime)
+crime --&gt; policy(Policy Impact)
+crime --&gt; reasons(Reasons for Crime)
+crime --&gt; rehab(Rehabilitation)
+crime --&gt; economy(The Economy)
+
+types --&gt; types2(Violent vs. Non-Violent)
+policy --&gt; policy2(Government Action)
+reasons --&gt; reasons2(Drugs, Mental Health,\n Economic Situation, etc.)
+rehab --&gt; rehab2(How to Help Criminals)
+economy --&gt; economy2(Economic Influences\n on Crime)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="guiding-questions" class="level1">
 <h1>Guiding Questions</h1>
+<ol type="1">
+<li>How can we use the economy as a means by which to analyze crime data?</li>
+<li>What are some metrics we can use to determine the effectiveness of government action?</li>
+<li>Are there changes that we need to make in how we sentence criminals?</li>
+<li>Is it more effective to try and stop crimes before they are commited or to help those who commit crimes after they do so?</li>
+<li>What ethical concerns do we need to be aware of if we are attempting to predict who will commit crimes?</li>
+<li>Is action needed the most at the city, state, or federal level?</li>
+<li>In terms of rehabilitation, are there some people who are simply beyond help?</li>
+<li>Is it worth looking at other countries to see what works and what doesn’t? Or are all countries more or less the same in their relationship with crime?</li>
+<li>Which area of crime would be the most effective to attempt reform in?</li>
+<li>Could we quantify the negative effect different crimes have on society?</li>
+</ol>
+</section>
+<section id="references" class="level1">
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-freeman_chapter_1999" class="csl-entry" role="listitem">
+Freeman, Richard B. 1999. <span>“Chapter 52 <span>The</span> Economics of Crime.”</span> In <em>Handbook of <span>Labor</span> <span>Economics</span></em>, 3:3529–71. Elsevier. <a href="https://doi.org/10.1016/S1573-4463(99)30043-2">https://doi.org/10.1016/S1573-4463(99)30043-2</a>.
+</div>
+<div id="ref-gould_crime_2002" class="csl-entry" role="listitem">
+Gould, Eric D., Bruce A. Weinberg, and David B. Mustard. 2002. <span>“Crime <span>Rates</span> and <span>Local</span> <span>Labor</span> <span>Market</span> <span>Opportunities</span> in the <span>United</span> <span>States</span>: 1979–1997.”</span> <em>Review of Economics and Statistics</em> 84 (1): 45–61. <a href="https://doi.org/10.1162/003465302317331919">https://doi.org/10.1162/003465302317331919</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
