@@ -1,5 +1,6 @@
 ---
 title: "Data Sources"
+author: "Thomas Sigall"
 bibliography: reference.bib
 ---
 ```{r include = FALSE}
