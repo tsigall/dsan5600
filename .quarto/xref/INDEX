@@ -6,7 +6,8 @@
     "about.html": "9bab803a"
   },
   "introduction.qmd": {
-    "introduction.html": "523999bb"
+    "introduction.html": "523999bb",
+    "introduction.tex": "5d1ff569"
   },
   "financial_time_series_models.qmd": {
     "financial_time_series_models.html": "93065866"
