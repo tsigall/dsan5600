@@ -67,12 +67,18 @@ plot(decompose(arrests_ts, "multiplicative"))
 
 ```
 
-```{r acf}
+We can see the trend here that we were able to observe on the initial graph. There is horizontal movement during the first half of the observed period and then a clear downward trend until 2020. After that, it reverses and increases until the present day.
 
+Removing the trend allows us to see some seasonality. Once the seasonality has been averaged out as it has been here, the clear dips in arrests towards the end of each year remain and there is a clear pattern between the large dips at the end of each month.
+
+There seems to be more noise in the more recent data, which could be something interesting to look into.
+
+```{r acf}
+ggAcf(arrests_ts, 100) + ggtitle("ACF Plot for Annual New York City Arrests")
 ```
 
 ```{r pacf}
-
+ggPacf(arrests_ts, 100) + ggtitle("PACF Plot for Annual New York City Arrests")
 ```
 
 ```{r adf}
