@@ -1,0 +1,51 @@
+Bureau of Justice Statistics,,,,,,,,
+Filename: cv22t05.csv,,,,,,,,
+"Table 5. Percent and rate of violent victimizations reported to police, by demographic characteristics of victims, 2021 and 2022",,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,
+,,,,,,,,
+"Table 5. Percent and rate of violent victimizations reported to police, by demographic characteristics of victims, 2021 and 2022",,,,,,,,
+,,Percent,,,,"Rate per 1,000/a",,
+Victim demographic characteristic,,2021,,2022*,,2021,,2022*
+,Total,45.6,%,41.5,%,7.5,†,9.7
+Sex,,,,,,,,
+,Male,42.4,%,37.5,%,7.4,,8.8
+,Female,49.1,,45.3,,7.6,†,10.6
+Race/Hispanic origin,,,,,,,,
+,White/b,46.6,%,41.6,%,7.5,†,10
+,Black/b,48.2,,45.9,,8.9,,10
+,Hispanic,46.2,,45.6,,7.3,‡,10.3
+,"Asian/Native Hawaiian/Other Pacific Islander/b,c",39.8,,34.2,,3.9,,4.7
+,"Other/b,d",31.3,!,22.1,,14.1,!,13
+Age,,,,,,,,
+,12–17,25.5,%,31.2,%,3.4,†,8.5
+,18–24,32.5,,27.4,,7.5,,10.1
+,25–34,43.6,,38.2,,9.6,‡,13.1
+,35–49,47.7,,48.7,,9.3,‡,12.5
+,50–64,56.6,,54.3,,9.6,,9.4
+,65 or older,55.3,,44.9,,3.5,,4.7
+Marital status,,,,,,,,
+,Never married,42,% †,31.9,%,9.3,,10.8
+,Married,48.5,,52.9,,4.6,†,6.4
+,Widowed,36.3,,42.5,,3.9,,5.8
+,Divorced,51.6,,49.6,,14.2,,18.1
+,Separated,62.1,,66.3,,22.9,,38.8
+Household income,,,,,,,,
+,"Less than $25,000",46.6,%,43.1,%,13.8,,18.3
+,"$25,000–$49,999",50.6,,45.3,,8.6,†,12.1
+,"$50,000–$99,999",45.8,,40.4,,6.7,,7.5
+,"$100,000–$199,999",35.5,,37.5,,4.3,‡,6.1
+,"$200,000 or more",49.2,,36.9,,4.8,†,8.6
+Note: See appendix table 6 for standard errors.,,,,,,,,
+*Comparison year.,,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,,
+‡Difference with comparison year is significant at the 90% confidence level.,,,,,,,,
+"! Interpret with caution. Estimate is based on 10 or fewer sample cases, or coefficient of variation is greater than 50%.",,,,,,,,
+"a/Rate is per 1,000 persons age 12 or older. See appendix table 19 for person populations.",,,,,,,,
+"b/Excludes persons of Hispanic origin, (e.g., “white” refers to non-Hispanic white persons and “black” refers to non-Hispanic black persons).",,,,,,,,
+c/Includes persons who identified as Asian only or Native Hawaiian or Other Pacific Islander only. Categories are not shown separately due to small numbers of sample cases.,,,,,,,,
+d/Includes persons who identified as American Indian or Alaska Native only or as two or more races. Categories are not shown separately due to small numbers of sample cases.,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,,,

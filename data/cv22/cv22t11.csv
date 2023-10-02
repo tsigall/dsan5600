@@ -1,0 +1,43 @@
+Bureau of Justice Statistics,,,,,,,,,,,,
+Filename: cv22t11.csv,,,,,,,,,,,,
+"Table 11. Number and percent of violent incidents, by demographic characteristics of population, victims, and offenders, 2022",,,,,,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2022",,,,,,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,,,,,
+,,,,,,,,,,,,
+"Table 11. Number and percent of violent incidents, by demographic characteristics of population, victims, and offenders, 2022",,,,,,,,,,,,
+,,,Number of violent incidents,,,,Percent of violent incidents,,,,Percent ratio,
+Demographic characteristic,,Population/a,Victim ,Offender/b,Percent of population/a*,,Victim ,,Offender/b,,Victim-to-population ,Offender-to-population 
+,Total,"282,304,640","6,230,150","6,230,150",100,%,100,%,100,%,1,1
+Sex,,,,,,,,,,,,
+,Male,"138,308,540","3,028,420","4,470,720",49,%,48.6,%,78.6,% †,1,1.6
+,Female,"143,996,100","3,201,730","940,220",51,,51.4,,16.5,†,1,0.3
+,Both male and female offenders,~,~,"279,660",~,,~,,4.9,,~,~
+Race/Hispanic origin ,,,,,,,,,,,,
+,White/c,"171,625,260","3,858,410","2,687,770",60.8,%,61.9,%,53.1,% †,1,0.9
+,Black/c,"34,448,440","720,900","1,283,300",12.2,,11.6,,25.4,†,0.9,2.1
+,Hispanic/d,"50,873,240","1,073,070","694,420",18,,17.2,,13.7,†,1,0.8
+,"Asian/Native Hawaiian/Other Pacific Islander/c,e","19,681,580","252,060","92,310",7,,4,†,1.8,†,0.6,0.3
+,"Other/c,f","5,676,110","325,720","130,290",2,,5.2,†,2.6, ,2.6,1.3
+,Multiple offenders of various races/g,~,~,"173,480",~,,~,,3.4,,~,~
+Age,,,,,,,,,,,,
+,11 or younger/h,~,~,"64,700",~,,~,,1.2,% ,~,~
+,12–17,"25,875,630","650,450","483,870",9.2,%,10.4,%,9.3,,1.1,1
+,18–29,"51,154,320","1,808,100","1,243,780",18.1,,29,†,23.9,†,1.6,1.3
+,30 or older,"205,274,680","3,771,600","3,101,890",72.7,,60.5,†,59.7,†,0.8,0.8
+,Multiple offenders of various ages,~,~,"303,530",~,,~,,5.8,,~,~
+Note: Details may not sum to totals due to rounding and missing data for offender characteristics. An incident is a specific criminal act involving one or more victims. Offender characteristics are based on victims’ perceptions of offenders. See appendix table 12 for standard errors.,,,,,,,,,,,,
+*Comparison group.,,,,,,,,,,,,
+†Difference with comparison group is significant at the 95% confidence level.,,,,,,,,,,,,
+~Not applicable.,,,,,,,,,,,,
+a/The National Crime Victimization Survey (NCVS) population represents persons age 12 or older living in noninstitutionalized residential settings in the United States.,,,,,,,,,,,,
+"b/Includes incidents in which the perceived offender characteristics were reported. Offender sex was unknown in 9% of incidents, race or Hispanic origin in 19%, and age in 17%.",,,,,,,,,,,,
+"c/Excludes persons of Hispanic origin (e.g., “white” refers to non-Hispanic white persons and “black” refers to non-Hispanic black persons).",,,,,,,,,,,,
+"d/Includes single offenders perceived to be of Hispanic origin and multiple-offender groups in which all offenders were perceived as Hispanic. In previous publications, if the victim perceived any of the offenders in a multiple-offender incident as Hispanic, the offenders were classified as Hispanic. ",,,,,,,,,,,,
+e/Includes victims who identified or offenders who were perceived as Asian only or as Native Hawaiian or Other Pacific Islander only. Categories are not shown separately due to small numbers of sample cases.,,,,,,,,,,,,
+f/Includes victims who identified or offenders who were perceived as American Indian or Alaska Native only or as two or more races. Categories are not shown separately due to small numbers of sample cases.,,,,,,,,,,,,
+g/Includes multiple-offender groups in which offenders were perceived as two or more races or in which one offender was perceived as Hispanic and one offender was perceived as one or more races.,,,,,,,,,,,,
+"h/While the NCVS does not survey victims age 11 or younger, victims may report the offender was age 11 or younger.",,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2022.",,,,,,,,,,,,

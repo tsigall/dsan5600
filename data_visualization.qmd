@@ -1,3 +1,47 @@
 ---
 title: "Data Visualization"
+editor_options: 
+  chunk_output_type: inline
 ---
+
+```{r setup, include = FALSE}
+library(reticulate)
+library(tidyverse)
+library(lubridate)
+use_condaenv("r-env", required = TRUE)
+```
+
+```{python, obtain_data, include = FALSE}
+import pandas as pd
+from sodapy import Socrata
+import config
+
+arrest_data = "8h9b-rp9u"
+client = Socrata("data.cityofnewyork.us",
+                 config.app_token,
+                 username=config.username,
+                 password=config.password)
+
+results = client.get(arrest_data, limit=100000)
+
+# Convert to pandas DataFrame
+df = pd.DataFrame.from_records(results)
+
+df = df[["arrest_date", "pd_desc", "law_cat_cd", "age_group", "perp_sex", "perp_race"]]
+```
+
+```{r visualization}
+load("arrest_data.Rdata")
+
+crime_by_date <- df %>%
+  group_by(month = floor_date(arrest_date, "month")) %>%
+  summarize(count = n())
+
+p1 <- ggplot(data = crime_by_date, aes(x = month, y = count)) +
+  geom_line() +
+  ggtitle("Arrests in New York City by Date") +
+  xlab("Arrest Date") +
+  ylab("Arrests")
+
+p1
+```

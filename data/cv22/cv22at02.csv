@@ -1,0 +1,27 @@
+Bureau of Justice Statistics,,,,,,,,,,,,
+Filename: cv22at02.csv,,,,,,,,,,,,
+"Appendix table 2. Standard errors for table 1: Number and rate of violent victimizations, by type of crime, 2018–2022",,,,,,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2018–2022",,,,,,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,,,,,
+,,,,,,,,,,,,
+"Appendix table 2. Standard errors for table 1: Number and rate of violent victimizations, by type of crime, 2018–2022",,,,,,,,,,,,
+,,,2018,,2019,,2020,,2021,,2022,
+Type of violent crime,,,Number,"Rate per 1,000",Number,"Rate per 1,000",Number,"Rate per 1,000",Number,"Rate per 1,000",Number,"Rate per 1,000"
+Total violent crime,,,"343,744",1.25,"295,287",1.07,"219,870",0.79,"204,884",0.73,"253,599",0.9
+,Rape/sexual assault,,"76,473",0.28,"70,656",0.26,"50,445",0.18,"38,791",0.14,"50,993",0.18
+,Robbery,,"61,685",0.22,"61,708",0.22,"54,778",0.2,"55,135",0.2,"79,954",0.28
+,Assault,,"317,636",1.15,"264,712",0.96,"198,848",0.72,"198,046",0.71,"231,387",0.82
+,,Aggravated assault,"69,272",0.25,"87,553",0.32,"73,767",0.27,"59,066",0.21,"124,588",0.44
+,,Simple assault,"316,022",1.15,"246,234",0.89,"169,905",0.61,"182,987",0.66,"185,591",0.66
+Violent crime excluding simple assault,,,"126,295",0.46,"128,935",0.47,"105,983",0.38,"82,925",0.3,"155,866",0.55
+Selected characteristics of violent crime,,,,,,,,,,,,
+,Domestic violence,,"105,891",0.39,"138,056",0.5,"95,903",0.34,"93,801",0.34,"128,644",0.46
+,,Intimate partner violence,"86,437",0.31,"100,668",0.36,"60,582",0.22,"56,820",0.2,"108,690",0.39
+,Stranger violence,,"235,794",0.86,"147,625",0.53,"141,274",0.51,"117,001",0.42,"154,853",0.55
+,Violent crime with an injury,,"115,009",0.42,"117,551",0.42,"148,513",0.53,"84,792",0.3,"114,574",0.41
+,Violent crime with a weapon,,"83,351",0.3,"77,411",0.28,"79,478",0.29,"65,300",0.23,"139,386",0.49
+Note: Standard errors in this report may vary from previously published standard errors. See Methodology.,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2018–2022.",,,,,,,,,,,,

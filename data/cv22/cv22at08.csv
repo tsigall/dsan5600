@@ -1,0 +1,22 @@
+Bureau of Justice Statistics,,,,,,
+Filename: cv22at08.csv,,,,,,
+"Appendix table 8. Standard errors for table 7: Number and rate of violent victimizations, by veteran and citizenship status of victims, 2021 and 2022",,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,
+Date of version: 9/14/2023,,,,,,
+,,,,,,
+"Appendix table 8. Standard errors for table 7: Number and rate of violent victimizations, by veteran and citizenship status of victims, 2021 and 2022",,,,,,
+,,,2021,,2022,
+Victim veteran/citizenship status,,,Number,"Rate per 1,000",Number,"Rate per 1,000"
+,Total violent victimizations,,"204,884",0.73,"253,599",0.9
+Veteran status,,,,,,
+,Veteran,,"36,988",2.18,"61,384",3.63
+,Nonveteran,,"194,098",0.83,"245,829",1.04
+Citizenship status,,,,,,
+,U.S. citizen,,"203,694",0.78,"251,766",0.95
+,,U.S.-born citizen,"192,217",0.8,"253,463",1.06
+,,Naturalized U.S. citizen,"55,296",2.34,"45,563",1.9
+,Non-U.S. citizen,,"23,300",1.58,"47,484",3.09
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,

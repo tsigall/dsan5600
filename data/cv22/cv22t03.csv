@@ -1,0 +1,51 @@
+Bureau of Justice Statistics,,,,,,,
+Filename: cv22t03.csv,,,,,,,
+"Table 3. Rate of violent victimization, by type of crime and demographic characteristics of victims, 2021 and 2022",,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,
+Date of version: 9/14/2023,,,,,,,
+,,,,,,,
+"Table 3. Rate of violent victimization, by type of crime and demographic characteristics of victims, 2021 and 2022",,,,,,,
+,,Total violent crime/a,,,Violent crime excluding simple assault/b,,
+Victim demographic characteristic,,2021,,2022*,2021,,2022*
+,Total,16.5, †,23.5,5.6, †,9.8
+Sex,,,,,,,
+,Male,17.5, †,23.5,4.9, †,9.5
+,Female,15.5, †,23.4,6.2, †,10
+Race/Hispanic origin,,,,,,,
+,White/c,16.1, †,24,5.4, †,9.7
+,Black/c,18.5,,21.8,7.7,,9
+,Hispanic,15.9, †,22.6,5.4, †,11
+,"Asian/Native Hawaiian/Other Pacific Islander/c,d",9.9,,13.6,2.9,,4.8
+,"Other/c,e",45.1,,58.9,9.6, ‡,25.6
+Age,,,,,,,
+,12–17,13.2, †,27.4,4, †,8.4
+,18–24,23.1, †,36.8,11.9, †,18.7
+,25–34,22, †,34.2,8.3, †,13.4
+,35–49,19.4, †,25.8,6.1, †,10.6
+,50–64,16.9,,17.3,3.8, †,8
+,65 or older,6.4, †,10.5,2.2, ‡,4.1
+Marital status,,,,,,,
+,Never married,22.2, †,34,8.5, †,13.9
+,Married,9.5, †,12.1,2.6, †,5
+,Widowed,10.7,,13.6,3.3,,6.7
+,Divorced,27.4, ‡,36.4,8.2, †,17.2
+,Separated,36.8, ‡,58.6,15.5,,20
+Household income,,,,,,,
+,"Less than $25,000",29.6, †,42.4,11.7, †,19.3
+,"$25,000–$49,999",16.9, †,26.6,5.9, †,12.5
+,"$50,000–$99,999",14.6, †,18.5,4.3, †,6.8
+,"$100,000–$199,999",12.2, †,16.4,3.9, †,6.6
+,"$200,000 or more",9.7, †,23.4,2.9, †,7.9
+"Note: Rates are per 1,000 persons age 12 or older. See appendix table 19 for person populations. See appendix table 4 for standard errors.",,,,,,,
+*Comparison year.,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,
+‡Difference with comparison year is significant at the 90% confidence level.,,,,,,,
+"a/Includes rape or sexual assault, robbery, aggravated assault, and simple assault. Excludes homicide because the National Crime Victimization Survey is based on interviews with victims.",,,,,,,
+"b/Includes rape or sexual assault, robbery, and aggravated assault.",,,,,,,
+"c/Excludes persons of Hispanic origin (e.g., “white” refers to non-Hispanic white persons and “black” refers to non-Hispanic black persons).",,,,,,,
+d/Includes persons who identified as Asian only or Native Hawaiian or Other Pacific Islander only. Categories are not shown separately due to small numbers of sample cases.,,,,,,,
+e/Includes persons who identified as American Indian or Alaska Native only or as two or more races. Categories are not shown separately due to small numbers of sample cases.,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,,

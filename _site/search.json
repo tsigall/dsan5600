@@ -54,5 +54,33 @@
     "title": "Data Sources",
     "section": "Studies",
     "text": "Studies\nThe National Crime Victimization Survey (NCVS) Series is an important source of information on criminal victimization.\n\n\n\n\n\nOther more specific studies such as “Gender, Mental Illness, and Crime in the United States” (Thompson 2011) help to give more detail on why crimes were commited by getting more detail on the individuals who commited them. In addition there is a useful dataset published by the Department of Justice"
+  },
+  {
+    "objectID": "exploratory_data_analysis.html",
+    "href": "exploratory_data_analysis.html",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "crime_by_date &lt;- df %&gt;%\n  group_by(month = floor_date(arrest_date, \"month\")) %&gt;%\n  summarize(count = n())\n\np1 &lt;- ggplot(data = crime_by_date, aes(x = month, y = count)) +\n  geom_line() +\n  ggtitle(\"Arrests in New York City by Date\") +\n  xlab(\"Arrest Date\") +\n  ylab(\"Arrests\") +\n  theme(\n    panel.grid.major = element_line(color = \"grey\", size = 0.5),\n    panel.grid.minor = element_line(color = \"grey\", size = 0.2)\n  ) +\n  scale_x_date(date_breaks = \"1 year\",\n               date_labels = \"%Y\")\n\np1\n\n\n\n\nThere appears to be some seasonality in the plot, as there are noticeable dips in arrest rate towards the end of each year. There was a slight upward trend towards the end of the 2000’s but that changed dramatically during the 2010’s into a clear downward trend. Since the start of the current decade the trend has reversed course, however. It is hard to tell if the time series is multiplicative or additive, as it seems to hold different characteristics at different points, though this possibly suggests a multiplicative time series. The change in trend could also be part of a longer cycle, though it is impossible to tell from this graph as it only goes back to 2006.\n\n\n\n\ngglagplot(crime_by_date$count, do.lines = FALSE, lags = 1)"
+  },
+  {
+    "objectID": "data_visualization.html",
+    "href": "data_visualization.html",
+    "title": "Data Visualization",
+    "section": "",
+    "text": "load(\"arrest_data.Rdata\")\n\ncrime_by_date &lt;- df %&gt;%\n  group_by(month = floor_date(arrest_date, \"month\")) %&gt;%\n  summarize(count = n())\n\np1 &lt;- ggplot(data = crime_by_date, aes(x = month, y = count)) +\n  geom_line() +\n  ggtitle(\"Arrests in New York City by Date\") +\n  xlab(\"Arrest Date\") +\n  ylab(\"Arrests\")\n\np1"
+  },
+  {
+    "objectID": "exploratory_data_analysis.html#initial-visualization",
+    "href": "exploratory_data_analysis.html#initial-visualization",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "crime_by_date &lt;- df %&gt;%\n  group_by(month = floor_date(arrest_date, \"month\")) %&gt;%\n  summarize(count = n())\n\np1 &lt;- ggplot(data = crime_by_date, aes(x = month, y = count)) +\n  geom_line() +\n  ggtitle(\"Arrests in New York City by Date\") +\n  xlab(\"Arrest Date\") +\n  ylab(\"Arrests\") +\n  theme(\n    panel.grid.major = element_line(color = \"grey\", size = 0.5),\n    panel.grid.minor = element_line(color = \"grey\", size = 0.2)\n  ) +\n  scale_x_date(date_breaks = \"1 year\",\n               date_labels = \"%Y\")\n\np1\n\n\n\n\nThere appears to be some seasonality in the plot, as there are noticeable dips in arrest rate towards the end of each year. There was a slight upward trend towards the end of the 2000’s but that changed dramatically during the 2010’s into a clear downward trend. Since the start of the current decade the trend has reversed course, however. It is hard to tell if the time series is multiplicative or additive, as it seems to hold different characteristics at different points, though this possibly suggests a multiplicative time series. The change in trend could also be part of a longer cycle, though it is impossible to tell from this graph as it only goes back to 2006."
+  },
+  {
+    "objectID": "exploratory_data_analysis.html#lag-plot",
+    "href": "exploratory_data_analysis.html#lag-plot",
+    "title": "Exploratory Data Analysis",
+    "section": "",
+    "text": "gglagplot(crime_by_date$count, do.lines = FALSE, lags = 1)"
   }
 ]

@@ -37,7 +37,7 @@ Detailed time-series data is not critical here, but rather an understanding of w
 Economic data can be accessed in similar ways as crime data, as the data needed for this project is maintained by the government. For example, comparing unemployment rate against crime rate could be a useful comparison. This unemployment data would be obtained from [FRED](https://fred.stlouisfed.org/). An example with data from [here](https://fred.stlouisfed.org/series/UNRATE) can be seen below. 
 
 ```{r echo = FALSE}
-unrate <- read.csv("../datasets/UNRATE.csv")
+unrate <- read.csv("data/UNRATE.csv")
 
 plot_ly(x = unrate$DATE, y = unrate$UNRATE, type = 'scatter', mode = 'lines') %>%
   layout(title = "United States Unemployment Rate Over Time",

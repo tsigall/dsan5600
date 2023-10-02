@@ -1,3 +1,70 @@
 ---
 title: "Exploratory Data Analysis"
+editor_options: 
+  chunk_output_type: inline
 ---
+
+```{r setup, include = FALSE}
+library(reticulate)
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(forecast)
+```
+
+# Plot of New York City Arrests
+
+```{r load_data, include = FALSE}
+load("arrest_data.Rdata")
+
+```
+
+## Initial Visualization
+
+```{r initial_viz, warning=FALSE}
+crime_by_date <- df %>%
+  group_by(month = floor_date(arrest_date, "month")) %>%
+  summarize(count = n())
+
+p1 <- ggplot(data = crime_by_date, aes(x = month, y = count)) +
+  geom_line() +
+  ggtitle("Arrests in New York City by Date") +
+  xlab("Arrest Date") +
+  ylab("Arrests") +
+  theme(
+    panel.grid.major = element_line(color = "grey", size = 0.5),
+    panel.grid.minor = element_line(color = "grey", size = 0.2)
+  ) +
+  scale_x_date(date_breaks = "1 year",
+               date_labels = "%Y")
+
+p1
+```
+
+There appears to be some seasonality in the plot, as there are noticeable dips in arrest rate towards the end of each year. There was a slight upward trend towards the end of the 2000's but that changed dramatically during the 2010's into a clear downward trend. Since the start of the current decade the trend has reversed course, however. It is hard to tell if the time series is multiplicative or additive, as it seems to hold different characteristics at different points, though this possibly suggests a multiplicative time series. The change in trend could also be part of a longer cycle, though it is impossible to tell from this graph as it only goes back to 2006.
+
+## Lag Plot
+
+```{r lag_plots}
+gglagplot(crime_by_date$count, do.lines = FALSE, lags = 1)
+```
+
+```{r decomposing}
+
+```
+
+```{r acf}
+
+```
+
+```{r pacf}
+
+```
+
+```{r adf}
+
+```
+
+```{r detrend_and_difference}
+
+```
