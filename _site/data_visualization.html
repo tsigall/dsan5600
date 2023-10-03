@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -198,7 +217,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#new-york-city-arrests-2006---present" id="toc-new-york-city-arrests-2006---present" class="nav-link active" data-scroll-target="#new-york-city-arrests-2006---present">New York City Arrests, 2006 - present</a>
+  <ul class="collapse">
+  <li><a href="#by-crime" id="toc-by-crime" class="nav-link" data-scroll-target="#by-crime">By Crime</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -220,28 +248,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="new-york-city-arrests-2006---present" class="level1">
+<h1>New York City Arrests, 2006 - present</h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"arrest_data.Rdata"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>crime_by_date <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>arrests_by_date <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">month =</span> <span class="fu">floor_date</span>(arrest_date, <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>())</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> crime_by_date, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>arrests_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> arrests_by_date, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> count)) <span class="sc">+</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Arrests in New York City by Date"</span>) <span class="sc">+</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Arrest Date"</span>) <span class="sc">+</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Arrests"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>arrests_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_visualization_files/figure-html/visualization-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="by-crime" class="level2">
+<h2 class="anchored" data-anchor-id="by-crime">By Crime</h2>
+<p><img src="arrests_by_type.png" class="img-fluid"></p>
+<p>This graph includes the eight most common types of arrests made over the time period. Some interesting patterns reveal themselves when the data are categorized as such, particularly the arrests for marijuana possession. They spike around 2011 but then drop off quickly and today are non-existent. This is an excellent example to use to observe the effect that real-world events have on the trends we observe here. In 2014, New York City mayor Bill de Blasio told the NYPD to stop arrests for marijuana possession and instead issue tickets in attempts to decriminalize marijuana <span class="citation" data-cites="Dizard_2014">(<a href="#ref-Dizard_2014" role="doc-biblioref">Dizard 2014</a>)</span>. A drop in arrests is clearly seen around that time period. Around the same time, New York Governor Andrew Cuomo signed legislation which would allow the use of cannabis for medicinal purposes <span class="citation" data-cites="Campbell_2014">(<a href="#ref-Campbell_2014" role="doc-biblioref">Campbell 2014</a>)</span>. Then, in 2021, recreational cannabis was legalized for adults over 21, up to a specific amount. Since then, the NYPD has not listed any crime related to marijuana, as evidenced by there being no arrests for possession on the graph past 2021.</p>
 
 
 
-</main> <!-- /main -->
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Campbell_2014" class="csl-entry" role="listitem">
+Campbell, Jon. 2014. <span>“Cuomo Signs New York’s Medical Marijuana Bill.”</span> <em>USA Today</em>. USA Today. <a href="https://www.usatoday.com/story/news/nation/2014/07/07/cuomo-signs-medical-marijuana-bill/12323967/">https://www.usatoday.com/story/news/nation/2014/07/07/cuomo-signs-medical-marijuana-bill/12323967/</a>.
+</div>
+<div id="ref-Dizard_2014" class="csl-entry" role="listitem">
+Dizard, Wilson. 2014. <span>“NYC Decides Pot Fines Are Just the Ticket.”</span> <em>Al Jazeera America</em>. Al Jazeera America. <a href="http://america.aljazeera.com/articles/2014/11/10/marijuana-ticketnewyork.html">http://america.aljazeera.com/articles/2014/11/10/marijuana-ticketnewyork.html</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

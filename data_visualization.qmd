@@ -2,12 +2,14 @@
 title: "Data Visualization"
 editor_options: 
   chunk_output_type: inline
+bibliography: reference.bib
 ---
 
 ```{r setup, include = FALSE}
 library(reticulate)
 library(tidyverse)
 library(lubridate)
+library(plotly)
 use_condaenv("r-env", required = TRUE)
 ```
 
@@ -30,18 +32,26 @@ df = pd.DataFrame.from_records(results)
 df = df[["arrest_date", "pd_desc", "law_cat_cd", "age_group", "perp_sex", "perp_race"]]
 ```
 
+# New York City Arrests, 2006 - present
+
 ```{r visualization}
 load("arrest_data.Rdata")
 
-crime_by_date <- df %>%
+arrests_by_date <- df %>%
   group_by(month = floor_date(arrest_date, "month")) %>%
   summarize(count = n())
 
-p1 <- ggplot(data = crime_by_date, aes(x = month, y = count)) +
+arrests_plot <- ggplot(data = arrests_by_date, aes(x = month, y = count)) +
   geom_line() +
   ggtitle("Arrests in New York City by Date") +
   xlab("Arrest Date") +
   ylab("Arrests")
 
-p1
+arrests_plot
 ```
+
+## By Crime
+
+![](arrests_by_type.png)
+
+This graph includes the eight most common types of arrests made over the time period. Some interesting patterns reveal themselves when the data are categorized as such, particularly the arrests for marijuana possession. They spike around 2011 but then drop off quickly and today are non-existent. This is an excellent example to use to observe the effect that real-world events have on the trends we observe here. In 2014, New York City mayor Bill de Blasio told the NYPD to stop arrests for marijuana possession and instead issue tickets in attempts to decriminalize marijuana [@Dizard_2014]. A drop in arrests is clearly seen around that time period. Around the same time, New York Governor Andrew Cuomo signed legislation which would allow the use of cannabis for medicinal purposes [@Campbell_2014]. Then, in 2021, recreational cannabis was legalized for adults over 21, up to a specific amount. Since then, the NYPD has not listed any crime related to marijuana, as evidenced by there being no arrests for possession on the graph past 2021.

@@ -11,6 +11,8 @@ library(lubridate)
 library(ggplot2)
 library(forecast)
 library(TSstudio)
+library(tseries)
+library(gridExtra)
 ```
 
 # Plot of New York City Arrests
@@ -73,18 +75,47 @@ Removing the trend allows us to see some seasonality. Once the seasonality has b
 
 There seems to be more noise in the more recent data, which could be something interesting to look into.
 
+## ACF and PACF
+
 ```{r acf}
 ggAcf(arrests_ts, 100) + ggtitle("ACF Plot for Annual New York City Arrests")
 ```
+
+The ACF values are decaying towards zero as lag increases, which is evidence against seasonality.
 
 ```{r pacf}
 ggPacf(arrests_ts, 100) + ggtitle("PACF Plot for Annual New York City Arrests")
 ```
 
-```{r adf}
+Spikes can be seen at lags of 1, 12, and 13.
 
+## Augmented Dickey-Fuller Test
+
+```{r adf}
+adf.test(arrests_ts)
 ```
+
+The ADF tests returns a p-value of 0.26, meaning we do not have enough evidence to reject the null hypotheses. This series is not stationary.
+
+## Detrend and Difference
 
 ```{r detrend_and_difference}
+detrend <- resid(lm(arrests_by_date$count ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(arrests_ts)
 
 ```
+
+```{r multifigure_1}
+grid.arrange(autoplot(arrests_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+
+The detrended series (the middle plot) does not seem to be vastly different from the original series. This could be evidence that there is not much of a trend in the data. The differenced series looks to be stationary, which suggests that there may be a trend.
+
+```{r multifigure_2}
+ggtsdisplay(difference)
+```
+
+This ACF has positive spikes at 12, 24, and 36, meaning once the trend is removed, the seasonality becomes evident. The ACF of the differenced time series provides strong evidence in support of seasonality.
