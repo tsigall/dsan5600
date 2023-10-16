@@ -7,7 +7,6 @@ website:
     style: "docked"
     search: true
     contents:
-        - about.qmd
         - introduction.qmd
         - data_sources.qmd
         - data_visualization.qmd
@@ -17,6 +16,7 @@ website:
         - financial_time_series_models.qmd
         - deep_learning_for_ts.qmd
         - conclusions.qmd
+        - about.qmd
 
 format:
   html:

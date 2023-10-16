@@ -1,3 +1,138 @@
 ---
 title: "ARMA/ARIMA/SARIMA Models"
+editor_options: 
+  chunk_output_type: inline
 ---
+
+# Fitting NYC Arrests Series
+
+```{r setup, include = FALSE}
+library(reticulate)
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(forecast)
+library(TSstudio)
+library(tseries)
+library(gridExtra)
+library(kableExtra)
+library(astsa)
+load("arrests_ts.Rdata")
+```
+
+## First Difference
+
+```{r first_diff, echo=FALSE}
+arrests_ts %>% diff() %>% ggtsdisplay()
+```
+
+## Second Difference
+
+```{r second_diff, echo=FALSE}
+arrests_ts %>% diff() %>% diff() %>% ggtsdisplay()
+```
+
+## Third Difference
+
+```{r third_diff, echo=FALSE}
+arrests_ts %>% diff() %>% diff() %>% diff() %>% ggtsdisplay()
+```
+
+All three difference plots look similar in their stationarity, so we will check $d=1,2,3$. From the ACF and PACF plots, we determine that we will check $q=1,2,4,5$ and $p=1,2,3,4$.
+
+```{r check_models, echo=FALSE}
+p <- 1
+d <- 1
+q <- 1
+i <- 1
+
+temp <- data.frame()
+ls <- matrix(rep(NA,6*32), nrow=32)
+
+for(p in c(1,2,3,4)){
+  for(q in c(1,2,4,5)){
+    for(d in c(1,2,3)){
+      if(p + d + q <= 8){
+        model <- Arima(arrests_ts, order = c(p, d, q), include.drift = FALSE)
+        ls[i,] <- c(p, d, q, model$aic, model$bic, model$aicc)
+        i <- i +1
+      }
+    }
+  }
+}
+
+temp <- as.data.frame(ls)
+names(temp) <- c("p","d","q","AIC","BIC","AICc")
+kable(temp)
+```
+
+## Model Selection and Diagnostics
+
+### Minimum AIC
+
+```{r min_aic, echo=FALSE}
+kable(temp[which.min(temp$AIC),])
+```
+
+### Minimum BIC
+
+```{r min_bic, echo = FALSE}
+kable(temp[which.min(temp$BIC),])
+```
+
+### Minimum AICc
+
+```{r min_aicc, echo = FALSE}
+kable(temp[which.min(temp$AICc),])
+```
+
+It is clear that the best model is one with parameters $p=3, d=1, q=4$. We now check the model diagnostics.
+
+```{r diagnostics, echo = FALSE}
+set.seed(621)
+model_output <- capture.output(sarima(arrests_ts, 3, 1, 4))
+cat(model_output[205:239], model_output[length(model_output)], sep = "\n")
+```
+There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless. 
+
+### Fitted vs. Actual
+```{r fit_v_actual, echo=FALSE}
+model_fit <- Arima(arrests_ts, order = c(3, 1, 4), include.drift = TRUE)
+plot(arrests_ts, col = "blue")
+lines(fitted(model_fit), col = "green")
+legend(x = "topright", legend = c("arrests_ts", "fit"), fill = 4:1)
+```
+The fitted model looks similar to the actual time series. 
+
+## Forecasting
+```{r forecast, echo=FALSE}
+autoplot(arrests_ts) +
+  autolayer(meanf(arrests_ts, h = 36),
+            series = "Mean", PI = FALSE) +
+  autolayer(naive(arrests_ts, h = 36),
+            series = "Naïve", PI = FALSE) +
+  autolayer(snaive(arrests_ts, h = 36),
+            series = "SNaïve", PI = FALSE) +
+  autolayer(rwf(arrests_ts, h = 36, drift = TRUE),
+              series = "Drift", PI = FALSE) +
+  autolayer(forecast(model_fit, 36),
+            series = "Fit", PI = FALSE) +
+  guides(color = guide_legend(title = "Forecast"))
+```
+Fit appears to be better than SNaïve as it does a better job of capturing the trend.
+
+
+SNaïve model error measurements:
+```{r check_snaive, echo = FALSE}
+accuracy(snaive(arrests_ts, h = 36))
+```
+Fitted model error measurements:
+```{r check_fitted, echo = FALSE}
+summary(model_fit)
+```
+The model error measurements for the fitted model are all much lower than the SNaïve benchmark method, so our fitted model is good. 
+
+```{r forecast_plot, echo = FALSE}
+model_fit %>% forecast %>% autoplot()
+```
+

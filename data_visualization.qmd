@@ -10,38 +10,43 @@ library(reticulate)
 library(tidyverse)
 library(lubridate)
 library(plotly)
+library(kableExtra)
 use_condaenv("r-env", required = TRUE)
 ```
 
 ```{python, obtain_data, include = FALSE}
-import pandas as pd
-from sodapy import Socrata
-import config
-
-arrest_data = "8h9b-rp9u"
-client = Socrata("data.cityofnewyork.us",
-                 config.app_token,
-                 username=config.username,
-                 password=config.password)
-
-results = client.get(arrest_data, limit=100000)
-
-# Convert to pandas DataFrame
-df = pd.DataFrame.from_records(results)
-
-df = df[["arrest_date", "pd_desc", "law_cat_cd", "age_group", "perp_sex", "perp_race"]]
+# import pandas as pd
+# from sodapy import Socrata
+# import config
+# 
+# arrest_data = "8h9b-rp9u"
+# client = Socrata("data.cityofnewyork.us",
+#                  config.app_token,
+#                  username=config.username,
+#                  password=config.password)
+# 
+# results = client.get(arrest_data, limit=100000)
+# 
+# # Convert to pandas DataFrame
+# df = pd.DataFrame.from_records(results)
+# 
+# df = df[["arrest_date", "pd_desc", "law_cat_cd", "age_group", "perp_sex", "perp_race"]]
 ```
 
 # New York City Arrests, 2006 - present
 
-```{r visualization}
+```{r visualization, echo = FALSE}
 load("arrest_data.Rdata")
+
+df<- df %>%
+  mutate(month = month(arrest_date),
+         year = year(arrest_date))
 
 arrests_by_date <- df %>%
   group_by(month = floor_date(arrest_date, "month")) %>%
-  summarize(count = n())
+  summarize(total = n())
 
-arrests_plot <- ggplot(data = arrests_by_date, aes(x = month, y = count)) +
+arrests_plot <- ggplot(data = arrests_by_date, aes(x = month, y = total)) +
   geom_line() +
   ggtitle("Arrests in New York City by Date") +
   xlab("Arrest Date") +
@@ -51,7 +56,86 @@ arrests_plot
 ```
 
 ## By Crime
+It is important to get an understanding of what types of crimes are commonly committed in New York City, the area we are currently looking at. Below is a table containing counts of all crimes committed over the period of 2006 - 2022, sorted in descending order. The most common crime committed over that time period was assault in the third degree (the lowest level of assault), followed by marijuana possession 4 & 5 (differentiated by the amount of marijuana possessed).
+```{r arrests_by_crime, echo = FALSE}
+arrests_by_crime <- df %>%
+  group_by(pd_desc) %>%
+  summarize(total = n()) %>% 
+  arrange(desc(total))
 
-![](arrests_by_type.png)
+kable(head(arrests_by_crime, 15))
+```
+
+Lets look at how each of these crimes is changing over time. 
+
+```{r arrests_by_crime_pivot, include = FALSE}
+arrests_by_crime <- df %>%
+  group_by(month = floor_date(arrest_date, "month"), pd_desc) %>%
+  summarize(count = n()) %>%
+  pivot_wider(names_from = pd_desc, values_from = count, values_fill = 0) %>%
+  ungroup()
+```
+
+```{r plot_by_crime, echo = FALSE, warning=FALSE}
+plot_ly(data = arrests_by_crime, 
+        x = ~month, 
+        y = ~`ASSAULT 3`, 
+        name = "Assault 3",
+        type = "scatter", 
+        mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`MARIJUANA, POSSESSION 4 & 5`, 
+            name = "Marijuana Possesion 4, 5",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`CONTROLLED SUBSTANCE, POSSESSION 7`, 
+            name = "Controlled Substance Possession 7",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`ASSAULT 2,1,UNCLASSIFIED`, 
+            name = "Assault 2, 1, or Unclassified",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`LARCENY,PETIT FROM OPEN AREAS,UNCLASSIFIED`, 
+            name = "Larceny, Petit",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`INTOXICATED DRIVING,ALCOHOL`, 
+            name = "Inoxicated Driving, Alcohol",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~`WEAPONS, POSSESSION, ETC`, 
+            name = "Weapons Possession",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  layout(title = "Crime by Type",
+         xaxis = list(title = ""),
+         yaxis = list(title = "Arrests"))
+```
+
 
 This graph includes the eight most common types of arrests made over the time period. Some interesting patterns reveal themselves when the data are categorized as such, particularly the arrests for marijuana possession. They spike around 2011 but then drop off quickly and today are non-existent. This is an excellent example to use to observe the effect that real-world events have on the trends we observe here. In 2014, New York City mayor Bill de Blasio told the NYPD to stop arrests for marijuana possession and instead issue tickets in attempts to decriminalize marijuana [@Dizard_2014]. A drop in arrests is clearly seen around that time period. Around the same time, New York Governor Andrew Cuomo signed legislation which would allow the use of cannabis for medicinal purposes [@Campbell_2014]. Then, in 2021, recreational cannabis was legalized for adults over 21, up to a specific amount. Since then, the NYPD has not listed any crime related to marijuana, as evidenced by there being no arrests for possession on the graph past 2021.
+
+
+```{r save_data, include = FALSE}
+save(list = c("arrests_by_crime", "arrests_by_date"), file = "arrest_data.Rdata")
+```
+

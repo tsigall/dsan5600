@@ -40,11 +40,11 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -60,84 +60,132 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">DSAN 5600</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./introduction.html" rel="" target="">
- <span class="menu-text">Introduction</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./data_sources.html" rel="" target="">
- <span class="menu-text">Data Sources</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./data_visualization.html" rel="" target="">
- <span class="menu-text">Data Visualization</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./exploratory_data_analysis.html" rel="" target="">
- <span class="menu-text">Exploratory Data Analysis</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./arma_arima_sarima_models.html" rel="" target="" aria-current="page">
- <span class="menu-text">ARMA/ARIMA/SARIMA Models</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./spectral_analysis.html" rel="" target="">
- <span class="menu-text">Spectral Analysis and Filtering (Optional)</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./financial_time_series_models.html" rel="" target="">
- <span class="menu-text">Financial Time Series Models (ARCH/GARCH)</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./deep_learning_for_ts.html" rel="" target="">
- <span class="menu-text">Deep Learning for TS</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./conclusions.html" rel="" target="">
- <span class="menu-text">Conclusions</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./dv.html" rel="" target="">
- <span class="menu-text">Data Vizes in TS</span></a>
-  </li>  
-</ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./arma_arima_sarima_models.html">ARMA/ARIMA/SARIMA Models</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DSAN 5600</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_sources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Sources</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exploratory_data_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exploratory Data Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arma_arima_sarima_models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">ARMA/ARIMA/SARIMA Models</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spectral_analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Spectral Analysis and Filtering</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./financial_time_series_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial Time Series Models (ARCH/GARCH)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deep_learning_for_ts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning for TS</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conclusions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fitting-nyc-arrests-series" id="toc-fitting-nyc-arrests-series" class="nav-link active" data-scroll-target="#fitting-nyc-arrests-series">Fitting NYC Arrests Series</a>
+  <ul class="collapse">
+  <li><a href="#first-difference" id="toc-first-difference" class="nav-link" data-scroll-target="#first-difference">First Difference</a></li>
+  <li><a href="#second-difference" id="toc-second-difference" class="nav-link" data-scroll-target="#second-difference">Second Difference</a></li>
+  <li><a href="#third-difference" id="toc-third-difference" class="nav-link" data-scroll-target="#third-difference">Third Difference</a></li>
+  <li><a href="#model-selection-and-diagnostics" id="toc-model-selection-and-diagnostics" class="nav-link" data-scroll-target="#model-selection-and-diagnostics">Model Selection and Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#minimum-aic" id="toc-minimum-aic" class="nav-link" data-scroll-target="#minimum-aic">Minimum AIC</a></li>
+  <li><a href="#minimum-bic" id="toc-minimum-bic" class="nav-link" data-scroll-target="#minimum-bic">Minimum BIC</a></li>
+  <li><a href="#minimum-aicc" id="toc-minimum-aicc" class="nav-link" data-scroll-target="#minimum-aicc">Minimum AICc</a></li>
+  <li><a href="#fitted-vs.-actual" id="toc-fitted-vs.-actual" class="nav-link" data-scroll-target="#fitted-vs.-actual">Fitted vs.&nbsp;Actual</a></li>
+  </ul></li>
+  <li><a href="#forecasting" id="toc-forecasting" class="nav-link" data-scroll-target="#forecasting">Forecasting</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -159,8 +207,509 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="fitting-nyc-arrests-series" class="level1">
+<h1>Fitting NYC Arrests Series</h1>
+<section id="first-difference" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/first_diff-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="second-difference" class="level2">
+<h2 class="anchored" data-anchor-id="second-difference">Second Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/second_diff-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="third-difference" class="level2">
+<h2 class="anchored" data-anchor-id="third-difference">Third Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/third_diff-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>All three difference plots look similar in their stationarity, so we will check <span class="math inline">\(d=1,2,3\)</span>. From the ACF and PACF plots, we determine that we will check <span class="math inline">\(q=1,2,4,5\)</span> and <span class="math inline">\(p=1,2,3,4\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3766.511</td>
+<td style="text-align: right;">3776.451</td>
+<td style="text-align: right;">3766.632</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3765.516</td>
+<td style="text-align: right;">3775.440</td>
+<td style="text-align: right;">3765.637</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3883.211</td>
+<td style="text-align: right;">3893.121</td>
+<td style="text-align: right;">3883.333</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3764.168</td>
+<td style="text-align: right;">3777.420</td>
+<td style="text-align: right;">3764.370</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3756.268</td>
+<td style="text-align: right;">3769.501</td>
+<td style="text-align: right;">3756.471</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3761.431</td>
+<td style="text-align: right;">3774.644</td>
+<td style="text-align: right;">3761.635</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3764.044</td>
+<td style="text-align: right;">3783.924</td>
+<td style="text-align: right;">3764.473</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3755.507</td>
+<td style="text-align: right;">3775.357</td>
+<td style="text-align: right;">3755.938</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3752.797</td>
+<td style="text-align: right;">3772.617</td>
+<td style="text-align: right;">3753.230</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3765.763</td>
+<td style="text-align: right;">3788.956</td>
+<td style="text-align: right;">3766.338</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3752.597</td>
+<td style="text-align: right;">3775.754</td>
+<td style="text-align: right;">3753.174</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3764.254</td>
+<td style="text-align: right;">3777.506</td>
+<td style="text-align: right;">3764.456</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3762.597</td>
+<td style="text-align: right;">3775.831</td>
+<td style="text-align: right;">3762.801</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3834.959</td>
+<td style="text-align: right;">3848.173</td>
+<td style="text-align: right;">3835.163</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3766.236</td>
+<td style="text-align: right;">3782.802</td>
+<td style="text-align: right;">3766.541</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3762.872</td>
+<td style="text-align: right;">3779.413</td>
+<td style="text-align: right;">3763.178</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3758.903</td>
+<td style="text-align: right;">3775.420</td>
+<td style="text-align: right;">3759.211</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3765.657</td>
+<td style="text-align: right;">3788.849</td>
+<td style="text-align: right;">3766.231</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3752.816</td>
+<td style="text-align: right;">3775.974</td>
+<td style="text-align: right;">3753.393</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3725.809</td>
+<td style="text-align: right;">3752.314</td>
+<td style="text-align: right;">3726.551</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3766.209</td>
+<td style="text-align: right;">3782.775</td>
+<td style="text-align: right;">3766.513</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3764.153</td>
+<td style="text-align: right;">3780.694</td>
+<td style="text-align: right;">3764.459</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3828.259</td>
+<td style="text-align: right;">3844.775</td>
+<td style="text-align: right;">3828.566</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3765.955</td>
+<td style="text-align: right;">3785.834</td>
+<td style="text-align: right;">3766.384</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3753.919</td>
+<td style="text-align: right;">3773.769</td>
+<td style="text-align: right;">3754.350</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3760.547</td>
+<td style="text-align: right;">3780.367</td>
+<td style="text-align: right;">3760.980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3725.629</td>
+<td style="text-align: right;">3752.135</td>
+<td style="text-align: right;">3726.371</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3764.753</td>
+<td style="text-align: right;">3784.632</td>
+<td style="text-align: right;">3765.182</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3756.035</td>
+<td style="text-align: right;">3775.885</td>
+<td style="text-align: right;">3756.466</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3805.134</td>
+<td style="text-align: right;">3824.954</td>
+<td style="text-align: right;">3805.567</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3763.442</td>
+<td style="text-align: right;">3786.635</td>
+<td style="text-align: right;">3764.017</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3757.657</td>
+<td style="text-align: right;">3780.815</td>
+<td style="text-align: right;">3758.235</td>
+</tr>
+</tbody>
+</table>
 
 
+</div>
+</div>
+</section>
+<section id="model-selection-and-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics">Model Selection and Diagnostics</h2>
+<section id="minimum-aic" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3725.629</td>
+<td style="text-align: right;">3752.135</td>
+<td style="text-align: right;">3726.371</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-bic" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3725.629</td>
+<td style="text-align: right;">3752.135</td>
+<td style="text-align: right;">3726.371</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">27</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3725.629</td>
+<td style="text-align: right;">3752.135</td>
+<td style="text-align: right;">3726.371</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=3, d=1, q=4\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/diagnostics-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
+    xreg = constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
+        REPORT = 1, reltol = tol))
+
+Coefficients:
+          ar1      ar2     ar3     ma1      ma2      ma3     ma4  constant
+      -1.2801  -0.2081  0.4542  0.8945  -0.4709  -0.7972  0.0207  -79.3632
+s.e.   0.2006   0.3481  0.2000  0.2089   0.2354   0.0754  0.1467   50.3485
+
+sigma^2 estimated as 4866953:  log likelihood = -1853.72,  aic = 3725.45
+
+$degrees_of_freedom
+[1] 195
+
+$ttable
+         Estimate      SE  t.value p.value
+ar1       -1.2801  0.2006  -6.3823  0.0000
+ar2       -0.2081  0.3481  -0.5977  0.5507
+ar3        0.4542  0.2000   2.2715  0.0242
+ma1        0.8945  0.2089   4.2829  0.0000
+ma2       -0.4709  0.2354  -2.0005  0.0468
+ma3       -0.7972  0.0754 -10.5709  0.0000
+ma4        0.0207  0.1467   0.1411  0.8879
+constant -79.3632 50.3485  -1.5763  0.1166
+
+$AIC
+[1] 18.35196
+
+$AICc
+[1] 18.35561
+
+$BIC
+[1] 18.49885</code></pre>
+</div>
+</div>
+<p>There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless.</p>
+</section>
+<section id="fitted-vs.-actual" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/fit_v_actual-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model looks similar to the actual time series.</p>
+</section>
+</section>
+<section id="forecasting" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/forecast-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Fit appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                  ME     RMSE     MAE       MPE     MAPE MASE     ACF1
+Training set -948.75 3352.033 2586.25 -6.206225 13.38735    1 0.717891</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: arrests_ts 
+ARIMA(3,1,4) with drift 
+
+Coefficients:
+          ar1      ar2     ar3     ma1      ma2      ma3     ma4     drift
+      -1.2801  -0.2081  0.4542  0.8945  -0.4709  -0.7972  0.0207  -79.3632
+s.e.   0.2006   0.3481  0.2000  0.2089   0.2354   0.0754  0.1467   50.3485
+
+sigma^2 = 5066628:  log likelihood = -1853.72
+AIC=3725.45   AICc=3726.38   BIC=3755.27
+
+Training set error measures:
+                   ME     RMSE      MAE        MPE     MAPE      MASE
+Training set 5.597487 2200.704 1595.247 -0.9085461 6.803609 0.6168187
+                     ACF1
+Training set -0.002591217</code></pre>
+</div>
+</div>
+<p>The model error measurements for the fitted model are all much lower than the SNaïve benchmark method, so our fitted model is good.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/forecast_plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
