@@ -93,18 +93,35 @@ set.seed(621)
 model_output <- capture.output(sarima(arrests_ts, 3, 1, 4))
 cat(model_output[205:239], model_output[length(model_output)], sep = "\n")
 ```
-There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless. 
+
+There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless.
+
+
+### Auto-Arima
+```{r auto_arima, echo = FALSE}
+auto_model <- auto.arima(arrests_ts)
+auto_model
+```
+The information criteria are all better that the previously used model of ARIMA(3, 1, 4). This model is absolutely worth considering moving forward.
+
 
 ### Fitted vs. Actual
+
 ```{r fit_v_actual, echo=FALSE}
 model_fit <- Arima(arrests_ts, order = c(3, 1, 4), include.drift = TRUE)
 plot(arrests_ts, col = "blue")
 lines(fitted(model_fit), col = "green")
-legend(x = "topright", legend = c("arrests_ts", "fit"), fill = 4:1)
+lines(fitted(auto_model), col = "red")
+legend(x = "topright", legend = c("arrests_ts", "fit1", "fit2"), fill = 4:1)
 ```
-The fitted model looks similar to the actual time series. 
+
+Both fitted models look similar to the actual time series.
+
+
+
 
 ## Forecasting
+### fit1
 ```{r forecast, echo=FALSE}
 autoplot(arrests_ts) +
   autolayer(meanf(arrests_ts, h = 36),
@@ -116,23 +133,34 @@ autoplot(arrests_ts) +
   autolayer(rwf(arrests_ts, h = 36, drift = TRUE),
               series = "Drift", PI = FALSE) +
   autolayer(forecast(model_fit, 36),
-            series = "Fit", PI = FALSE) +
+            series = "Fit1", PI = FALSE) +
+  autolayer(forecast(auto_model, 36),
+            series = "Fit2", PI = FALSE) +
   guides(color = guide_legend(title = "Forecast"))
 ```
-Fit appears to be better than SNaïve as it does a better job of capturing the trend.
 
+Both models appear to be better than SNaïve as they do a better job of capturing the trend.
 
 SNaïve model error measurements:
+
 ```{r check_snaive, echo = FALSE}
 accuracy(snaive(arrests_ts, h = 36))
 ```
+
 Fitted model error measurements:
+
 ```{r check_fitted, echo = FALSE}
 summary(model_fit)
+summary(auto_model)
 ```
-The model error measurements for the fitted model are all much lower than the SNaïve benchmark method, so our fitted model is good. 
+
+The model error measurements for both models are all much lower than the SNaïve benchmark method, so both models can work.
 
 ```{r forecast_plot, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
+```
+
+```{r forecast_plot_2, echo = FALSE}
+auto_model %>% forecast %>% autoplot()
 ```
 
