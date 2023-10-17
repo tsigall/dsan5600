@@ -12,6 +12,7 @@ library(lubridate)
 library(plotly)
 library(kableExtra)
 use_condaenv("r-env", required = TRUE)
+load("raw_data.Rdata")
 ```
 
 ```{python, obtain_data, include = FALSE}
@@ -25,7 +26,7 @@ use_condaenv("r-env", required = TRUE)
 #                  username=config.username,
 #                  password=config.password)
 # 
-# results = client.get(arrest_data, limit=100000)
+# results = client.get(arrest_data, limit = 6000000)
 # 
 # # Convert to pandas DataFrame
 # df = pd.DataFrame.from_records(results)
@@ -36,10 +37,9 @@ use_condaenv("r-env", required = TRUE)
 # New York City Arrests, 2006 - present
 
 ```{r visualization, echo = FALSE}
-load("arrest_data.Rdata")
-
-df<- df %>%
-  mutate(month = month(arrest_date),
+df <- df %>%
+  mutate(arrest_date = as.Date(arrest_date, format = "%m/%d/%Y"),
+         month = month(arrest_date),
          year = year(arrest_date))
 
 arrests_by_date <- df %>%
@@ -56,7 +56,9 @@ arrests_plot
 ```
 
 ## By Crime
+
 It is important to get an understanding of what types of crimes are commonly committed in New York City, the area we are currently looking at. Below is a table containing counts of all crimes committed over the period of 2006 - 2022, sorted in descending order. The most common crime committed over that time period was assault in the third degree (the lowest level of assault), followed by marijuana possession 4 & 5 (differentiated by the amount of marijuana possessed).
+
 ```{r arrests_by_crime, echo = FALSE}
 arrests_by_crime <- df %>%
   group_by(pd_desc) %>%
@@ -66,7 +68,7 @@ arrests_by_crime <- df %>%
 kable(head(arrests_by_crime, 15))
 ```
 
-Lets look at how each of these crimes is changing over time. 
+Lets look at how each of these crimes is changing over time.
 
 ```{r arrests_by_crime_pivot, include = FALSE}
 arrests_by_crime <- df %>%
@@ -131,11 +133,8 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
-
 This graph includes the eight most common types of arrests made over the time period. Some interesting patterns reveal themselves when the data are categorized as such, particularly the arrests for marijuana possession. They spike around 2011 but then drop off quickly and today are non-existent. This is an excellent example to use to observe the effect that real-world events have on the trends we observe here. In 2014, New York City mayor Bill de Blasio told the NYPD to stop arrests for marijuana possession and instead issue tickets in attempts to decriminalize marijuana [@Dizard_2014]. A drop in arrests is clearly seen around that time period. Around the same time, New York Governor Andrew Cuomo signed legislation which would allow the use of cannabis for medicinal purposes [@Campbell_2014]. Then, in 2021, recreational cannabis was legalized for adults over 21, up to a specific amount. Since then, the NYPD has not listed any crime related to marijuana, as evidenced by there being no arrests for possession on the graph past 2021.
-
 
 ```{r save_data, include = FALSE}
 save(list = c("arrests_by_crime", "arrests_by_date"), file = "arrest_data.Rdata")
 ```
-

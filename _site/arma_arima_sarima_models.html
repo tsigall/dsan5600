@@ -180,9 +180,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#minimum-aic" id="toc-minimum-aic" class="nav-link" data-scroll-target="#minimum-aic">Minimum AIC</a></li>
   <li><a href="#minimum-bic" id="toc-minimum-bic" class="nav-link" data-scroll-target="#minimum-bic">Minimum BIC</a></li>
   <li><a href="#minimum-aicc" id="toc-minimum-aicc" class="nav-link" data-scroll-target="#minimum-aicc">Minimum AICc</a></li>
+  <li><a href="#auto-arima" id="toc-auto-arima" class="nav-link" data-scroll-target="#auto-arima">Auto-Arima</a></li>
   <li><a href="#fitted-vs.-actual" id="toc-fitted-vs.-actual" class="nav-link" data-scroll-target="#fitted-vs.-actual">Fitted vs.&nbsp;Actual</a></li>
   </ul></li>
-  <li><a href="#forecasting" id="toc-forecasting" class="nav-link" data-scroll-target="#forecasting">Forecasting</a></li>
+  <li><a href="#forecasting" id="toc-forecasting" class="nav-link" data-scroll-target="#forecasting">Forecasting</a>
+  <ul class="collapse">
+  <li><a href="#fit1" id="toc-fit1" class="nav-link" data-scroll-target="#fit1">fit1</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -654,6 +658,24 @@ $BIC
 </div>
 <p>There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless.</p>
 </section>
+<section id="auto-arima" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: arrests_ts 
+ARIMA(1,1,1)(0,1,1)[12] 
+
+Coefficients:
+         ar1      ma1     sma1
+      0.4337  -0.7444  -0.6934
+s.e.  0.1367   0.1018   0.0554
+
+sigma^2 = 3187995:  log likelihood = -1703.68
+AIC=3415.36   AICc=3415.57   BIC=3428.37</code></pre>
+</div>
+</div>
+<p>The information criteria are all better that the previously used model of ARIMA(3, 1, 4). This model is absolutely worth considering moving forward.</p>
+</section>
 <section id="fitted-vs.-actual" class="level3">
 <h3 class="anchored" data-anchor-id="fitted-vs.-actual">Fitted vs.&nbsp;Actual</h3>
 <div class="cell">
@@ -661,17 +683,19 @@ $BIC
 <p><img src="arma_arima_sarima_models_files/figure-html/fit_v_actual-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The fitted model looks similar to the actual time series.</p>
+<p>Both fitted models look similar to the actual time series.</p>
 </section>
 </section>
 <section id="forecasting" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting">Forecasting</h2>
+<section id="fit1" class="level3">
+<h3 class="anchored" data-anchor-id="fit1">fit1</h3>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="arma_arima_sarima_models_files/figure-html/forecast-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Fit appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>Both models appear to be better than SNaïve as they do a better job of capturing the trend.</p>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -699,15 +723,37 @@ Training set 5.597487 2200.704 1595.247 -0.9085461 6.803609 0.6168187
                      ACF1
 Training set -0.002591217</code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: arrests_ts 
+ARIMA(1,1,1)(0,1,1)[12] 
+
+Coefficients:
+         ar1      ma1     sma1
+      0.4337  -0.7444  -0.6934
+s.e.  0.1367   0.1018   0.0554
+
+sigma^2 = 3187995:  log likelihood = -1703.68
+AIC=3415.36   AICc=3415.57   BIC=3428.37
+
+Training set error measures:
+                   ME     RMSE      MAE        MPE     MAPE    MASE       ACF1
+Training set -121.183 1714.047 1202.141 -0.5315764 5.725607 0.46482 0.02141618</code></pre>
 </div>
-<p>The model error measurements for the fitted model are all much lower than the SNaïve benchmark method, so our fitted model is good.</p>
+</div>
+<p>The model error measurements for both models are all much lower than the SNaïve benchmark method, so both models can work.</p>
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="arma_arima_sarima_models_files/figure-html/forecast_plot-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/forecast_plot_2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 </section>
 
