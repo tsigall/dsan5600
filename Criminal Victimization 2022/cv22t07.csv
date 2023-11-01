@@ -1,0 +1,31 @@
+Bureau of Justice Statistics,,,,,,,,
+Filename: cv22t07.csv,,,,,,,,
+"Table 7. Number and rate of violent victimizations, by veteran and citizenship status of victims, 2021 and 2022",,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,
+,,,,,,,,
+"Table 7. Number and rate of violent victimizations, by veteran and citizenship status of victims, 2021 and 2022",,,,,,,,
+,,,2021,,,,2022*,
+Victim veteran/citizenship status,,,Number,,"Rate per 1,000/a",,Number,"Rate per 1,000/a"
+,Total violent victimizations/b,,"4,598,310",†,16.5,†,"6,624,950",23.5
+Veteran status/c,,,,,,,,
+,Veteran/d,,"247,290",,14.4,,"328,400",19.7
+,Nonveteran/e,,"4,007,820",†,17,†,"5,552,730",23.3
+Citizenship status,,,,,,,,
+,U.S. citizen,,"4,438,670",†,16.9,†,"6,296,890",23.7
+,,U.S.-born citizen/f,"4,174,680",†,17.5,†,"6,040,930",25
+,,Naturalized U.S. citizen,"263,990",,11.1,,"255,960",10.7
+,Non-U.S. citizen,,"144,670",†,9.8,†,"304,540",19.9
+Note: Details may not sum to totals due to rounding and missing data. See appendix table 8 for standard errors.,,,,,,,,
+*Comparison year.,,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,,
+"a/Rate is per 1,000 persons age 12 or older. See appendix table 19 for person populations.",,,,,,,,
+"b/Includes rape or sexual assault, robbery, aggravated assault, and simple assault. Excludes homicide because the National Crime Victimization Survey (NCVS) is based on interviews with victims.",,,,,,,,
+c/Includes persons age 18 or older.,,,,,,,,
+"d/Veterans include persons currently or previously on active duty. Because the NCVS is a household-based survey and active-duty military personnel are more likely to be out of the household at the time of data collection, most veterans in the sample are former active-duty military personnel.",,,,,,,,
+e/Nonveterans include persons who never served in the U.S. Armed Forces or who completed training in the Reserves or National Guard only.,,,,,,,,
+"f/Includes persons born in the United States, in a U.S. territory, or abroad to U.S. parents.",,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,,,

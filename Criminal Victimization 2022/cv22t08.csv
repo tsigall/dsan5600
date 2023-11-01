@@ -1,0 +1,27 @@
+Bureau of Justice Statistics,,,,,,,,,
+Filename: cv22t08.csv,,,,,,,,,
+"Table 8. Rate of victimization, by type of crime and location of residence, 2021 and 2022",,,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,,
+,,,,,,,,,
+"Table 8. Rate of victimization, by type of crime and location of residence, 2021 and 2022",,,,,,,,,
+,Total violent crime/a,,,Violent crime excluding simple assault/b,,,Total property crime/c,,
+Location of residence/d,2021,,2022*,2021,,2022*,2021,,2022*
+Urban/e,24.5,†,33.4,9.7,†,13.8,157.5,‡,176.1
+Suburban/f,16.5,†,23.9,5.2,†,10.1,86.8,†,98.9
+Rural/g,11.1,‡,15.4,4.4,,6,57.7,,61.7
+"Note: Rates are per 1,000 persons age 12 or older for violent crime and per 1,000 households for property crime. See appendix table 19 for person populations and appendix table 20 for household populations. See appendix table 9 for standard errors.",,,,,,,,,
+*Comparison year.,,,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,,,
+‡Difference with comparison year is significant at the 90% confidence level.,,,,,,,,,
+"a/Includes rape or sexual assault, robbery, aggravated assault, and simple assault. Excludes homicide because the National Crime Victimization Survey (NCVS) is based on interviews with victims.",,,,,,,,,
+"b/Includes rape or sexual assault, robbery, and aggravated assault.",,,,,,,,,
+"c/Includes burglary, trespassing, motor vehicle theft, and other theft. ",,,,,,,,,
+"d/See Methodology in Criminal Victimization, 2019 (NCJ 255113, BJS, September 2020) for details on the revised measurement of location of residence in the NCVS. ",,,,,,,,,
+"e/All census blocks within cities or U.S. Census Bureau-designated places that meet certain criteria based on their population and density. See Methodology in Criminal Victimization, 2019 (NCJ 255113, BJS, September 2020).",,,,,,,,,
+f/All other census blocks not classified as urban or rural.,,,,,,,,,
+g/All census blocks not in U.S. Census Bureau-defined urbanized areas or urban clusters.,,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,,,,

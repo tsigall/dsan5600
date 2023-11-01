@@ -1,0 +1,42 @@
+Bureau of Justice Statistics,,,,,
+Filename: cv22at04.csv,,,,,
+"Appendix table 4. Standard errors for table 3: Rate of violent victimization, by type of crime and demographic characteristics of victims, 2021 and 2022",,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,
+Date of version: 9/14/2023,,,,,
+,,,,,
+"Appendix table 4. Standard errors for table 3: Rate of violent victimization, by type of crime and demographic characteristics of victims, 2021 and 2022",,,,,
+,,Total violent crime,,Violent crime excluding simple assault,
+Victim demographic characteristic,,2021,2022,2021,2022
+,Total,0.73,0.9,0.3,0.55
+Sex,,,,,
+,Male,1.13,1.23,0.39,0.82
+,Female,0.89,1.23,0.48,0.77
+Race/Hispanic origin,,,,,
+,White,0.93,1.29,0.44,0.78
+,Black,1.9,2.08,1.05,1.13
+,Hispanic,1.64,2.02,0.6,1.27
+,Asian/Native Hawaiian/Other Pacific Islander,2.18,2.62,0.87,1.14
+,Other,14.71,11.3,2.72,7.91
+Age,,,,,
+,12–17,2.16,3.32,1.06,1.45
+,18–24,2.15,3.71,1.53,2.63
+,25–34,1.89,3.09,0.84,1.67
+,35–49,1.65,2.17,0.75,1.12
+,50–64,1.78,1.36,0.6,1.14
+,65 or older,1.14,1.4,0.37,0.98
+Marital status,,,,,
+,Never married,1.25,1.76,0.58,1.1
+,Married,0.85,1.04,0.34,0.6
+,Widowed,3.72,3.05,1,2.13
+,Divorced,3.34,3.86,1.37,2.54
+,Separated,6.74,10.84,4.47,5.53
+Household income,,,,,
+,"Less than $25,000",2.91,3.56,1.29,2.48
+,"$25,000–$49,999",1.47,1.84,0.59,1.25
+,"$50,000–$99,999",1.31,1.29,0.52,0.69
+,"$100,000–$199,999",1.2,1.69,0.58,1.01
+,"$200,000 or more",1.41,3.06,0.56,1.53
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,

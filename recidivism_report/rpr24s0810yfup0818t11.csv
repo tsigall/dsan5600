@@ -1,0 +1,29 @@
+Bureau of Justice Statistics,,,,,,,,,,,,,,,,,,,,,,,,,,
+Filename: rpr24s0810yfup0818t11.csv,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Table 11. Percent of state prisoners released in 24 states in 2008 who were arrested within 10 years following release, by most serious commitment offense and type of post-release arrest offense",,,,,,,,,,,,,,,,,,,,,,,,,,
+Report title: Recidivism of Prisoners Released in 24 States in 2008: A 10-Year Follow-Up Period (2008–2018)  NCJ 256094,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2008 data collection, 2008–2018",,,,,,,,,,,,,,,,,,,,,,,,,,
+"Authors: Leonardo Antenangeli, Ph.D., and Matthew R. Durose, BJS Statisticians",,,,,,,,,,,,,,,,,,,,,,,,,,
+Refer questions to: askbjs@ojp.usdoj.gov (202) 307-0765,,,,,,,,,,,,,,,,,,,,,,,,,,
+Date of version: 9/8/2021,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Table 11. Percent of state prisoners released in 24 states in 2008 who were arrested within 10 years following release, by most serious commitment offense and type of post-release arrest offense",,,,,,,,,,,,,,,,,,,,,,,,,,
+,,Post-release arrest offense,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,Violent,,,,,,,,,,,Property,,,,,,,,,,,
+Most serious commitment offense,,Any,,Total violent/a,,Homicide,,Rape/sexual assault,,Robbery,,Assault,,,Total property/b,,Burglary,,Larceny/motor vehicle theft,,Fraud/ forgery,,Drug,,Public order,
+,All released prisoners,81.9,%,39.6,%,1.2,%,2.5,%,7.4,%,31.3,%,,47.4,%,14.5,%,28.9,%,16,%,47.1,%,68.3,%
+Violenta,,76.7,%,44.2,%,1.7,%,3.6,%,8.5,%,35.4,%,,40.1,%,11.2,%,22.1,%,11.8,%,36.3,%,65.1,%
+,Homicide,57.4,,28.1,,2.3,,1.8,,4,,21.9,,,22.9,,5.2,,11.5,,5.8,,25.1,,45.9,
+,Rape/sexual assault,62.8,,25.8,,0.5,,6.3,,2.7,,17.5,,,21.2,,4.9,,10.4,,6.6,,17.4,,55.8,
+,Robbery,82.5,,47.5,,1.9,,3,,15.6,,36,,,48.9,,14.3,,31.5,,15.2,,45.9,,67,
+,Assault,82,,52.8,,2.2,,3,,7.4,,45,,,45.7,,13.4,,22.9,,13.1,,39.5,,70.9,
+Property/b,,86.7,%,39.7,%,0.9,%,2.3,%,8.4,%,30.8,%,,63.6,%,24.1,%,44,%,23.3,%,48.3,%,72.1,%
+,Burglary,87.4,,41.4,,0.9,,2.7,,8.5,,32.4,,,62.9,,30.9,,42,,19.3,,46.8,,72.3,
+,Larceny/motor vehicle theft,87.6,,40.2,,1.2,,2.5,,10,,30.3,,,66.7,,22.4,,49.7,,24,,51.9,,73.8,
+,Fraud/forgery,82.2,,31.7,,0.7,,1.4,,5.4,,25.3,,,59.8,,12.9,,38.9,,33.5,,42.4,,65.5,
+Drug,,81.4,%,34.8,%,1.1,%,1.9,%,6.2,%,27.7,%,,40.3,%,10,%,22.5,%,13.9,%,57.6,%,65.8,%
+Public order,,82.1,%,41.4,%,1.3,%,2.5,%,6.2,%,33,%,,42.2,%,10.5,%,23.2,%,12.9,%,41.4,%,70.9,%
+"Note: The numerator for each percentage is the number of persons arrested for that offense during the 10-year follow-up period, and the denominator is the number released after serving time for each type of commitment offense. For prisoners serving time for more than one offense, the most serious offense is the one with the longest sentence length. Details may not sum to totals because a person may be arrested more than once for different types of offenses and each arrest may involve more than one offense. See appendix table 7 for standard errors.",,,,,,,,,,,,,,,,,,,,,,,,,,
+a/Includes other violent offenses that are not shown separately.,,,,,,,,,,,,,,,,,,,,,,,,,,
+b/Includes other property offenses that are not shown separately.,,,,,,,,,,,,,,,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, Recidivism of State Prisoners Released in 2008 data collection, 2008–2018.",,,,,,,,,,,,,,,,,,,,,,,,,,

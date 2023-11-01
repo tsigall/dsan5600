@@ -19,6 +19,7 @@ library(plotly)
 
 ```{r load_data, include = FALSE}
 load("arrest_data.Rdata")
+recidivism <- read.csv("recidivism.csv")
 ```
 
 ## By Crime
@@ -38,7 +39,7 @@ plot_ly(data = arrests_by_date,
          yaxis = list(title = "Arrests"))
 ```
 
-There appears to be some seasonality in the plot, as there are noticeable dips in arrest rate towards the end of each year. There was a slight upward trend towards the end of the 2000's but that changed dramatically during the 2010's into a clear downward trend. Since the start of the current decade the trend has reversed course, however. It is hard to tell if the time series is multiplicative or additive, as it seems to hold different characteristics at different points, though this possibly suggests a multiplicative time series. The change in trend could also be part of a longer cycle, though it is impossible to tell from this graph as it only goes back to 2006. 
+There appears to be some seasonality in the plot, as there are noticeable dips in arrest rate towards the end of each year. There was a slight upward trend towards the end of the 2000's but that changed dramatically during the 2010's into a clear downward trend. Since the start of the current decade the trend has reversed course, however. It is hard to tell if the time series is multiplicative or additive, as it seems to hold different characteristics at different points, though this possibly suggests a multiplicative time series. The change in trend could also be part of a longer cycle, though it is impossible to tell from this graph as it only goes back to 2006.
 
 #### Lag Plots
 
@@ -115,17 +116,17 @@ ggtsdisplay(difference)
 
 This ACF has positive spikes at 12, 24, and 36, meaning once the trend is removed, the seasonality becomes evident. The ACF of the differenced time series provides strong evidence in support of seasonality.
 
-### Assault 3
+### Assault
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
         x = ~month, 
-        y = ~`ASSAULT 3`, 
-        name = "Assault 3",
+        y = ~assault, 
+        name = "Assault",
         type = "scatter", 
         mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Assault 3",
+  layout(title = "Assault",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -135,16 +136,16 @@ insert text here
 #### Lag Plots
 
 ```{r, echo = FALSE}
-assault_3_ts <- ts(arrests_by_crime$`ASSAULT 3`, start = c(2006, 1), frequency = 12)
+assault_ts <- ts(arrests_by_crime$assault, start = c(2006, 1), frequency = 12)
 
-ts_lags(assault_3_ts, lags = 1:12)
+ts_lags(assault_ts, lags = 1:12)
 ```
 
 insert text
 
 ```{r, echo = FALSE}
 
-ts_lags(assault_3_ts, lags = c(12, 24, 36, 48))
+ts_lags(assault_ts, lags = c(12, 24, 36, 48))
 ```
 
 insert text
@@ -152,7 +153,7 @@ insert text
 #### Decomposition
 
 ```{r, echo = FALSE}
-plot(decompose(assault_3_ts, "multiplicative"))
+plot(decompose(assault_ts, "multiplicative"))
 
 ```
 
@@ -162,17 +163,17 @@ plot(decompose(assault_3_ts, "multiplicative"))
 
 #### Detrend and Difference
 
-### Marijuana Possession 4, 5
+### Controlled Substance Possession
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`MARIJUANA, POSSESSION 4 & 5`, 
-            name = "Marijuana Possesion 4, 5",
+            y = ~controlled_substance_possession, 
+            name = "Controlled Substance Possession",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Marijuana Possesion 4, 5",
+  layout(title = "Controlled Substance Possession",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -187,17 +188,17 @@ plot_ly(data = arrests_by_crime,
 
 #### Detrend and Difference
 
-### Controlled Substance Possession 7
+### Controlled Substance Sale
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`CONTROLLED SUBSTANCE, POSSESSION 7`, 
-            name = "Controlled Substance Possession 7",
+            y = ~controlled_substance_sale, 
+            name = "Controlled Substance Sale",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Controlled Substance Possession 7",
+  layout(title = "Controlled Substance Sale",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -212,17 +213,17 @@ plot_ly(data = arrests_by_crime,
 
 #### Detrend and Difference
 
-### Assault 2, 1, or Unclassified
+### Larceny
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`ASSAULT 2,1,UNCLASSIFIED`, 
-            name = "Assault 2, 1, or Unclassified",
+            y = ~larceny, 
+            name = "Larceny",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Assault 2, 1, or Unclassified",
+  layout(title = "Larceny",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -237,17 +238,17 @@ plot_ly(data = arrests_by_crime,
 
 #### Detrend and Difference
 
-### Larceny Petit
+### Marijuana Possession
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
-             y = ~`LARCENY,PETIT FROM OPEN AREAS,UNCLASSIFIED`, 
-            name = "Larceny, Petit",
+             y = ~marijuana_possession, 
+            name = "Marijuana Possession",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Larceny Petit",
+  layout(title = "Marijuana Possession",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -262,17 +263,17 @@ plot_ly(data = arrests_by_crime,
 
 #### Detrend and Difference
 
-### Weapons
+### Marijuana Sale
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month,  
-            y = ~`WEAPONS, POSSESSION, ETC`, 
-            name = "Weapons Possession",
+            y = ~marijuana_sale, 
+            name = "Marijuana Sale",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Weapons Possession",
+  layout(title = "Marijuana Sale",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
@@ -287,17 +288,67 @@ plot_ly(data = arrests_by_crime,
 
 #### Detrend and Difference
 
-### Intoxicated Driving, Alcohol
+### Motor Vehicle Theft
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month,  
-            y = ~`INTOXICATED DRIVING,ALCOHOL`, 
-            name = "Inoxicated Driving, Alcohol",
+            y = ~motor_vehicle_theft, 
+            name = "Motor Vehicle Theft",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Inoxicated Driving, Alcohol",
+  layout(title = "Motor Vehicle Theft",
+         xaxis = list(title = ""),
+         yaxis = list(title = "Arrests"))
+```
+
+#### Lag Plots
+
+#### Decomposition
+
+#### ACF and PACF
+
+#### Augmented Dickey-Fuller Test
+
+#### Detrend and Difference
+
+### Murder
+
+```{r, echo = FALSE}
+plot_ly(data = arrests_by_crime, 
+            x = ~month,  
+            y = ~murder, 
+            name = "Murder",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  layout(title = "Murderl",
+         xaxis = list(title = ""),
+         yaxis = list(title = "Arrests"))
+```
+
+#### Lag Plots
+
+#### Decomposition
+
+#### ACF and PACF
+
+#### Augmented Dickey-Fuller Test
+
+#### Detrend and Difference
+
+### Robbery
+
+```{r, echo = FALSE}
+plot_ly(data = arrests_by_crime, 
+            x = ~month,  
+            y = ~robbery, 
+            name = "Robbery",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  layout(title = "Robbery",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```

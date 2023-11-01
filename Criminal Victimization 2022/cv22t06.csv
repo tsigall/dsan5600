@@ -1,0 +1,46 @@
+Bureau of Justice Statistics,,,,,,,,
+Filename: cv22t06.csv,,,,,,,,
+"Table 6. Rate of victimizations reported and not reported to police, by type of crime, 2021 and 2022",,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,
+,,,,,,,,
+"Table 6. Rate of victimizations reported and not reported to police, by type of crime, 2021 and 2022",,,,,,,,
+,,,Reported to police,,,Not reported to police,,
+Type of crime,,,2021,,2022*,2021,,2022*
+Total violent crime/a,,,7.5,†,9.7,8.7,†,13.2
+,Rape/sexual assault/b,,0.3,‡,0.4,0.9,†,1.5
+,Robbery,,1,†,1.6,0.7,,0.9
+,Assault,,6.3,†,7.8,7.2,†,10.9
+,,Aggravated assault,1.7,†,2.7,1,†,2.7
+,,Simple assault,4.6,,5,6.1,†,8.2
+Violent crime excluding simple assault/c,,,2.9,†,4.7,2.6,†,5
+Selected characteristics of violent crime/d,,,,,,,,
+,Domestic violence/e,,1.6,†,2.6,1.6,,2.2
+,,Intimate partner violence/f,0.9,†,1.7,0.8,†,1.6
+,Stranger violence,,3.6,,3.8,3.7,†,6.5
+,Violent crime with an injury,,2,,2.4,1.5,†,2.5
+,Violent crime with a weapon,,1.9,†,3.3,1.2,†,3
+Total property crime,,,27.8,†,32.4,61.3,†,68
+,Burglary/trespassing/g,,5.7,,6.4,8.1,,8.1
+,,Burglary/h,3.7,,4.5,5.1,,5.5
+,,Trespassing/i,2,,1.9,3,,2.6
+,Motor vehicle theft,,3.3,†,4.4,1,,0.9
+,Other theft/j,,18.8,†,21.6,52.2,†,59
+"Note: Rates are per 1,000 persons age 12 or older for violent crime and per 1,000 households for property crime. See appendix table 19 for person populations and appendix table 20 for household populations. See appendix table 7 for standard errors.",,,,,,,,
+*Comparison year.,,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,,
+‡Difference with comparison year is significant at the 90% confidence level.,,,,,,,,
+a/Excludes homicide because the National Crime Victimization Survey (NCVS) is based on interviews with victims.,,,,,,,,
+b/See Methodology for details on the measurement of rape or sexual assault in the NCVS.,,,,,,,,
+"c/Includes rape or sexual assault, robbery, and aggravated assault.",,,,,,,,
+d/Violent crime categories such as domestic violence and violent crime with an injury are not mutually exclusive from other violent crime categories or other selected characteristics.,,,,,,,,
+e/Includes the subset of violent victimizations that were committed by current or former intimate partners or family members.,,,,,,,,
+"f/Includes the subset of violent victimizations that were committed by current or former spouses, boyfriends, or girlfriends.",,,,,,,,
+"g/Includes unlawful or forcible entry or attempted entry of places, including a permanent residence, other residence (e.g., a hotel room or vacation residence), or other structure (e.g., a garage or shed). Includes victimizations where the offender stole, attempted to steal, or did not attempt to steal. Excludes trespassing on land.",,,,,,,,
+h/Includes only crimes where the offender committed or attempted a theft. ,,,,,,,,
+i/Includes crimes where the offender did not commit or attempt a theft. Excludes trespassing on land.,,,,,,,,
+j/Includes other unlawful taking or attempted unlawful taking of property or cash without personal contact with the victim.,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022.",,,,,,,,

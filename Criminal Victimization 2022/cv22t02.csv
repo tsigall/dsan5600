@@ -1,0 +1,28 @@
+Bureau of Justice Statistics,,,,,,,,,,,,,,,,,,,
+Filename: cv22t02.csv,,,,,,,,,,,,,,,,,,,
+"Table 2. Number and rate of property victimizations, by type of crime, 2018–2022",,,,,,,,,,,,,,,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,,,,,,,,,,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2018–2022",,,,,,,,,,,,,,,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,,,,,,,,,,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,,,,,,,,,,,,,,
+Date of version: 9/14/2023,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+"Table 2. Number and rate of property victimizations, by type of crime, 2018–2022",,,,,,,,,,,,,,,,,,,
+,,2018,,,,2019,,,,2020,,,,2021,,,,2022*,
+Type of property crime,,Number,,"Rate per 1,000/a",,Number,,"Rate per 1,000/a",,Number,,"Rate per 1,000/a",,Number,,"Rate per 1,000/a",,Number,"Rate per 1,000/a"
+,Total,"13,502,840",,108.2, †,"12,818,000", ‡,101.4,,"12,085,170", †,94.5, †,"11,682,060", †,90.3, †,"13,373,330",101.9
+Burglary/trespassing/b,,"2,639,620", †,21.1, †,"2,178,400", ‡,17.2, †,"1,741,250",,13.6,,"1,800,350",,13.9,,"1,919,930",14.6
+,Burglary/c,"1,867,620", †,15, †,"1,484,730",,11.7, ‡,"1,210,640",,9.5,,"1,142,900", ‡,8.8,,"1,324,030",10.1
+,Trespassing/d,"772,000", †,6.2, †,"693,670",,5.5, ‡,"530,610",,4.1,,"657,440",,5.1,,"595,910",4.5
+Motor vehicle theft,,"534,010", †,4.3, †,"495,670", †,3.9, †,"545,810", †,4.3, †,"558,670", †,4.3, †,"716,650",5.5
+Other theft/e,,"10,329,210",,82.7,,"10,143,930", †,80.2,,"9,798,110", †,76.6, †,"9,323,040", †,72.1, †,"10,736,750",81.8
+"Note: Details may not sum to totals due to rounding. Includes threatened, attempted, and completed occurrences of crimes. See appendix table 3 for standard errors.",,,,,,,,,,,,,,,,,,,
+*Comparison year.,,,,,,,,,,,,,,,,,,,
+†Difference with comparison year is significant at the 95% confidence level.,,,,,,,,,,,,,,,,,,,
+‡Difference with comparison year is significant at the 90% confidence level.,,,,,,,,,,,,,,,,,,,
+"a/Rate is per 1,000 households. See appendix table 20 for household populations.",,,,,,,,,,,,,,,,,,,
+"b/Includes unlawful or forcible entry or attempted entry of places, including a permanent residence, other residence (e.g., a hotel room or vacation residence), or other structure (e.g., a garage or shed). Includes victimizations where the offender stole, attempted to steal, or did not attempt to steal. Excludes trespassing on land.",,,,,,,,,,,,,,,,,,,
+c/Includes only crimes where the offender committed or attempted a theft.,,,,,,,,,,,,,,,,,,,
+d/Includes crimes where the offender did not commit or attempt a theft. Excludes trespassing on land.,,,,,,,,,,,,,,,,,,,
+e/Includes other unlawful taking or attempted unlawful taking of property or cash without personal contact with the victim.,,,,,,,,,,,,,,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2018–2022.",,,,,,,,,,,,,,,,,,,

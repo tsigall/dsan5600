@@ -57,21 +57,56 @@ arrests_plot
 
 ## By Crime
 
-It is important to get an understanding of what types of crimes are commonly committed in New York City, the area we are currently looking at. Below is a table containing counts of all crimes committed over the period of 2006 - 2022, sorted in descending order. The most common crime committed over that time period was assault in the third degree (the lowest level of assault), followed by marijuana possession 4 & 5 (differentiated by the amount of marijuana possessed).
+It is important to get an understanding of what types of crimes are commonly committed in New York City, the area we are currently looking at. We want to look at crimes that give us a good idea of the state of public safety in New York City. Those crimes along with their total counts from 2006-2022 are listed below.
+
+Homicide, Burglary, Drug-Related Offenses, Assault, Motor Vehicle Theft, Robbery, Drug-Related Violent Crimes, Domestic Violence
+
+Weapons possession?
 
 ```{r arrests_by_crime, echo = FALSE}
 arrests_by_crime <- df %>%
+  mutate(pd_desc = ifelse(str_detect(pd_desc, "ASSAULT"), "assault",
+                          ifelse(str_detect(pd_desc, "ROBBERY"), "robbery", 
+                                 ifelse(str_detect(pd_desc, "MARIJUANA, POSSESSION"), "marijuana_possession",
+                                        ifelse(str_detect(pd_desc, "MARIJUANA, SALE"), "marijuana_sale",
+                                               ifelse(str_detect(pd_desc, "CE,P|NCE, P"), "controlled_substance_possession",
+                                                      ifelse(str_detect(pd_desc, "E,I|CE, I|E,S|E, S"), "controlled_substance_sale",
+                                                ifelse(str_detect(pd_desc, "MURDER,UNCLASSIFIED"), "murder", 
+                                                       ifelse(str_detect(pd_desc, "AUTO"), "motor_vehicle_theft",
+                                                          ifelse(str_detect(pd_desc, "LARCENY"), "larceny", pd_desc)))))))))) %>%
   group_by(pd_desc) %>%
   summarize(total = n()) %>% 
-  arrange(desc(total))
+  filter(str_detect(pd_desc, "assault|robbery|marijuana_possession|marijuana_sale|controlled|substance_possession|controlled_substance_sale|murder|motor_vehicle_theft|larceny"))
 
-kable(head(arrests_by_crime, 15))
+kable(arrests_by_crime)
+arrests_by_crime
 ```
+
+These categories include multiple types of crimes, each of which is outlined below.
+
+```{r}
+arrests_by_crime_detail <- df %>%
+  filter(str_detect(pd_desc, "ASSAULT|ROBBERY|MARIJUANA, POSSESSION|MARIJUANA, SALE|CE,P|NCE, PE,I|CE, I|E,S|E, S|MURDER,UNCLASSIFIED|AUTO|LARCENY")) %>% group_by(pd_desc) %>%
+  summarize(total = n())
+
+arrests_by_crime_detail
+```
+
 
 Lets look at how each of these crimes is changing over time.
 
 ```{r arrests_by_crime_pivot, include = FALSE}
 arrests_by_crime <- df %>%
+   mutate(pd_desc = ifelse(str_detect(pd_desc, "ASSAULT"), "assault",
+                          ifelse(str_detect(pd_desc, "ROBBERY"), "robbery", 
+                                 ifelse(str_detect(pd_desc, "MARIJUANA, POSSESSION"), "marijuana_possession",
+                                        ifelse(str_detect(pd_desc, "MARIJUANA, SALE"), "marijuana_sale",
+                                               ifelse(str_detect(pd_desc, "CE,P|NCE, P"), "controlled_substance_possession",
+                                                      ifelse(str_detect(pd_desc, "E,I|CE, I|E,S|E, S"), "controlled_substance_sale",
+                                                ifelse(str_detect(pd_desc, "MURDER,UNCLASSIFIED"), "murder", 
+                                                       ifelse(str_detect(pd_desc, "AUTO"), "motor_vehicle_theft",
+                                                          ifelse(str_detect(pd_desc, "LARCENY"), "larceny", pd_desc)))))))))) %>%
+  filter(str_detect(pd_desc, "assault|robbery|marijuana_possession|marijuana_sale|controlled|substance_possession|controlled_substance_sale|murder|motor_vehicle_theft|larceny")) %>%
   group_by(month = floor_date(arrest_date, "month"), pd_desc) %>%
   summarize(count = n()) %>%
   pivot_wider(names_from = pd_desc, values_from = count, values_fill = 0) %>%
@@ -81,55 +116,71 @@ arrests_by_crime <- df %>%
 ```{r plot_by_crime, echo = FALSE, warning=FALSE}
 plot_ly(data = arrests_by_crime, 
         x = ~month, 
-        y = ~`ASSAULT 3`, 
-        name = "Assault 3",
+        y = ~murder, 
+        name = "Murder",
         type = "scatter", 
         mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`MARIJUANA, POSSESSION 4 & 5`, 
-            name = "Marijuana Possesion 4, 5",
+            y = ~assault, 
+            name = "Assault",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`CONTROLLED SUBSTANCE, POSSESSION 7`, 
-            name = "Controlled Substance Possession 7",
+            y = ~robbery, 
+            name = "Robbery",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`ASSAULT 2,1,UNCLASSIFIED`, 
-            name = "Assault 2, 1, or Unclassified",
+            y = ~larceny, 
+            name = "Larceny",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`LARCENY,PETIT FROM OPEN AREAS,UNCLASSIFIED`, 
-            name = "Larceny, Petit",
+            y = ~motor_vehicle_theft, 
+            name = "Motor Vehicle Theft",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`INTOXICATED DRIVING,ALCOHOL`, 
-            name = "Inoxicated Driving, Alcohol",
+            y = ~marijuana_possession, 
+            name = "Marijuana Possession",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~`WEAPONS, POSSESSION, ETC`, 
-            name = "Weapons Possession",
+            y = ~marijuana_sale, 
+            name = "Marijuana Sale",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~controlled_substance_possession, 
+            name = "Controlled Substance Possession",
+            type = "scatter",
+            mode = "lines",
+        showlegend = TRUE) %>%
+  add_trace(data = arrests_by_crime, 
+            x = ~month, 
+            y = ~controlled_substance_sale, 
+            name = "Controlled Substance Sale/Intent",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
   layout(title = "Crime by Type",
-         xaxis = list(title = ""),
+         xaxis = list(title = "",
+                      tickvals = c("2006", "2010", "2014", "2018", "2022"),
+                      ticktext = c("2006", "2010", "2014", "2018", "2022")),
          yaxis = list(title = "Arrests"))
 ```
 

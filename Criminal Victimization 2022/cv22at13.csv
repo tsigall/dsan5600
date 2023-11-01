@@ -1,0 +1,15 @@
+Bureau of Justice Statistics,,,,,
+Filename: cv22at13.csv,,,,,
+"Appendix table 13. Standard errors for table 12: Number of violent incidents, by sex of victims and offenders, 2022",,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2022",,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,
+Date of version: 9/14/2023,,,,,
+,,,,,
+"Appendix table 13. Standard errors for table 12: Number of violent incidents, by sex of victims and offenders, 2022",,,,,
+,,Offender sex,,,
+Victim sex,Total violent incidents,Male,Female,Both male and female,Unknown
+Male,"160,982","137,471","46,089","33,974","64,049"
+Female,"171,608","131,930","77,379","41,726","39,982"
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2022.",,,,,

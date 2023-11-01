@@ -1,0 +1,45 @@
+Bureau of Justice Statistics,,,,,,
+Filename: cv22at19.csv,,,,,,
+"Appendix table 19. Population of persons age 12 or older, by demographic characteristics, 2018–2022",,,,,,
+"Report title: Criminal Victimization, 2022   NCJ 307089",,,,,,
+"Data source: Bureau of Justice Statistics, National Crime Victimization Survey, 2021 and 2022",,,,,,
+"Authors: Alexandra Thompson and Susannah N. Tapp, PhD, BJS Statisticians",,,,,,
+Refer questions to: askbjs@usdoj.gov 202-307-0765,,,,,,
+Date of version: 9/14/2023,,,,,,
+,,,,,,
+"Appendix table 19. Population of persons age 12 or older, by demographic characteristics, 2018–2022",,,,,,
+Demographic characteristic,,2018,2019,2020,2021,2022
+,Total,"275,325,390","276,872,470","278,082,260","279,188,570","282,304,640"
+Sex,,,,,,
+,Male,"133,907,500","134,693,660","135,260,190","135,863,650","138,308,540"
+,Female,"141,417,890","142,178,810","142,822,080","143,324,920","143,996,100"
+Race/Hispanic origin,,,,,,
+,White/a,"171,493,180","171,423,480","171,267,760","171,158,580","171,625,260"
+,Black/a,"33,132,390","33,397,100","33,688,820","33,938,330","34,448,440"
+,Hispanic,"46,997,610","47,890,870","48,640,170","49,402,220","50,873,240"
+,"Asian/Native Hawaiian/Other Pacific Islander/a,b","18,094,710","18,335,230","18,867,300","19,293,190","19,681,580"
+,"Other/a,c","5,607,500","5,825,790","5,618,230","5,396,250","5,676,110"
+Age,,,,,,
+,12–17,"24,917,160","24,941,440","24,992,970","24,905,640","25,875,630"
+,18–24,"29,838,720","29,646,500","29,353,220","29,130,230","29,483,540"
+,25–34,"44,946,880","45,289,720","45,294,090","45,260,400","44,673,480"
+,35–49,"61,429,050","61,483,410","61,393,010","61,448,170","62,718,200"
+,50–64,"62,940,810","62,643,880","62,477,170","62,284,210","62,912,810"
+,65 or older,"51,252,780","52,867,520","54,571,810","56,159,930","56,640,980"
+Marital status/d,,,,,,
+,Never married,"97,152,920","97,943,560","99,468,100","101,747,930","104,122,530"
+,Married,"128,744,200","129,699,090","129,399,370","127,458,620","128,793,660"
+,Widowed,"15,166,010","15,160,640","15,350,940","15,760,770","15,255,090"
+,Divorced,"27,360,570","27,184,390","27,280,860","27,374,380","27,523,050"
+,Separated,"5,129,600","4,970,250","4,810,270","4,770,190","4,909,160"
+Household income,,,,,,
+,"Less than $25,000","50,629,410","47,213,950","41,849,120","41,846,630","38,445,470"
+,"$25,000–$49,999","70,739,680","68,598,330","66,271,710","64,861,660","61,575,030"
+,"$50,000–$99,999","90,829,470","91,124,780","88,752,540","88,155,100","88,540,080"
+,"$100,000–$199,999","47,677,720","52,113,470","60,852,220","62,121,610","68,027,520"
+,"$200,000 or more","15,449,110","17,821,930","20,356,680","22,203,560","25,716,540"
+"a/Excludes persons of Hispanic origin, (e.g., “white” refers to non-Hispanic white persons and “black” refers to non-Hispanic black persons).",,,,,,
+b/Includes persons who identified as Asian only or Native Hawaiian or Other Pacific Islander only. Categories are not shown separately due to small numbers of sample cases.,,,,,,
+c/Includes persons who identified as American Indian or Alaska Native only or as two or more races. Categories are not shown separately due to small numbers of sample cases.,,,,,,
+d/Estimates do not sum to totals due to missing data on marital status.,,,,,,
+"Source: Bureau of Justice Statistics, National Crime Victimization Survey, 2018–2022.",,,,,,
