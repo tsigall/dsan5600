@@ -52,7 +52,7 @@ arrests_plot <- ggplot(data = arrests_by_date, aes(x = month, y = total)) +
   xlab("Arrest Date") +
   ylab("Arrests")
 
-arrests_plot
+ggplotly(arrests_plot)
 ```
 
 ## By Crime

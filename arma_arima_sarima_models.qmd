@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: inline
 ---
 
-# Fitting NYC Arrests Series
+# Fitting NYC Arrests Series by Crime
 
 ```{r setup, include = FALSE}
 library(reticulate)
@@ -19,6 +19,9 @@ library(kableExtra)
 library(astsa)
 load("arrests_ts.Rdata")
 ```
+
+::: panel-tabset
+# Total
 
 ## First Difference
 
@@ -119,8 +122,6 @@ Both fitted models look similar to the actual time series.
 
 ## Forecasting
 
-### fit1
-
 ```{r forecast, echo=FALSE}
 autoplot(arrests_ts) +
   autolayer(meanf(arrests_ts, h = 36),
@@ -162,3 +163,22 @@ model_fit %>% forecast %>% autoplot()
 ```{r forecast_plot_2, echo = FALSE}
 auto_model %>% forecast %>% autoplot()
 ```
+
+# Assault
+
+# Controlled Substance Possession
+
+# Controlled Substance Sale
+
+# Larceny
+
+# Marijuana Possession
+
+# Marijuana Sale
+
+# Motor Vehicle Theft
+
+# Murder
+
+# Robbery
+:::

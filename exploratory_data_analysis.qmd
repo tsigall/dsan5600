@@ -5,6 +5,11 @@ editor_options:
 toc: false
 ---
 
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
 ```{r setup, include = FALSE}
 library(reticulate)
 library(tidyverse)
@@ -52,7 +57,6 @@ ts_lags(arrests_ts, lags = 1:12)
 Looking at the lag plot up to a lag of 12 months, we can see that the data are clearly not random, as a linear shape exists in each lag that we observe here. Seasonality is harder to observe here, as each month does not appear to be clustered alongside other observations of the same month. This could be due to the large number of points, however.
 
 ```{r lag_48, echo = FALSE}
-
 ts_lags(arrests_ts, lags = c(12, 24, 36, 48))
 ```
 
@@ -62,7 +66,6 @@ If we look up to a lag of 48 months, we can see that as the lag increases, the d
 
 ```{r decomposing, echo = FALSE}
 plot(decompose(arrests_ts, "multiplicative"))
-
 ```
 
 We can see the trend here that we were able to observe on the initial graph. There is horizontal movement during the first half of the observed period and then a clear downward trend until 2020. After that, it reverses and increases until the present day.
@@ -131,7 +134,7 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
-insert text here
+This time series follows a very similar pattern to the overall arrests series. There is an upward trend until around 2013 then a downward trend to the minimum value in April 2020, then a sharp increase until today. The data are clearly seasonal as well, seeming to follow a yearly pattern with the yearly minimum happening each winter. 
 
 #### Lag Plots
 
@@ -141,27 +144,51 @@ assault_ts <- ts(arrests_by_crime$assault, start = c(2006, 1), frequency = 12)
 ts_lags(assault_ts, lags = 1:12)
 ```
 
-insert text
+There is the most correlation between lags at a lag value of 12, further increasing evidence for the seasonality of this series. There appears to be less correlation here than in the total time series, though. 
 
 ```{r, echo = FALSE}
-
 ts_lags(assault_ts, lags = c(12, 24, 36, 48))
 ```
 
-insert text
+There is some correlation between yearly lags, meaning this may be a good candidate for seasonal differencing. This correlation appears to decrease as the lag increases.
 
 #### Decomposition
 
 ```{r, echo = FALSE}
-plot(decompose(assault_ts, "multiplicative"))
-
+plot(decompose(assault_ts, "additive"))
 ```
+Decomposition reveals the trend we noticed in the overall plot, with the drop in 2020. The increase and decrease before that point, however, may be less than we initially thought. 
 
 #### ACF and PACF
+```{r, echo = FALSE}
+ggAcf(assault_ts, 100) + ggtitle("ACF Plot for Annual New York City Assault Arrests")
+```
+The ACF Plot is decaying towards 0 though there is evidence of seasonality in the correlation between lags. 
+
+```{r}
+ggPacf(assault_ts, 100) + ggtitle("ACF Plot for Annual New York City Assault Arrests")
+
+```
+Spikes can be seen at lags 1, 2, 3, and 4.
 
 #### Augmented Dickey-Fuller Test
+```{r echo = FALSE}
+adf.test(assault_ts)
+```
+The ADF tests returns a p-value of less than 0.01, meaning we do not have enough evidence to reject the null hypotheses. This series is stationary.
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$assault ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(assault_ts)
+
+grid.arrange(autoplot(assault_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+Detrending does not change the time series much, suggesting the trend we saw earlier was not as significant as we thought. The time series was stationary before according to the ADF test, meaning differencing did not do much. 
+
 
 ### Controlled Substance Possession
 
@@ -178,15 +205,58 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+This looks different from the overall arrests time series. There is a clear negative linear trend in this series, though that trend hit its minimum in July 2020 and has generally been increasing since, though only slightly compared to the initial decrease. 
+
 #### Lag Plots
+```{r}
+controlled_pos_ts <- ts(arrests_by_crime$controlled_substance_possession, start = c(2006, 1), frequency = 12)
+
+ts_lags(controlled_pos_ts, lags = 1:12)
+```
+This series appears to be highly correlated as all of these lags show high levels of correlation.
+
+```{r}
+ts_lags(controlled_pos_ts, lags = c(12, 24, 36, 48))
+```
+Like the other series, the correlation between lags gets less as the lag increases, though it is still fairly high.
 
 #### Decomposition
+```{r}
+plot(decompose(controlled_pos_ts, "additive"))
+```
+The time series is clearly additive, and the negative trend becomes clear when decomposed. There does appear to be a seasonal component. 
+
 
 #### ACF and PACF
+```{r}
+ggAcf(controlled_pos_ts, 100) + ggtitle("ACF Plot for Annual New York City Controled Substance Possession Arrests")
+```
+This is evidence against seasonality, and evidence that the series should be differenced. 
+
+```{r}
+ggPacf(controlled_pos_ts, 100) + ggtitle("ACF Plot for Annual New York City Controled Substance Possession Arrests")
+
+```
+Spikes are seen at 1, 2, 3, 8, and 12. 
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(controlled_pos_ts)
+```
+The ADF test shows that this series is stationary, though we can clearly see that is not true. 
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$controlled_substance_possession ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(controlled_pos_ts)
+
+grid.arrange(autoplot(controlled_pos_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+Detrending clearly changes the time series to be more stationary, meaning there is a clear trend. Differencing also moves us closer to a stationary time series. 
+
 
 ### Controlled Substance Sale
 
@@ -203,18 +273,59 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+controlled_sale_ts <- ts(arrests_by_crime$controlled_substance_sale, start = c(2006, 1), frequency = 12)
+
+ts_lags(controlled_sale_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(controlled_sale_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(controlled_sale_ts, "additive"))
+```
+insert text
+
 
 #### ACF and PACF
+```{r}
+ggAcf(controlled_sale_ts, 100) + ggtitle("ACF Plot for Annual New York City Controled Substance Sale Arrests")
+```
+insert text
+
+```{r}
+ggPacf(controlled_sale_ts, 100) + ggtitle("ACF Plot for Annual New York City Controled Substance Sale Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(controlled_sale_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$controlled_substance_sale ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(controlled_sale_ts)
+
+grid.arrange(autoplot(controlled_sale_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Larceny
-
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
@@ -228,22 +339,63 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+larceny_ts <- ts(arrests_by_crime$larceny, start = c(2006, 1), frequency = 12)
+
+ts_lags(larceny_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(larceny_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(larceny_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(larceny_ts, 100) + ggtitle("ACF Plot for Annual New York City Larceny Arrests")
+```
+insert text
+
+```{r}
+ggPacf(larceny_ts, 100) + ggtitle("ACF Plot for Annual New York City Larceny Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(larceny_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$larceny ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(larceny_ts)
+
+grid.arrange(autoplot(larceny_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Marijuana Possession
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
             x = ~month, 
-             y = ~marijuana_possession, 
+            y = ~marijuana_possession, 
             name = "Marijuana Possession",
             type = "scatter",
             mode = "lines",
@@ -253,21 +405,63 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+marijuana_pos_ts <- ts(arrests_by_crime$marijuana_possession, start = c(2006, 1), frequency = 12)
+
+ts_lags(marijuana_pos_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(marijuana_pos_ts, lags = c(12, 24, 36, 48))
+```
+
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(marijuana_pos_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(marijuana_pos_ts, 100) + ggtitle("ACF Plot for Annual New York City Marijuana Possession Arrests")
+```
+insert text
+
+```{r}
+ggPacf(marijuana_pos_ts, 100) + ggtitle("ACF Plot for Annual New York City Marijuana Possession Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(marijuana_pos_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$marijuana_possession ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(marijuana_pos_ts)
+
+grid.arrange(autoplot(marijuana_pos_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Marijuana Sale
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
-            x = ~month,  
+            x = ~month, 
             y = ~marijuana_sale, 
             name = "Marijuana Sale",
             type = "scatter",
@@ -278,21 +472,63 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+marijuana_sale_ts <- ts(arrests_by_crime$marijuana_sale, start = c(2006, 1), frequency = 12)
+
+ts_lags(marijuana_sale_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(marijuana_sale_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(marijuana_sale_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(marijuana_sale_ts, 100) + ggtitle("ACF Plot for Annual New York City Marijuana Sale Arrests")
+```
+insert text
+
+```{r}
+ggPacf(marijuana_sale_ts, 100) + ggtitle("ACF Plot for Annual New York City Marijuana Sale Arrests")
+
+```
+
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(marijuana_sale_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$marijuana_sale ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(marijuana_sale_ts)
+
+grid.arrange(autoplot(marijuana_sale_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Motor Vehicle Theft
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
-            x = ~month,  
+            x = ~month, 
             y = ~motor_vehicle_theft, 
             name = "Motor Vehicle Theft",
             type = "scatter",
@@ -303,46 +539,128 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+motor_theft_ts <- ts(arrests_by_crime$motor_vehicle_theft, start = c(2006, 1), frequency = 12)
+
+ts_lags(motor_theft_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(motor_theft_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(motor_theft_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(motor_theft_ts, 100) + ggtitle("ACF Plot for Annual New York City Motor Vehicle Theft Arrests")
+```
+insert text
+
+```{r}
+ggPacf(motor_theft_ts, 100) + ggtitle("ACF Plot for Annual New York City Motor Vehicle Theft Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(motor_theft_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$motor_vehicle_theft ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(motor_theft_ts)
+
+grid.arrange(autoplot(motor_theft_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Murder
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
-            x = ~month,  
+            x = ~month, 
             y = ~murder, 
             name = "Murder",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
-  layout(title = "Murderl",
+  layout(title = "Murder",
          xaxis = list(title = ""),
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+murder_ts <- ts(arrests_by_crime$murder, start = c(2006, 1), frequency = 12)
+
+ts_lags(murder_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(murder_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(murder_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(murder_ts, 100) + ggtitle("ACF Plot for Annual New York City Murder Arrests")
+```
+
+insert text
+```{r}
+ggPacf(murder_ts, 100) + ggtitle("ACF Plot for Annual New York City Murder Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(murder_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$murder ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(murder_ts)
+
+grid.arrange(autoplot(murder_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
 
 ### Robbery
 
 ```{r, echo = FALSE}
 plot_ly(data = arrests_by_crime, 
-            x = ~month,  
+            x = ~month, 
             y = ~robbery, 
             name = "Robbery",
             type = "scatter",
@@ -353,15 +671,57 @@ plot_ly(data = arrests_by_crime,
          yaxis = list(title = "Arrests"))
 ```
 
+insert text
+
 #### Lag Plots
+```{r}
+robbery_ts <- ts(arrests_by_crime$robbery, start = c(2006, 1), frequency = 12)
+
+ts_lags(robbery_ts, lags = 1:12)
+```
+insert text
+
+```{r}
+ts_lags(robbery_ts, lags = c(12, 24, 36, 48))
+```
+insert text
 
 #### Decomposition
+```{r}
+plot(decompose(robbery_ts, "additive"))
+```
+insert text
 
 #### ACF and PACF
+```{r}
+ggAcf(robbery_ts, 100) + ggtitle("ACF Plot for Annual New York City Robbery Arrests")
+```
+insert text
+
+```{r}
+ggPacf(robbery_ts, 100) + ggtitle("ACF Plot for Annual New York City Robbery Arrests")
+
+```
+insert text
 
 #### Augmented Dickey-Fuller Test
+```{r}
+adf.test(robbery_ts)
+```
+insert text
 
 #### Detrend and Difference
+```{r}
+detrend <- resid(lm(arrests_by_crime$robbery ~ arrests_by_date$month, na.action = NULL))
+difference <- diff(robbery_ts)
+
+grid.arrange(autoplot(robbery_ts),
+             autoplot(as.ts(detrend)), 
+             autoplot(difference), 
+             ncol = 1)
+```
+insert text
+
 :::
 
 ```{r, include = FALSE}
