@@ -2,6 +2,7 @@
 title: "ARMA/ARIMA/SARIMA Models"
 editor_options: 
   chunk_output_type: inline
+toc: false
 ---
 
 # Fitting NYC Arrests Series by Crime
@@ -26,7 +27,7 @@ load("arrests_ts.Rdata")
 ## First Difference
 
 ```{r first_diff, echo=FALSE}
-arrests_ts %>% diff() %>% ggtsdisplay()
+arrests_ts %>% diff(12) %>% ggtsdisplay()
 ```
 
 ## Second Difference
@@ -168,13 +169,7 @@ auto_model %>% forecast %>% autoplot()
 
 # Controlled Substance Possession
 
-# Controlled Substance Sale
-
-# Larceny
-
 # Marijuana Possession
-
-# Marijuana Sale
 
 # Motor Vehicle Theft
 
