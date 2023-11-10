@@ -66,7 +66,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -132,6 +132,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./arimax_sarimax_var.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ARIMAX/SARIMAX/VAR</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./spectral_analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Spectral Analysis and Filtering</span></a>
   </div>
@@ -165,15 +171,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#fitting-nyc-arrests-series-by-crime" id="toc-fitting-nyc-arrests-series-by-crime" class="nav-link active" data-scroll-target="#fitting-nyc-arrests-series-by-crime">Fitting NYC Arrests Series by Crime</a></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -200,306 +198,53 @@ ul.task-list li input[type="checkbox"] {
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Total</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Assault</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Controlled Substance Possession</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Marijuana Possession</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Motor Vehicle Theft</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">Murder</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false">Robbery</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>We are fitting a SARIMA model as we saw a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+<li>P: The seasonal order of AR terms.</li>
+<li>D: The seasonal degree of differencing.</li>
+<li>Q: The seasonal order of MA terms.</li>
+<li>s: The seasonal period.</li>
+</ul>
+<section id="acf-and-pacf" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 <section id="first-difference" class="level2">
 <h2 class="anchored" data-anchor-id="first-difference">First Difference</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/first_diff-1.png" class="img-fluid" width="672"></p>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>The series looks to be stationary at this level, though we should try a seasonal differencing. The seasonal period <code>s</code> is clearly 12. There are spikes at 1 and 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.</p>
 </section>
-<section id="second-difference" class="level2">
-<h2 class="anchored" data-anchor-id="second-difference">Second Difference</h2>
+<section id="seasonal-difference" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-difference">Seasonal Difference</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/second_diff-1.png" class="img-fluid" width="672"></p>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>This looks less stationary than a simple first differencing, we will try <code>D</code> = 0 and 1.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2, 4</li>
+<li>d: 0, 1</li>
+<li>q: 1, 4</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
 </section>
-<section id="third-difference" class="level2">
-<h2 class="anchored" data-anchor-id="third-difference">Third Difference</h2>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/third_diff-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>All three difference plots look similar in their stationarity, so we will check <span class="math inline">\(d=1,2,3\)</span>. From the ACF and PACF plots, we determine that we will check <span class="math inline">\(q=1,2,4,5\)</span> and <span class="math inline">\(p=1,2,3,4\)</span>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<table data-quarto-postprocess="true" class="table table-sm table-striped small">
-<thead>
-<tr class="header">
-<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3766.511</td>
-<td style="text-align: right;">3776.451</td>
-<td style="text-align: right;">3766.632</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3765.516</td>
-<td style="text-align: right;">3775.440</td>
-<td style="text-align: right;">3765.637</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3883.211</td>
-<td style="text-align: right;">3893.121</td>
-<td style="text-align: right;">3883.333</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3764.168</td>
-<td style="text-align: right;">3777.420</td>
-<td style="text-align: right;">3764.370</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3756.268</td>
-<td style="text-align: right;">3769.501</td>
-<td style="text-align: right;">3756.471</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3761.431</td>
-<td style="text-align: right;">3774.644</td>
-<td style="text-align: right;">3761.635</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3764.044</td>
-<td style="text-align: right;">3783.924</td>
-<td style="text-align: right;">3764.473</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3755.507</td>
-<td style="text-align: right;">3775.357</td>
-<td style="text-align: right;">3755.938</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3752.797</td>
-<td style="text-align: right;">3772.617</td>
-<td style="text-align: right;">3753.230</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3765.763</td>
-<td style="text-align: right;">3788.956</td>
-<td style="text-align: right;">3766.338</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3752.597</td>
-<td style="text-align: right;">3775.754</td>
-<td style="text-align: right;">3753.174</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3764.254</td>
-<td style="text-align: right;">3777.506</td>
-<td style="text-align: right;">3764.456</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3762.597</td>
-<td style="text-align: right;">3775.831</td>
-<td style="text-align: right;">3762.801</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3834.959</td>
-<td style="text-align: right;">3848.173</td>
-<td style="text-align: right;">3835.163</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3766.236</td>
-<td style="text-align: right;">3782.802</td>
-<td style="text-align: right;">3766.541</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3762.872</td>
-<td style="text-align: right;">3779.413</td>
-<td style="text-align: right;">3763.178</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3758.903</td>
-<td style="text-align: right;">3775.420</td>
-<td style="text-align: right;">3759.211</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3765.657</td>
-<td style="text-align: right;">3788.849</td>
-<td style="text-align: right;">3766.231</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3752.816</td>
-<td style="text-align: right;">3775.974</td>
-<td style="text-align: right;">3753.393</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3725.809</td>
-<td style="text-align: right;">3752.314</td>
-<td style="text-align: right;">3726.551</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3766.209</td>
-<td style="text-align: right;">3782.775</td>
-<td style="text-align: right;">3766.513</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3764.153</td>
-<td style="text-align: right;">3780.694</td>
-<td style="text-align: right;">3764.459</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3828.259</td>
-<td style="text-align: right;">3844.775</td>
-<td style="text-align: right;">3828.566</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3765.955</td>
-<td style="text-align: right;">3785.834</td>
-<td style="text-align: right;">3766.384</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3753.919</td>
-<td style="text-align: right;">3773.769</td>
-<td style="text-align: right;">3754.350</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3760.547</td>
-<td style="text-align: right;">3780.367</td>
-<td style="text-align: right;">3760.980</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3725.629</td>
-<td style="text-align: right;">3752.135</td>
-<td style="text-align: right;">3726.371</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3764.753</td>
-<td style="text-align: right;">3784.632</td>
-<td style="text-align: right;">3765.182</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3756.035</td>
-<td style="text-align: right;">3775.885</td>
-<td style="text-align: right;">3756.466</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3805.134</td>
-<td style="text-align: right;">3824.954</td>
-<td style="text-align: right;">3805.567</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3763.442</td>
-<td style="text-align: right;">3786.635</td>
-<td style="text-align: right;">3764.017</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3757.657</td>
-<td style="text-align: right;">3780.815</td>
-<td style="text-align: right;">3758.235</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
+<section id="build-model" class="level2">
+<h2 class="anchored" data-anchor-id="build-model">Build Model</h2>
 </section>
 <section id="model-selection-and-diagnostics" class="level2">
 <h2 class="anchored" data-anchor-id="model-selection-and-diagnostics">Model Selection and Diagnostics</h2>
@@ -514,6 +259,9 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
@@ -521,13 +269,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">27</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3725.629</td>
-<td style="text-align: right;">3752.135</td>
-<td style="text-align: right;">3726.371</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3417.252</td>
+<td style="text-align: right;">3433.513</td>
+<td style="text-align: right;">3417.576</td>
 </tr>
 </tbody>
 </table>
@@ -547,6 +298,9 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
@@ -554,13 +308,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">27</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3725.629</td>
-<td style="text-align: right;">3752.135</td>
-<td style="text-align: right;">3726.371</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3417.252</td>
+<td style="text-align: right;">3433.513</td>
+<td style="text-align: right;">3417.576</td>
 </tr>
 </tbody>
 </table>
@@ -580,6 +337,9 @@ ul.task-list li input[type="checkbox"] {
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
@@ -587,13 +347,16 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">27</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3725.629</td>
-<td style="text-align: right;">3752.135</td>
-<td style="text-align: right;">3726.371</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3417.252</td>
+<td style="text-align: right;">3433.513</td>
+<td style="text-align: right;">3417.576</td>
 </tr>
 </tbody>
 </table>
@@ -601,49 +364,13 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 </div>
-<p>It is clear that the best model is one with parameters <span class="math inline">\(p=3, d=1, q=4\)</span>. We now check the model diagnostics.</p>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=1, Q=1\)</span>. We now check the model diagnostics.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/diagnostics-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call:
-arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
-    xreg = constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
-        REPORT = 1, reltol = tol))
-
-Coefficients:
-          ar1      ar2     ar3     ma1      ma2      ma3     ma4  constant
-      -1.2801  -0.2081  0.4542  0.8945  -0.4709  -0.7972  0.0207  -79.3632
-s.e.   0.2006   0.3481  0.2000  0.2089   0.2354   0.0754  0.1467   50.3485
-
-sigma^2 estimated as 4866953:  log likelihood = -1853.72,  aic = 3725.45
-
-$degrees_of_freedom
-[1] 195
-
-$ttable
-         Estimate      SE  t.value p.value
-ar1       -1.2801  0.2006  -6.3823  0.0000
-ar2       -0.2081  0.3481  -0.5977  0.5507
-ar3        0.4542  0.2000   2.2715  0.0242
-ma1        0.8945  0.2089   4.2829  0.0000
-ma2       -0.4709  0.2354  -2.0005  0.0468
-ma3       -0.7972  0.0754 -10.5709  0.0000
-ma4        0.0207  0.1467   0.1411  0.8879
-constant -79.3632 50.3485  -1.5763  0.1166
-
-$AIC
-[1] 18.35196
-
-$AICc
-[1] 18.35561
-
-$BIC
-[1] 18.49885</code></pre>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>There is some concern about the correlation between residuals according to the p values for the Ljung-Box statistic, but we will continue evaluating the model regardless.</p>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals, meaning we have a good model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 1)12.</p>
 </section>
 <section id="auto-arima" class="level3">
 <h3 class="anchored" data-anchor-id="auto-arima">Auto-Arima</h3>
@@ -661,23 +388,27 @@ sigma^2 = 3187995:  log likelihood = -1703.68
 AIC=3415.36   AICc=3415.57   BIC=3428.37</code></pre>
 </div>
 </div>
-<p>The information criteria are all better that the previously used model of ARIMA(3, 1, 4). This model is absolutely worth considering moving forward.</p>
+<p>The information criteria are all better that the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is absolutely worth considering moving forward.</p>
 </section>
 <section id="fitted-vs.-actual" class="level3">
 <h3 class="anchored" data-anchor-id="fitted-vs.-actual">Fitted vs.&nbsp;Actual</h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/fit_v_actual-1.png" class="img-fluid" width="672"></p>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Both fitted models look similar to the actual time series.</p>
+<p>Both fitted models look similar to the actual time series. The two fitted models look incredibly similar, so we will just go with the one we fit by hand.</p>
 </section>
+</section>
+<section id="seasonal-cross-validation" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
 </section>
 <section id="forecasting" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting">Forecasting</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/forecast-1.png" class="img-fluid" width="672"></p>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Both models appear to be better than SNaïve as they do a better job of capturing the trend.</p>
@@ -692,21 +423,21 @@ Training set -948.75 3352.033 2586.25 -6.206225 13.38735    1 0.717891</code></p
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: arrests_ts 
-ARIMA(3,1,4) with drift 
+ARIMA(1,1,1)(1,1,1)[12] 
 
 Coefficients:
-          ar1      ar2     ar3     ma1      ma2      ma3     ma4     drift
-      -1.2801  -0.2081  0.4542  0.8945  -0.4709  -0.7972  0.0207  -79.3632
-s.e.   0.2006   0.3481  0.2000  0.2089   0.2354   0.0754  0.1467   50.3485
+         ar1      ma1     sar1     sma1
+      0.4357  -0.7447  -0.0331  -0.6762
+s.e.  0.1362   0.1012   0.1009   0.0774
 
-sigma^2 = 5066628:  log likelihood = -1853.72
-AIC=3725.45   AICc=3726.38   BIC=3755.27
+sigma^2 = 3203058:  log likelihood = -1703.63
+AIC=3417.25   AICc=3417.58   BIC=3433.51
 
 Training set error measures:
-                   ME     RMSE      MAE        MPE     MAPE      MASE
-Training set 5.597487 2200.704 1595.247 -0.9085461 6.803609 0.6168187
-                     ACF1
-Training set -0.002591217</code></pre>
+                    ME     RMSE     MAE        MPE     MAPE      MASE
+Training set -118.0164 1713.516 1202.21 -0.5149775 5.722823 0.4648468
+                   ACF1
+Training set 0.02157491</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: arrests_ts 
@@ -725,36 +456,1535 @@ Training set error measures:
 Training set -121.183 1714.047 1202.141 -0.5315764 5.725607 0.46482 0.02141618</code></pre>
 </div>
 </div>
-<p>The model error measurements for both models are all much lower than the SNaïve benchmark method, so both models can work.</p>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/forecast_plot-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="arma_arima_sarima_models_files/figure-html/forecast_plot_2-1.png" class="img-fluid" width="672"></p>
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>We are fitting a SARIMA model as we saw a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+<li>P: The seasonal order of AR terms.</li>
+<li>D: The seasonal degree of differencing.</li>
+<li>Q: The seasonal order of MA terms.</li>
+<li>s: The seasonal period.</li>
+</ul>
+<section id="acf-and-pacf-1" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-1">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-1" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-1">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The series looks to be stationary at this level, though we should try a seasonal differencing. The seasonal period <code>s</code> is clearly 12. There are spikes at 1 and 2 on the ACF plot and spikes at 1 and 2 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.</p>
+</section>
+<section id="seasonal-difference-1" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-difference-1">Seasonal Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks less stationary than a simple first differencing, we will try <code>D</code> = 0 and 1.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2</li>
+<li>d: 1</li>
+<li>q: 1, 2</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
+</section>
+<section id="build-model-1" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-1">Build Model</h2>
+</section>
+<section id="model-selection-and-diagnostics-1" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-1">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-1" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-1">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2547.193</td>
+<td style="text-align: right;">2563.455</td>
+<td style="text-align: right;">2547.517</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
+</section>
+<section id="minimum-bic-1" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-1">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2547.193</td>
+<td style="text-align: right;">2563.455</td>
+<td style="text-align: right;">2547.517</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-1" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-1">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2547.193</td>
+<td style="text-align: right;">2563.455</td>
+<td style="text-align: right;">2547.517</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=1, Q=1\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals at some lag values, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 1)12.</p>
+</section>
+<section id="auto-arima-1" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-1">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: assault_ts 
+ARIMA(1,0,1)(0,1,1)[12] with drift 
+
+Coefficients:
+         ar1      ma1     sma1    drift
+      0.9355  -0.3413  -0.8120  -2.1155
+s.e.  0.0321   0.0744   0.0588   2.6734
+
+sigma^2 = 31875:  log likelihood = -1272.62
+AIC=2555.23   AICc=2555.55   BIC=2571.52</code></pre>
+</div>
+</div>
+<p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is not worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-1" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-1">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model looks similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-1" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-1">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-1" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-1">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   ME     RMSE      MAE       MPE     MAPE MASE      ACF1
+Training set -8.65625 339.4464 238.4479 -1.031363 8.016814    1 0.7024543</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: assault_ts 
+ARIMA(1,1,1)(1,1,1)[12] 
+
+Coefficients:
+          ar1      ma1     sar1     sma1
+      -0.0661  -0.3138  -0.0818  -0.7732
+s.e.   0.1953   0.1882   0.0962   0.0746
+
+sigma^2 = 32889:  log likelihood = -1268.6
+AIC=2547.19   AICc=2547.52   BIC=2563.45
+
+Training set error measures:
+                    ME     RMSE      MAE       MPE     MAPE      MASE
+Training set -5.383942 173.6338 121.9244 -0.361724 4.000579 0.5113253
+                     ACF1
+Training set -0.001146537</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: assault_ts 
+ARIMA(1,0,1)(0,1,1)[12] with drift 
+
+Coefficients:
+         ar1      ma1     sma1    drift
+      0.9355  -0.3413  -0.8120  -2.1155
+s.e.  0.0321   0.0744   0.0588   2.6734
+
+sigma^2 = 31875:  log likelihood = -1272.62
+AIC=2555.23   AICc=2555.55   BIC=2571.52
+
+Training set error measures:
+                   ME     RMSE      MAE        MPE     MAPE      MASE
+Training set 3.774822 171.3926 119.2401 -0.1977777 3.905564 0.5000679
+                   ACF1
+Training set -0.0132078</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>We are fitting a SARIMA model as we saw a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+<li>P: The seasonal order of AR terms.</li>
+<li>D: The seasonal degree of differencing.</li>
+<li>Q: The seasonal order of MA terms.</li>
+<li>s: The seasonal period.</li>
+</ul>
+<section id="acf-and-pacf-2" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-2">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-2" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-2">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The series looks to be stationary at this level, though we should try a seasonal differencing. The seasonal period <code>s</code> is clearly 12. There are spikes at 1, 3, 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.</p>
+</section>
+<section id="seasonal-difference-2" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-difference-2">Seasonal Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks less stationary than a simple first differencing, we will try <code>D</code> = 0 and 1.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2, 4</li>
+<li>d: 1</li>
+<li>q: 1, 3, 4</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
+</section>
+<section id="build-model-2" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-2">Build Model</h2>
+</section>
+<section id="model-selection-and-diagnostics-2" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-2">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-2" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-2">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2534.408</td>
+<td style="text-align: right;">2553.922</td>
+<td style="text-align: right;">2534.865</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
+</section>
+<section id="minimum-bic-2" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-2">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2534.408</td>
+<td style="text-align: right;">2553.922</td>
+<td style="text-align: right;">2534.865</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-2" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-2">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">14</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2534.408</td>
+<td style="text-align: right;">2553.922</td>
+<td style="text-align: right;">2534.865</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=1, Q=1\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals at some lag values, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 1)12.</p>
+</section>
+<section id="auto-arima-2" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-2">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: controlled_pos_ts 
+ARIMA(2,1,1)(2,0,0)[12] with drift 
+
+Coefficients:
+          ar1      ar2      ma1    sar1    sar2    drift
+      -0.1522  -0.2875  -0.4061  0.3955  0.2736  -1.2514
+s.e.   0.1430   0.0932   0.1465  0.0679  0.0732  13.6691
+
+sigma^2 = 32636:  log likelihood = -1343.24
+AIC=2700.47   AICc=2701.05   BIC=2723.67</code></pre>
+</div>
+</div>
+<p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is not worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-2" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-2">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model looks similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-2" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-2">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-2" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-2">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME     RMSE      MAE       MPE   MAPE MASE      ACF1
+Training set -129.3281 292.8638 231.6927 -19.49965 27.347    1 0.4911806</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: controlled_pos_ts 
+ARIMA(1,1,1)(1,1,1)[12] 
+
+Coefficients:
+         ar1      ma1    sar1     sma1
+      0.1299  -0.6668  0.0022  -0.7269
+s.e.  0.1172   0.0879  0.1046   0.0801
+
+sigma^2 = 32009:  log likelihood = -1264.4
+AIC=2538.79   AICc=2539.12   BIC=2555.05
+
+Training set error measures:
+                    ME     RMSE      MAE       MPE     MAPE      MASE
+Training set -19.52719 171.2926 120.6894 -3.057452 13.16291 0.5209028
+                   ACF1
+Training set 0.03014107</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: controlled_pos_ts 
+ARIMA(2,1,1)(2,0,0)[12] with drift 
+
+Coefficients:
+          ar1      ar2      ma1    sar1    sar2    drift
+      -0.1522  -0.2875  -0.4061  0.3955  0.2736  -1.2514
+s.e.   0.1430   0.0932   0.1465  0.0679  0.0732  13.6691
+
+sigma^2 = 32636:  log likelihood = -1343.24
+AIC=2700.47   AICc=2701.05   BIC=2723.67
+
+Training set error measures:
+                    ME     RMSE      MAE       MPE     MAPE      MASE
+Training set -8.202674 177.5279 123.8372 -3.311035 12.68277 0.5344889
+                    ACF1
+Training set -0.02145194</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>We are fitting a SARIMA model as we saw a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+<li>P: The seasonal order of AR terms.</li>
+<li>D: The seasonal degree of differencing.</li>
+<li>Q: The seasonal order of MA terms.</li>
+<li>s: The seasonal period.</li>
+</ul>
+<section id="acf-and-pacf-3" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-3">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-3" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-3">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There still looks to be a trend at this level, we should try to difference one more time. We should also try a seasonal differencing at a seasonal period of 12.</p>
+</section>
+<section id="second-difference" class="level2">
+<h2 class="anchored" data-anchor-id="second-difference">Second Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks more stationary, we should determine parameters to try from here.</p>
+<p>The seasonal period <code>s</code> is clearly 12. There are spikes at 1 and 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.</p>
+</section>
+<section id="seasonal-difference-3" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-difference-3">Seasonal Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks less stationary than a simple first differencing, we will try <code>D</code> = 0 and 1.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2, 4</li>
+<li>d: 1, 2</li>
+<li>q: 1, 4</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
+</section>
+<section id="build-model-3" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-3">Build Model</h2>
+</section>
+<section id="model-selection-and-diagnostics-3" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-3">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-3" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-3">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2700.755</td>
+<td style="text-align: right;">2717.017</td>
+<td style="text-align: right;">2701.08</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
+</section>
+<section id="minimum-bic-3" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-3">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2700.755</td>
+<td style="text-align: right;">2717.017</td>
+<td style="text-align: right;">2701.08</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-3" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-3">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2700.755</td>
+<td style="text-align: right;">2717.017</td>
+<td style="text-align: right;">2701.08</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=1, Q=1\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals at some lag values, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 1)12.</p>
+</section>
+<section id="auto-arima-3" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-3">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: marijuana_pos_ts 
+ARIMA(1,1,1)(0,1,1)[12] 
+
+Coefficients:
+         ar1      ma1     sma1
+      0.2557  -0.5081  -0.6226
+s.e.  0.2258   0.2001   0.0552
+
+sigma^2 = 75884:  log likelihood = -1345.62
+AIC=2699.24   AICc=2699.46   BIC=2712.25</code></pre>
+</div>
+</div>
+<p>The information criteria are all slightly better than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12, but not so much better that this model would be worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-3" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-3">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model looks similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-3" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-3">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-3" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-3">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   ME     RMSE      MAE  MPE MAPE MASE     ACF1
+Training set -181.224 644.5754 463.6198 -Inf  Inf    1 0.832498</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: marijuana_pos_ts 
+ARIMA(1,1,1)(1,1,1)[12] 
+
+Coefficients:
+         ar1      ma1     sar1     sma1
+      0.2848  -0.5273  -0.0775  -0.5769
+s.e.  0.2307   0.2019   0.1100   0.0897
+
+sigma^2 = 76059:  log likelihood = -1345.38
+AIC=2700.76   AICc=2701.08   BIC=2717.02
+
+Training set error measures:
+                    ME     RMSE      MAE MPE MAPE      MASE        ACF1
+Training set -16.58966 264.0473 178.6642 NaN  Inf 0.3853679 0.003799704</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: marijuana_pos_ts 
+ARIMA(1,1,1)(0,1,1)[12] 
+
+Coefficients:
+         ar1      ma1     sma1
+      0.2557  -0.5081  -0.6226
+s.e.  0.2258   0.2001   0.0552
+
+sigma^2 = 75884:  log likelihood = -1345.62
+AIC=2699.24   AICc=2699.46   BIC=2712.25
+
+Training set error measures:
+                    ME     RMSE      MAE MPE MAPE      MASE        ACF1
+Training set -17.25645 264.4465 179.9504 NaN  Inf 0.3881422 0.003041133</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It doesn’t really make sense to forecast here as we can be sure that there will be no more arrests for marijuana possession, but it is good to know that we have fitted a good model. We can predict what would have happened to the level of arrests if the policy changes that were instituded over the years never happened.</p>
+</section>
 </div>
 <div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>We are fitting an ARIMA model as we did not see a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+</ul>
+<section id="acf-and-pacf-4" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-4">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-4" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-4">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks to be slightly more stationary than the original series, we can proceed with the model build process. There are spikes at 1 and 3 on the ACF plot and spikes at 1, 2 on the PACF plot.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2</li>
+<li>d: 0, 1</li>
+<li>q: 1, 3</li>
+</ul>
+</section>
+<section id="build-model-4" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-4">Build Model</h2>
+</section>
+<section id="model-selection-and-diagnostics-4" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-4">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-4" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-4">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1811.959</td>
+<td style="text-align: right;">1831.838</td>
+<td style="text-align: right;">1812.387</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
+</section>
+<section id="minimum-bic-4" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-4">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1811.959</td>
+<td style="text-align: right;">1831.838</td>
+<td style="text-align: right;">1812.387</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-4" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-4">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1811.959</td>
+<td style="text-align: right;">1831.838</td>
+<td style="text-align: right;">1812.387</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=2, d=1, q=3\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there may be correlation between residuals at some lag values, meaning we might not have a good enough model. We will still proceed with the model ARIMA(2, 1, 3).</p>
+</section>
+<section id="auto-arima-4" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-4">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: motor_theft_ts 
+ARIMA(1,1,2)(1,0,1)[12] 
+
+Coefficients:
+         ar1      ma1     ma2    sar1     sma1
+      0.6833  -1.3608  0.3769  0.5664  -0.2539
+s.e.  0.1504   0.1765  0.1616  0.1865   0.2174
+
+sigma^2 = 403.1:  log likelihood = -895.92
+AIC=1803.84   AICc=1804.26   BIC=1823.72</code></pre>
+</div>
+</div>
+<p>The information criteria are all slightly better than the previously used model of ARIMA(2, 1, 3), and it considers the seasonal component, so this model would be worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-4" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-4">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model and auto mdoel look similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-4" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-4">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-4" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-4">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Both models appear to be better than SNaïve as they does a better job of capturing the trend. It is hard to tell which is better between the fit and the auto fit.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   ME     RMSE      MAE       MPE     MAPE MASE      ACF1
+Training set 0.359375 25.82059 20.25521 -3.821604 23.16162    1 0.3607956</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: motor_theft_ts 
+ARIMA(2,1,3) 
+
+Coefficients:
+         ar1      ar2      ma1     ma2      ma3
+      1.3083  -0.8111  -2.1162  1.9925  -0.8230
+s.e.  0.0575   0.1751   0.1216  0.3478   0.2065
+
+sigma^2 = 420.6:  log likelihood = -899.98
+AIC=1811.96   AICc=1812.39   BIC=1831.84
+
+Training set error measures:
+                    ME     RMSE      MAE       MPE     MAPE      MASE
+Training set 0.1933576 20.20498 15.75906 -4.812673 18.54937 0.7780249
+                   ACF1
+Training set 0.08911728</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: motor_theft_ts 
+ARIMA(1,1,2)(1,0,1)[12] 
+
+Coefficients:
+         ar1      ma1     ma2    sar1     sma1
+      0.6833  -1.3608  0.3769  0.5664  -0.2539
+s.e.  0.1504   0.1765  0.1616  0.1865   0.2174
+
+sigma^2 = 403.1:  log likelihood = -895.92
+AIC=1803.84   AICc=1804.26   BIC=1823.72
+
+Training set error measures:
+                     ME     RMSE      MAE       MPE    MAPE      MASE
+Training set 0.04309529 19.78048 15.27388 -4.755127 17.8983 0.7540717
+                    ACF1
+Training set 0.007660609</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method. The seasonal, auto fitted model slightly outperforms the non-seasonal ARIMA model, so we will go with that model.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </div>
 <div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<p>We are fitting an ARIMA model as we did not see a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+</ul>
+<section id="acf-and-pacf-5" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-5">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-72-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-5" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-5">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-73-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks to be much more stationary than the original series, we can proceed with the model build process. There are spikes at 1 on the ACF plot and spikes at 1 and 2 on the PACF plot.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1</li>
+<li>d: 0, 1</li>
+<li>q: 1, 2</li>
+</ul>
+</section>
+<section id="build-model-5" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-5">Build Model</h2>
+</section>
+<section id="model-selection-and-diagnostics-5" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-5">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-5" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-5">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1722.681</td>
+<td style="text-align: right;">1735.934</td>
+<td style="text-align: right;">1722.883</td>
+</tr>
+</tbody>
+</table>
+
 
 </div>
-<div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
+</div>
+</section>
+<section id="minimum-bic-5" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-5">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1723.207</td>
+<td style="text-align: right;">1733.147</td>
+<td style="text-align: right;">1723.328</td>
+</tr>
+</tbody>
+</table>
 
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-5" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-5">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1722.681</td>
+<td style="text-align: right;">1735.934</td>
+<td style="text-align: right;">1722.883</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=2\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there may be correlation between residuals at some lag values, meaning we might not have a good enough model. We will still proceed with the model ARIMA(1, 1, 2).</p>
+</section>
+<section id="auto-arima-5" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-5">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: murder_ts 
+ARIMA(0,1,1) 
+
+Coefficients:
+          ma1
+      -0.7223
+s.e.   0.0674
+
+sigma^2 = 279.2:  log likelihood = -859.55
+AIC=1723.09   AICc=1723.15   BIC=1729.72</code></pre>
+</div>
+</div>
+<p>The information criteria are all slightly better than the previously used model of ARIMA(1, 1, 2), but not so much better that this model would be worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-5" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-5">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-80-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model and auto mdoel look similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-5" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-5">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-5" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-5">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-81-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model is better than SNaïve as they does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   ME     RMSE      MAE        MPE     MAPE MASE      ACF1
+Training set 3.338542 23.85863 18.18229 -0.9214067 22.28037    1 0.2861511</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: murder_ts 
+ARIMA(1,1,2) 
+
+Coefficients:
+         ar1      ma1     ma2
+      0.5923  -1.2474  0.3314
+s.e.  0.1945   0.2024  0.1613
+
+sigma^2 = 275.8:  log likelihood = -857.34
+AIC=1722.68   AICc=1722.88   BIC=1735.93
+
+Training set error measures:
+                   ME     RMSE    MAE       MPE     MAPE      MASE        ACF1
+Training set 1.301421 16.44369 12.523 -2.198117 15.40046 0.6887473 -0.03843839</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</div>
+<div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
+<p>We are fitting a SARIMA model as we saw a clear seasonal component in the previous section. We need to determine the following parameters:</p>
+<ul>
+<li>p: The order of AR terms.</li>
+<li>d: The degree of differencing needed to make the data stationary.</li>
+<li>q: The order of MA terms.</li>
+<li>P: The seasonal order of AR terms.</li>
+<li>D: The seasonal degree of differencing.</li>
+<li>Q: The seasonal order of MA terms.</li>
+<li>s: The seasonal period.</li>
+</ul>
+<section id="acf-and-pacf-6" class="level2">
+<h2 class="anchored" data-anchor-id="acf-and-pacf-6">ACF and PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="first-difference-6" class="level2">
+<h2 class="anchored" data-anchor-id="first-difference-6">First Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-86-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The series looks to be stationary here. We should also try a seasonal differencing at a seasonal period of 12.</p>
+<p>The seasonal period <code>s</code> is clearly 12. There are spikes at 1 and 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.</p>
+</section>
+<section id="seasonal-difference-4" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-difference-4">Seasonal Difference</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks less stationary than a simple first differencing, we will try <code>D</code> = 0 and 1.</p>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2, 4</li>
+<li>d: 1</li>
+<li>q: 1, 4</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
+</section>
+<section id="build-model-6" class="level2">
+<h2 class="anchored" data-anchor-id="build-model-6">Build Model</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>error:  1 1 1 1 0 1 
+error:  1 1 1 1 1 1 </code></pre>
+</div>
+</div>
+</section>
+<section id="model-selection-and-diagnostics-6" class="level2">
+<h2 class="anchored" data-anchor-id="model-selection-and-diagnostics-6">Model Selection and Diagnostics</h2>
+<section id="minimum-aic-6" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aic-6">Minimum AIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2225.528</td>
+<td style="text-align: right;">2245.042</td>
+<td style="text-align: right;">2225.985</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-bic-6" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-bic-6">Minimum BIC</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2225.528</td>
+<td style="text-align: right;">2245.042</td>
+<td style="text-align: right;">2225.985</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="minimum-aicc-6" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-aicc-6">Minimum AICc</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2225.528</td>
+<td style="text-align: right;">2245.042</td>
+<td style="text-align: right;">2225.985</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=1, Q=2\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-92-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 2)12.</p>
+</section>
+<section id="auto-arima-6" class="level3">
+<h3 class="anchored" data-anchor-id="auto-arima-6">Auto-Arima</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: robbery_ts 
+ARIMA(1,1,1)(1,0,0)[12] 
+
+Coefficients:
+         ar1      ma1   sar1
+      0.0540  -0.6564  0.524
+s.e.  0.1219   0.0937  0.063
+
+sigma^2 = 7144:  log likelihood = -1189.41
+AIC=2386.83   AICc=2387.03   BIC=2400.08</code></pre>
+</div>
+</div>
+<p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 2)12, this model is not worth considering moving forward.</p>
+</section>
+<section id="fitted-vs.-actual-6" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-vs.-actual-6">Fitted vs.&nbsp;Actual</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-94-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fitted model looks similar to the actual time series.</p>
+</section>
+</section>
+<section id="seasonal-cross-validation-6" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-cross-validation-6">Seasonal Cross Validation</h2>
+<p>1 step ahead and 12 steps ahead</p>
+</section>
+<section id="forecasting-6" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-6">Forecasting</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-95-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This model appears to be better than SNaïve as it does a better job of capturing the trend.</p>
+<p>SNaïve model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME     RMSE      MAE       MPE     MAPE MASE      ACF1
+Training set -12.01042 115.8672 90.13542 -2.377496 11.06785    1 0.5657567</code></pre>
+</div>
+</div>
+<p>Fitted model error measurements:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: robbery_ts 
+ARIMA(1,1,1)(1,1,2)[12] 
+
+Coefficients:
+         ar1      ma1     sar1    sma1     sma2
+      0.1076  -0.6704  -0.8783  0.2000  -0.7483
+s.e.  0.1279   0.0992   0.1794  0.2808   0.2064
+
+sigma^2 = 6017:  log likelihood = -1106.76
+AIC=2225.53   AICc=2225.98   BIC=2245.04
+
+Training set error measures:
+                   ME     RMSE      MAE        MPE     MAPE      MASE
+Training set 1.098047 74.06755 56.32804 -0.3259382 6.784593 0.6249268
+                     ACF1
+Training set -0.002933577</code></pre>
+</div>
+</div>
+<p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
 </div>
 </div>
 </div>

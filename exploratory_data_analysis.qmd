@@ -69,7 +69,7 @@ plot(decompose(arrests_ts, "multiplicative"))
 
 We can see the trend here that we were able to observe on the initial graph. There is horizontal movement during the first half of the observed period and then a clear downward trend until 2020. After that, it reverses and increases until the present day.
 
-Removing the trend allows us to see some seasonality. Once the seasonality has been averaged out as it has been here, the clear dips in arrests towards the end of each year remain and there is a clear pattern between the large dips at the end of each month.
+Removing the trend allows us to see some seasonality. Once the seasonality has been averaged out as it has been here, the clear dips in arrests towards the end of each year remain and there is a clear pattern between the large dips at the end of each year.
 
 There seems to be more noise in the more recent data, which could be something interesting to look into.
 
@@ -79,7 +79,7 @@ There seems to be more noise in the more recent data, which could be something i
 ggAcf(arrests_ts, 100) + ggtitle("ACF Plot for Annual New York City Arrests")
 ```
 
-The ACF values are decaying towards zero as lag increases, which is evidence against seasonality.
+The ACF values are decaying towards zero as lag increases, which is evidence that this series needs to be differenced.
 
 ```{r pacf, echo = FALSE}
 ggPacf(arrests_ts, 100) + ggtitle("PACF Plot for Annual New York City Arrests")
@@ -116,7 +116,7 @@ The detrended series (the middle plot) does not seem to be vastly different from
 ggtsdisplay(difference)
 ```
 
-This ACF has positive spikes at 12, 24, and 36, meaning once the trend is removed, the seasonality becomes evident. The ACF of the differenced time series provides strong evidence in support of seasonality.
+This ACF has positive spikes at 12, 24, and 36, meaning once the trend is removed, the seasonality becomes evident. The ACF of the differenced time series provides strong evidence in support of seasonality. A SARIMA model would best suit this time series. 
 
 ### Assault
 
@@ -196,6 +196,13 @@ grid.arrange(autoplot(assault_ts),
 
 Detrending does not change the time series much, suggesting the trend we saw earlier was not as significant as we thought. The time series was stationary before according to the ADF test, meaning differencing did not do much.
 
+```{r}
+ggtsdisplay(difference)
+```
+
+
+The evidence of seasonality throughout this process indicates a SARIMA model might be the best for this time series. 
+
 ### Controlled Substance Possession
 
 ```{r, echo = FALSE}
@@ -274,6 +281,12 @@ grid.arrange(autoplot(controlled_pos_ts),
 
 Detrending clearly changes the time series to be more stationary, meaning there is a clear trend. Differencing also moves us closer to a stationary time series.
 
+```{r}
+ggtsdisplay(difference)
+
+```
+This series also seems to have a significant seasonal component, we will fit a SARIMA model. 
+
 ### Marijuana Possession
 
 ```{r, echo = FALSE}
@@ -348,9 +361,12 @@ grid.arrange(autoplot(marijuana_pos_ts),
              autoplot(as.ts(detrend)), 
              autoplot(difference), 
              ncol = 1)
+
+ggtsdisplay(difference)
+
 ```
 
-The differenced plot looks more stationary, suggesting that differencing may be useful here.
+The differenced plot looks more stationary, suggesting that differencing may be useful here. The strong seasonal component suggests a SARIMA model would be useful. 
 
 ### Motor Vehicle Theft
 
@@ -426,9 +442,12 @@ grid.arrange(autoplot(motor_theft_ts),
              autoplot(as.ts(detrend)), 
              autoplot(difference), 
              ncol = 1)
+
+ggtsdisplay(difference)
+
 ```
 
-The detrended plot looks very similar to the observed plot.
+The detrended plot looks very similar to the observed plot. There is no seasonal component here, an ARIMA model will work. 
 
 ### Murder
 
@@ -504,9 +523,11 @@ grid.arrange(autoplot(murder_ts),
              autoplot(as.ts(detrend)), 
              autoplot(difference), 
              ncol = 1)
+
+ggtsdisplay(difference)
 ```
 
-The differenced time series looks stationary, indicating that we amy need to difference.
+The differenced time series looks stationary, indicating that we may need to difference. There is little evidence for any seasonal components, an ARIMA model would be best. 
 
 ### Robbery
 
@@ -582,11 +603,19 @@ grid.arrange(autoplot(robbery_ts),
              autoplot(as.ts(detrend)), 
              autoplot(difference), 
              ncol = 1)
+
+ggtsdisplay(difference)
 ```
 
-The differenced time series looks to be stationary meaning differencing may be useful.
+The differenced time series looks to be stationary meaning differencing may be useful. The existence of a clear seasonal component means we should fit a SARIMA model. 
 :::
 
 ```{r, include = FALSE}
-save(arrests_ts, file = "arrests_ts.Rdata")
+save(arrests_ts, 
+       assault_ts, 
+       controlled_pos_ts, 
+       marijuana_pos_ts, 
+       motor_theft_ts,
+       murder_ts,
+       robbery_ts, file = "arrests_ts.Rdata")
 ```

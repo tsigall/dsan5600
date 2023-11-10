@@ -12,6 +12,7 @@ website:
         - data_visualization.qmd
         - exploratory_data_analysis.qmd
         - arma_arima_sarima_models.qmd
+        - arimax_sarimax_var.qmd
         - spectral_analysis.qmd
         - financial_time_series_models.qmd
         - deep_learning_for_ts.qmd
