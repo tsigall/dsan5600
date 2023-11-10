@@ -92,7 +92,6 @@ arrests_by_crime_detail <- df %>%
 arrests_by_crime_detail
 ```
 
-
 Lets look at how each of these crimes is changing over time.
 
 ```{r arrests_by_crime_pivot, include = FALSE}

@@ -1,3 +1,508 @@
 ---
 title: "ARIMAX/SARIMAX/VAR"
+editor_options: 
+  chunk_output_type: inline
+bibliography: reference.bib
 ---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r setup, include = FALSE}
+library(vars)
+library(reticulate)
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(forecast)
+library(TSstudio)
+library(tseries)
+library(gridExtra)
+library(kableExtra)
+library(astsa)
+load("unrate.Rdata")
+load("arrest_data.Rdata")
+load("arrests_ts.Rdata")
+```
+
+```{r}
+unrate_ts <- ts(df$unrate, start = c(2006, 1), frequency = 12)
+```
+
+# Exogenous Variables
+
+The number of arrests made in any city, especially one as large and diverse as New York City, is a figure that is influenced by many variables in addition to time. This means that modelling the number of arrests only on time may result in overlooking valuable information that could be used to fit a model that could forecast arrests even more accurately. Similar work has been done in the past, relating both the economy and labor markets to crime statistics.
+
+We will take that approach here, drawing inspiration on the work mentioned in the introduction by Freeman in which he looks at "the way decisions interact in a market setting" [@freeman_chapter_1999]. He exhibits an important understanding of the influence economic factors have on crime, treating crime rates as another variable in our complex economic system. Looking at the labor market would be beneficial as well, as in the 1980's and 90's crime was seen to be closely related to unemployment rates [@gould_crime_2002].
+
+Another variable that might be useful to look at is the state of the current election cycle. It is possible that when public officials are up for re-election, they might be more incentivized to take more action to lower crime rates.
+
+# Models to Fit
+
+Two types of models will be fit here. We will use an ARIMAX or SARIMAX model when looking at the effect of one or more exogenous variables in predicting the number of arrests. We will use a VAR model when looking at how crime and other time series variables are influenced by each other. The specific models are listed below:
+
+-   (ARIMAX) Total Arrests \~ Unemployment Rate
+
+-   (ARIMAX) Total Arrests \~ Election Year
+
+-   (ARIMAX) Murder \~ Unemployment Rate + GDP
+
+-   (VAR) Robbery \~ Unemployment Rate
+
+-   (VAR) Controlled Substance Possession \~ Marijuana Possession
+
+## Total Arrests ~ Unemployment Rate
+
+We have a univariate time series in total arrests and we want to see the effect the exogenous variable of unemployment rate has on that time series. We will fit an ARIMAX model, Total Arrests \~ Unemployment Rate. Unemployment data is for the New York City Metropolitan Area and obtained from [here](https://fred.stlouisfed.org/categories/30789).
+
+```{r}
+month <- as.Date(arrests_by_crime$month)
+dd <- data.frame(month, arrests = arrests_ts, unrate = unrate_ts)
+
+kable(head(dd))
+```
+
+```{r}
+dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
+
+autoplot(dd.ts[,c(2,3)], facets = TRUE) +
+  xlab("Year") + ylab("") +
+  ggtitle("Variables influencing Arrests in NYC")
+```
+
+There looks to be some relation between these two variables, with the spike in 2020 in unemployment rate being at the same time as the low arrest rate, though we should fit a model to see if this relationship is substantial.
+
+### Fitting Using auto.arima
+
+```{r}
+xreg <- cbind(unrate = dd.ts[,"unrate"])
+
+auto_model <- auto.arima(dd.ts[,"arrests"], xreg = xreg)
+summary(auto_model)
+checkresiduals(auto_model)
+```
+
+We have a SARIMAX model, a regression model with ARIMA(0,1,2)(2,0,0)\[12\] errors.
+
+### Fitting Manually
+
+We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA/SARIMA model for the residuals.
+
+```{r}
+fit.reg <- lm(arrests ~ unrate, data = dd)
+summary(fit.reg)
+```
+
+```{r, echo = TRUE}
+res.fit <- ts(residuals(fit.reg), start = c(2006, 1), frequency = 12)
+ggtsdisplay(res.fit)
+ggtsdisplay(res.fit %>% diff())
+ggtsdisplay(res.fit %>% diff() %>% diff(12))
+```
+
+We will try the following parameters:
+
+-   p: 1, 4
+-   d: 0, 1
+-   q: 1, 4
+-   P: 1
+-   D: 0, 1
+-   Q: 1, 2, 3
+
+```{r}
+i <- 1
+
+temp <- data.frame()
+ls <- matrix(rep(NA,9*28), nrow=28)
+
+for(p in c(1,4)){
+  for(q in c(1,4)){
+    for(d in c(0,1)){
+      for(P in c(1)){
+        for(Q in c(1,2,3)){
+          for(D in c(0,1)){
+            if(p + d + q + P + D + Q<= 9){
+              tryCatch({
+                model <- Arima(res.fit, order = c(p, d, q), seasonal = c(P, D, Q))
+                ls[i,] <- c(p, d, q, P, D, Q, model$aic, model$bic, model$aicc)
+              }, error = function(err) {
+                cat()
+              }, finally = {
+                i <- i + 1
+              })
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+temp <- as.data.frame(ls)
+names(temp) <- c("p","d","q","P", "D", "Q", "AIC","BIC","AICc")
+
+
+
+```
+
+### Model Selection and Diagnostics
+
+#### Minimum AIC
+
+```{r, echo=FALSE}
+kable(temp[which.min(temp$AIC),])
+```
+
+#### Minimum BIC
+
+```{r, echo = FALSE}
+kable(temp[which.min(temp$BIC),])
+```
+
+#### Minimum AICc
+
+```{r, echo = FALSE}
+kable(temp[which.min(temp$AICc),])
+```
+
+It is clear that the best model is one with parameters $p=1, d=1, q=1, P=1, D=1, Q=3$. We now check the model diagnostics.
+
+```{r, echo = FALSE}
+set.seed(621)
+model_output <- capture.output(sarima(res.fit, 1, 1, 1, 1, 1, 3, 12))
+```
+
+The Ljung-Box statistic p-values suggest that there is no correlation between residuals, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 1, 2)12. The information criteria are all similar between the auto model and this model. We will proceed with this model. 
+
+#### Fitted vs. Actual
+
+```{r, echo=FALSE}
+model_fit <- Arima(res.fit, order = c(1, 1, 1), seasonal = c(1, 1, 3))
+plot(res.fit, col = "blue")
+lines(fitted(model_fit), col = "green")
+legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
+```
+
+### Cross Validation
+```{r}
+# minimum data length for fitting
+k <- 48
+n <- length(res.fit)
+
+st <- tsp(res.fit)[1] + (k - 2)/12 # ending point: October 2009
+
+
+rmse1 <- matrix(NA,n-k,12)
+rmse2 <- matrix(NA,n-k,12)
+
+for(i in 1:(n - k)) {
+  tryCatch({
+    xtrain <- window(res.fit, end = st + i/12)
+    xtest <- window(res.fit, start = st + (i + 1)/12, end = st + (i + 12)/12)
+    
+    fit1 <- Arima(xtrain, 
+                 order = c(1, 1, 1), 
+                 seasonal = c(1, 1, 3),
+                 method = "ML")
+    
+    fcast1 <- forecast(fit1, h = 12)
+    
+    fit2 <- Arima(xtrain, 
+                 order = c(0, 1, 2), 
+                 seasonal = c(2, 0, 0),
+                 method = "ML")
+    
+    fcast2 <- forecast(fit2, h = 12)
+    
+    rmse1[i, 1:length(xtest)] <- sqrt((fcast1$mean-xtest)^2)
+    rmse2[i, 1:length(xtest)] <- sqrt((fcast2$mean-xtest)^2)
+  }, error = function(err) {
+                cat()
+              })
+}
+
+plot(1:12, colMeans(rmse1,na.rm=TRUE), type="l", col=2, xlab="horizon", ylab="RMSE")
+lines(1:12, colMeans(rmse2,na.rm=TRUE), type="l", col=3, xlab="horizon", ylab="RMSE2")
+legend("topleft",legend=c("manual fit","auto fit"),col=2:3,lty=1)
+```
+
+
+### Forecasting
+
+```{r, echo = FALSE}
+model_fit %>% forecast %>% autoplot()
+```
+
+
+## Total Arrests \~ Election Year
+
+## Murder \~ Unemployment Rate
+
+```{r}
+month <- as.Date(arrests_by_crime$month)
+dd <- data.frame(month, murder = murder_ts, unrate = unrate_ts)
+
+kable(head(dd))
+```
+
+```{r}
+dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
+
+autoplot(dd.ts[,c(2,3)], facets = TRUE) +
+  xlab("Year") + ylab("") +
+  ggtitle("Variables influencing Arrests in NYC")
+```
+
+There looks to be some relation between these two variables, though we should fit a model to see if this relationship is substantial.
+
+### Fitting Using auto.arima
+
+```{r}
+xreg <- cbind(unrate = dd.ts[,"unrate"])
+
+auto_model <- auto.arima(dd.ts[,"murder"], xreg = xreg)
+summary(auto_model)
+checkresiduals(auto_model)
+```
+
+We have an ARIMAX model, a regression model with ARIMA(0,1,1) errors.
+
+### Fitting Manually
+
+We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA/SARIMA model for the residuals.
+
+```{r}
+fit.reg <- lm(murder ~ unrate, data = dd)
+summary(fit.reg)
+```
+
+```{r, echo = TRUE}
+res.fit <- ts(residuals(fit.reg), start = c(2006, 1), frequency = 12)
+ggtsdisplay(res.fit)
+ggtsdisplay(res.fit %>% diff())
+```
+
+We will try the following parameters:
+
+-   p: 1, 2, 4
+-   d: 0, 1
+-   q: 1
+
+```{r}
+i <- 1
+
+temp <- data.frame()
+ls <- matrix(rep(NA,6*5), nrow=5)
+
+for(p in c(1,4)){
+  for(q in c(1,4)){
+    for(d in c(0,1)){
+      if(p + d + q + P + D + Q<= 9){
+        tryCatch({
+          model <- Arima(res.fit, order = c(p, d, q))
+          ls[i,] <- c(p, d, q, model$aic, model$bic, model$aicc)
+        }, error = function(err) {
+          cat()
+        }, finally = {
+          i <- i + 1
+        })
+      }
+    }
+  }
+}
+
+temp <- as.data.frame(ls)
+names(temp) <- c("p","d","q", "AIC","BIC","AICc")
+```
+
+### Model Selection and Diagnostics
+
+#### Minimum AIC
+
+```{r, echo=FALSE}
+kable(temp[which.min(temp$AIC),])
+```
+
+#### Minimum BIC
+
+```{r, echo = FALSE}
+kable(temp[which.min(temp$BIC),])
+```
+
+#### Minimum AICc
+
+```{r, echo = FALSE}
+kable(temp[which.min(temp$AICc),])
+```
+
+It is clear that the best model is one with parameters $p=1, d=1, q=1$. We now check the model diagnostics.
+
+```{r, echo = FALSE}
+set.seed(621)
+model_output <- capture.output(sarima(res.fit, 1, 1, 1))
+```
+
+#### Fitted vs. Actual
+
+```{r, echo=FALSE}
+model_fit <- Arima(res.fit, order = c(1, 1, 1))
+plot(res.fit, col = "blue")
+lines(fitted(model_fit), col = "green")
+legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
+```
+
+### Cross Validation
+
+### Forecasting
+
+```{r, echo = FALSE}
+model_fit %>% forecast %>% autoplot()
+```
+
+Adding unemployment rate resulted in little change from the previous model, suggesting that the two are not related.  
+
+## Robbery \~ Unemployment Rate
+
+```{r}
+month <- as.Date(arrests_by_crime$month)
+dd <- data.frame(month, robbery = robbery_ts, unrate = unrate_ts)
+
+kable(head(dd))
+```
+
+```{r}
+dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
+
+autoplot(dd.ts[,c(2,3)], facets = TRUE) +
+  xlab("Year") + ylab("") +
+  ggtitle("Variables influencing Robbery Arrests in NYC")
+```
+
+There looks to be some relation between these two variables, with the spike in 2020 in unemployment rate being at the same time as the low arrest rate, though we should fit a model to see if this relationship is substantial.
+
+### Fitting Using VARSelect
+
+```{r}
+VARselect(dd[,c(2,3)], lag.max = 10, type = "both")
+```
+
+Clearly p = 3 is a good parameter, we will also try VAR(1) in addition to VAR(3)
+
+```{r}
+summary(vars::VAR(dd[, c(2,3)], p = 1, type = "both"))
+summary(vars::VAR(dd[, c(2,3)], p = 3, type = "both"))
+```
+
+### Cross Validation
+```{r}
+ts <- ts(dd[,c(2,3)], start = c(2006, 1), frequency = 12)
+
+k <- 72
+
+rmse1 <- matrix(NA, 132, 2)
+rmse2 <- matrix(NA, 132, 2)
+
+year <- c()
+
+st <- tsp(ts)[1] + (k - 1)/12
+
+for(i in 1:11) {
+  xtrain <- window(ts, end=st + i-1)
+  xtest <- window(ts, start=st + (i-1) + 1/12, end=st + i)
+  
+  # first model
+  fit <- VAR(ts, p=1, type='both')
+  fcast <- predict(fit, n.ahead = 12)
+  
+  frob<-fcast$fcst$robbery
+  funr<-fcast$fcst$unrate
+  
+  ff<-data.frame(frob[,1],funr[,1]) #collecting the forecasts for 2 variables
+  
+  year<-st + (i-1) + 1/12 #starting year
+  
+  ff<-ts(ff,start=c(year,1),frequency = 12)
+  
+  a = 12*i-11
+  b= 12*i 
+  
+  tryCatch({
+    rmse1[c(a:b),]  <- sqrt((ff-xtest)^2)
+  }, error = function(err) {
+      cat(a, b)
+      rmse1[c(a:b),]  <- sqrt((ff-xtest)^2)
+  })
+  
+  
+  # second model
+  fit2 <- VAR(ts, p=3, type='both')
+  fcast2 <- predict(fit2, n.ahead = 12)
+  
+  frob<-fcast2$fcst$robbery
+  funr<-fcast2$fcst$unrate
+  
+  ff2<-data.frame(frob[,1],funr[,1]) #collecting the forecasts for 3 variables
+  
+  year<-st + (i-1) + 1/12 #starting year
+  
+  ff2<-ts(ff2,start=c(year,1),frequency = 12)
+  
+  a = 12*i-11
+  b= 12*i 
+  
+  tryCatch({
+    rmse2[c(a:b),]  <- sqrt((ff2-xtest)^2)
+  }, error = function(err) {
+      cat(a, b)
+      rmse2[c(a:b),]  <- sqrt((ff2-xtest)^2)
+  })
+}
+```
+
+```{r}
+yr = rep(c(2012:2022),each =12) #year
+m = rep(paste0(1:12),11) #month
+
+rmse1 <- data.frame(yr,m,rmse1)
+rmse1$date <- as.Date(paste(rmse1$yr, rmse1$m, "01", sep = "-"))
+names(rmse1) <- c("Year", "Month","robbery","unemployment", "Date")
+rmse2 <- data.frame(yr,m,rmse2)
+rmse2$date <- as.Date(paste(rmse2$yr, rmse2$m, "01", sep = "-"))
+names(rmse2) <- c("Year", "Month","robbery","unemployment", "Date")
+
+ggplot() + 
+  geom_line(data = rmse1, aes(x = Date, y = robbery),color = "blue") +
+  geom_line(data = rmse2, aes(x = Date, y = robbery),color = "red") +
+  labs(
+    title = "CV RMSE for robbery",
+    x = "Date",
+    y = "RMSE",
+    guides(colour=guide_legend(title="Fit")))
+
+ggplot() + 
+  geom_line(data = rmse1, aes(x = Date, y = unemployment),color = "blue") +
+  geom_line(data = rmse2, aes(x = Date, y = unemployment),color = "red") +
+  labs(
+    title = "CV RMSE for heater",
+    x = "Date",
+    y = "RMSE",
+    guides(colour=guide_legend(title="Fit")))
+
+mean(rmse1$robbery)
+mean(rmse2$robbery)
+
+mean(rmse1$unemployment)
+mean(rmse2$unemployment)
+```
+
+The models are very close in performance, but it looks like VAR(3) is slightly better so we will forecast with that model. 
+
+### Forecast
+```{r}
+fit <- VAR(ts, p = 3, type = "both")
+plot(forecast(fit, 24))
+```
+
+
+## Controlled Substance Possession \~ Marijuana Possession
