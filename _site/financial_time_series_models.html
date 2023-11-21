@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -64,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked">
+<body class="nav-sidebar docked fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -169,9 +203,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -192,6 +224,476 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>An interesting financial asset to model that would be useful in predicting crime rates would be CoreCivic (<code>CXW</code>), a company that owns and operates many private prisons throughout the United States. We will go through the model build process with this asset, considering financial time series models in addition to the traditional ones we have already seen.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cxw <span class="ot">&lt;-</span> <span class="fu">getSymbols</span>(<span class="st">"CXW"</span>, <span class="at">auto.assign =</span> <span class="cn">FALSE</span>, <span class="at">from =</span> <span class="st">"2006-01-01"</span>, <span class="at">to =</span> <span class="st">"2022-12-31"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chartSeries</span>(cxw, <span class="at">theme =</span> <span class="fu">chartTheme</span>(<span class="st">"white"</span>), <span class="co"># Theme</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">bar.type =</span> <span class="st">"hlc"</span>,  <span class="co"># High low close </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">up.col =</span> <span class="st">"green"</span>,  <span class="co"># Up candle color</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">dn.col =</span> <span class="st">"red"</span>)   <span class="co"># Down candle color</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>returns <span class="ot">&lt;-</span> cxw<span class="sc">$</span>CXW.Adjusted <span class="sc">%&gt;%</span> <span class="fu">diff</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(returns) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"CXW Returns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Volatility clustering is visible, an ARCH model may be appropriate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="fu">ggAcf</span>(returns),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggPacf</span>(returns),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="fu">ggAcf</span>(<span class="fu">abs</span>(returns)),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggPacf</span>(returns<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Correlation is visible in both plots, meaning conditional variation is present.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ArchTest</span>(returns, <span class="at">lags =</span> <span class="dv">1</span>, <span class="at">demean =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    ARCH LM-test; Null hypothesis: no ARCH effects
+
+data:  returns
+Chi-squared = 4.7167, df = 1, p-value = 0.02987</code></pre>
+</div>
+</div>
+<p>The p-value is &lt; 0.05, we reject the null hypothesis and can conclude that ARCH(1) effects are present in our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="fu">ggAcf</span>(returns),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggPacf</span>(returns),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The first differenced series looks good, we will try the following parameters:</p>
+<p>p: 1, 3</p>
+<p>d: 0, 1</p>
+<p>q: 1, 3</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ls <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">6</span><span class="sc">*</span><span class="dv">17</span>), <span class="at">nrow=</span><span class="dv">17</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)){</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(q <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)){</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)){</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(p <span class="sc">+</span> d <span class="sc">+</span> q <span class="sc">&lt;=</span> <span class="dv">8</span>){</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(cxw<span class="sc">$</span>CXW.Adjusted, <span class="at">order =</span> <span class="fu">c</span>(p, d, q), <span class="at">include.drift =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        ls[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(p, d, q, model<span class="sc">$</span>aic, model<span class="sc">$</span>bic, model<span class="sc">$</span>aicc)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        i <span class="ot">&lt;-</span> i <span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ls)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p"</span>,<span class="st">"d"</span>,<span class="st">"q"</span>,<span class="st">"AIC"</span>,<span class="st">"BIC"</span>,<span class="st">"AICc"</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AIC),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p d q      AIC      BIC     AICc
+4 1 1 3 2672.798 2704.604 2672.812</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>BIC),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p d q      AIC      BIC     AICc
+2 1 1 1 2680.339 2699.423 2680.345</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AICc),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p d q      AIC      BIC     AICc
+4 1 1 3 2672.798 2704.604 2672.812</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>arima113 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(cxw<span class="sc">$</span>CXW.Adjusted, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">include.drift =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>arima.res <span class="ot">&lt;-</span> arima113<span class="sc">$</span>residuals</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">auto.arima</span>(cxw<span class="sc">$</span>CXW.Adjusted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: cxw$CXW.Adjusted 
+ARIMA(0,1,0) 
+
+sigma^2 = 0.1095:  log likelihood = -1338.85
+AIC=2679.69   AICc=2679.69   BIC=2686.05</code></pre>
+</div>
+</div>
+<p>An ARIMA(1, 1, 3) model was clearly the best model, both when fitting by hand and when using auto.arima().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="fu">ggAcf</span>(arima.res<span class="sc">^</span><span class="dv">2</span>), <span class="fu">ggPacf</span>(arima.res<span class="sc">^</span><span class="dv">2</span>), <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(q <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) {</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    model[[cc]] <span class="ot">&lt;-</span> <span class="fu">garch</span>(arima.res, <span class="at">order =</span> <span class="fu">c</span>(q, p), <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    cc <span class="ot">&lt;-</span> cc <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in garch(arima.res, order = c(q, p), trace = FALSE): singular
+information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced
+
+Warning in sqrt(pred$e): NaNs produced</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ARCH_AIC <span class="ot">&lt;-</span> <span class="fu">sapply</span>(model, AIC)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model[[<span class="fu">which</span>(ARCH_AIC <span class="sc">==</span> <span class="fu">min</span>(ARCH_AIC))]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+garch(x = arima.res, order = c(q, p), trace = FALSE)
+
+Coefficient(s):
+       a0         a1         b1         b2         b3         b4         b5  
+2.072e-03  1.733e-01  1.211e-01  9.807e-02  3.179e-01  1.635e-14  3.079e-02  
+       b6         b7  
+2.219e-01  3.947e-02  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(ARCH_AIC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1552.663</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">garch</span>(arima.res, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">1</span>), <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in sqrt(pred$e): NaNs produced</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+garch(x = arima.res, order = c(7, 1), trace = FALSE)
+
+Model:
+GARCH(7,1)
+
+Residuals:
+       Min         1Q     Median         3Q        Max 
+-16.371905  -0.487764   0.005551   0.535784   9.847984 
+
+Coefficient(s):
+    Estimate  Std. Error  t value Pr(&gt;|t|)    
+a0 2.072e-03   2.793e-04    7.419 1.18e-13 ***
+a1 1.733e-01   1.628e-02   10.645  &lt; 2e-16 ***
+b1 1.211e-01   5.355e-02    2.261   0.0238 *  
+b2 9.807e-02   6.557e-02    1.496   0.1347    
+b3 3.179e-01   5.801e-02    5.481 4.24e-08 ***
+b4 1.635e-14   6.459e-02    0.000   1.0000    
+b5 3.079e-02   5.271e-02    0.584   0.5592    
+b6 2.219e-01   5.363e-02    4.137 3.52e-05 ***
+b7 3.947e-02   5.120e-02    0.771   0.4408    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Diagnostic Tests:
+    Jarque Bera Test
+
+data:  Residuals
+X-squared = 97779, df = 2, p-value &lt; 2.2e-16
+
+
+    Box-Ljung test
+
+data:  Squared.Residuals
+X-squared = 0.39699, df = 1, p-value = 0.5286</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(arima.fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(cxw<span class="sc">$</span>CXW.Adjusted, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">include.drift =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: cxw$CXW.Adjusted 
+ARIMA(1,1,3) 
+
+Coefficients:
+          ar1     ma1      ma2     ma3
+      -0.6765  0.6498  -0.0107  0.0437
+s.e.   0.1296  0.1301   0.0183  0.0164
+
+sigma^2 = 0.1092:  log likelihood = -1331.4
+AIC=2672.8   AICc=2672.81   BIC=2704.6
+
+Training set error measures:
+                      ME      RMSE       MAE       MPE     MAPE     MASE
+Training set 0.001000185 0.3302727 0.2127011 -0.023513 1.611635 1.000054
+                     ACF1
+Training set 0.0002234806</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final.fit <span class="ot">&lt;-</span> <span class="fu">garchFit</span>(<span class="sc">~</span><span class="fu">garch</span>(<span class="dv">1</span>, <span class="dv">7</span>), arima.res, <span class="at">trace =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Title:
+ GARCH Modelling 
+
+Call:
+ garchFit(formula = ~garch(1, 7), data = arima.res, trace = FALSE) 
+
+Mean and Variance Equation:
+ data ~ garch(1, 7)
+&lt;environment: 0x1298ac778&gt;
+ [data = arima.res]
+
+Conditional Distribution:
+ norm 
+
+Coefficient(s):
+        mu       omega      alpha1       beta1       beta2       beta3  
+0.01000185  0.00224949  0.14429583  0.01865153  0.00049868  0.83022439  
+     beta4       beta5       beta6       beta7  
+0.00000001  0.00318746  0.00000001  0.00000001  
+
+Std. Errors:
+ based on Hessian 
+
+Error Analysis:
+        Estimate  Std. Error  t value Pr(&gt;|t|)    
+mu     1.000e-02   3.933e-03    2.543    0.011 *  
+omega  2.249e-03   4.814e-04    4.673 2.97e-06 ***
+alpha1 1.443e-01   2.421e-02    5.960 2.52e-09 ***
+beta1  1.865e-02   4.865e-02    0.383    0.701    
+beta2  4.987e-04   3.330e-02    0.015    0.988    
+beta3  8.302e-01   1.866e-01    4.450 8.57e-06 ***
+beta4  1.000e-08   8.599e-02    0.000    1.000    
+beta5  3.187e-03   3.162e-02    0.101    0.920    
+beta6  1.000e-08   1.610e-01    0.000    1.000    
+beta7  1.000e-08   4.504e-02    0.000    1.000    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Log Likelihood:
+ -784.9998    normalized:  -0.183454 
+
+Description:
+ Tue Nov 21 15:39:57 2023 by user:  
+
+
+Standardised Residuals Tests:
+                                   Statistic    p-Value
+ Jarque-Bera Test   R    Chi^2  35253.277879 0.00000000
+ Shapiro-Wilk Test  R    W          0.923947 0.00000000
+ Ljung-Box Test     R    Q(10)     16.752385 0.08002579
+ Ljung-Box Test     R    Q(15)     21.385563 0.12495616
+ Ljung-Box Test     R    Q(20)     26.732906 0.14294711
+ Ljung-Box Test     R^2  Q(10)      8.988113 0.53323205
+ Ljung-Box Test     R^2  Q(15)     10.241942 0.80425138
+ Ljung-Box Test     R^2  Q(20)     12.988203 0.87788962
+ LM Arch Test       R    TR^2       9.394369 0.66892786
+
+Information Criterion Statistics:
+      AIC       BIC       SIC      HQIC 
+0.3715821 0.3864488 0.3715712 0.3768339 </code></pre>
+</div>
+</div>
+<p>GARCH(1, 7) is the best model. p-Values for the Ljung-Box test indicate that there is not enough evidence to reject the null hypothesis that there is no autocorrelation between residuals, meaning this is an adequate model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(final.fit, <span class="at">n.ahead =</span> <span class="dv">100</span>, <span class="at">plot =</span> <span class="cn">TRUE</span>, <span class="at">table =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    meanForecast meanError standardDeviation lowerInterval upperInterval
+1     0.01000185 0.3029208         0.3029208    -0.5837120     0.6037157
+2     0.01000185 0.3887184         0.3887184    -0.7518722     0.7718759
+3     0.01000185 0.4157060         0.4157060    -0.8047669     0.8247706
+4     0.01000185 0.3273798         0.3273798    -0.6316507     0.6516544
+5     0.01000185 0.3818473         0.3818473    -0.7384052     0.7584089
+6     0.01000185 0.4121003         0.4121003    -0.7976999     0.8177036
+7     0.01000185 0.3456270         0.3456270    -0.6674146     0.6874183
+8     0.01000185 0.3786862         0.3786862    -0.7322094     0.7522131
+9     0.01000185 0.4086711         0.4086711    -0.7909789     0.8109826
+10    0.01000185 0.3594119         0.3594119    -0.6944325     0.7144362
+11    0.01000185 0.3781269         0.3781269    -0.7311133     0.7511170
+12    0.01000185 0.4057714         0.4057714    -0.7852954     0.8052991
+13    0.01000185 0.3699365         0.3699365    -0.7150605     0.7350642
+14    0.01000185 0.3793010         0.3793010    -0.7334145     0.7534182
+15    0.01000185 0.4035708         0.4035708    -0.7809824     0.8009861
+16    0.01000185 0.3780673         0.3780673    -0.7309964     0.7510001
+17    0.01000185 0.3815628         0.3815628    -0.7378475     0.7578511
+18    0.01000185 0.4021177         0.4021177    -0.7781344     0.7981381
+19    0.01000185 0.3844438         0.3844438    -0.7434942     0.7634979
+20    0.01000185 0.3844540         0.3844540    -0.7435142     0.7635179
+21    0.01000185 0.4013843         0.4013843    -0.7766970     0.7967007
+22    0.01000185 0.3895437         0.3895437    -0.7534898     0.7734935
+23    0.01000185 0.3876633         0.3876633    -0.7498042     0.7698079
+24    0.01000185 0.4012996         0.4012996    -0.7765309     0.7965346
+25    0.01000185 0.3937241         0.3937241    -0.7616832     0.7816869
+26    0.01000185 0.3909881         0.3909881    -0.7563207     0.7763244
+27    0.01000185 0.4017723         0.4017723    -0.7774574     0.7974611
+28    0.01000185 0.3972507         0.3972507    -0.7685953     0.7885990
+29    0.01000185 0.3943038         0.3943038    -0.7628194     0.7828231
+30    0.01000185 0.4027062         0.4027062    -0.7792878     0.7992915
+31    0.01000185 0.4003199         0.4003199    -0.7746107     0.7946144
+32    0.01000185 0.3975396         0.3975396    -0.7691615     0.7891652
+33    0.01000185 0.4040094         0.4040094    -0.7818421     0.8018458
+34    0.01000185 0.4030747         0.4030747    -0.7800100     0.8000137
+35    0.01000185 0.4006601         0.4006601    -0.7752775     0.7952812
+36    0.01000185 0.4055999         0.4055999    -0.7849593     0.8049630
+37    0.01000185 0.4056178         0.4056178    -0.7849945     0.8049982
+38    0.01000185 0.4036527         0.4036527    -0.7811430     0.8011467
+39    0.01000185 0.4074071         0.4074071    -0.7885015     0.8085051
+40    0.01000185 0.4080219         0.4080219    -0.7897064     0.8097101
+41    0.01000185 0.4065187         0.4065187    -0.7867602     0.8067639
+42    0.01000185 0.4093731         0.4093731    -0.7923546     0.8123583
+43    0.01000185 0.4103368         0.4103368    -0.7942436     0.8142473
+44    0.01000185 0.4092669         0.4092669    -0.7921465     0.8121502
+45    0.01000185 0.4114510         0.4114510    -0.7964273     0.8164310
+46    0.01000185 0.4125961         0.4125961    -0.7986717     0.8186754
+47    0.01000185 0.4119097         0.4119097    -0.7973263     0.8173300
+48    0.01000185 0.4136044         0.4136044    -0.8006479     0.8206515
+49    0.01000185 0.4148215         0.4148215    -0.8030334     0.8230371
+50    0.01000185 0.4144608         0.4144608    -0.8023263     0.8223300
+51    0.01000185 0.4158052         0.4158052    -0.8049614     0.8249651
+52    0.01000185 0.4170264         0.4170264    -0.8073549     0.8273586
+53    0.01000185 0.4169333         0.4169333    -0.8071724     0.8271761
+54    0.01000185 0.4180325         0.4180325    -0.8093268     0.8293305
+55    0.01000185 0.4192185         0.4192185    -0.8116513     0.8316550
+56    0.01000185 0.4193393         0.4193393    -0.8118882     0.8318919
+57    0.01000185 0.4202710         0.4202710    -0.8137142     0.8337179
+58    0.01000185 0.4214017         0.4214017    -0.8159302     0.8359339
+59    0.01000185 0.4216893         0.4216893    -0.8164940     0.8364977
+60    0.01000185 0.4225097         0.4225097    -0.8181020     0.8381057
+61    0.01000185 0.4235774         0.4235774    -0.8201947     0.8401984
+62    0.01000185 0.4239920         0.4239920    -0.8210072     0.8410109
+63    0.01000185 0.4247411         0.4247411    -0.8224754     0.8424791
+64    0.01000185 0.4257458         0.4257458    -0.8244447     0.8444484
+65    0.01000185 0.4262547         0.4262547    -0.8254419     0.8454456
+66    0.01000185 0.4269599         0.4269599    -0.8268242     0.8468279
+67    0.01000185 0.4279061         0.4279061    -0.8286787     0.8486824
+68    0.01000185 0.4284830         0.4284830    -0.8298094     0.8498131
+69    0.01000185 0.4291630         0.4291630    -0.8311422     0.8511459
+70    0.01000185 0.4300571         0.4300571    -0.8328945     0.8528982
+71    0.01000185 0.4306816         0.4306816    -0.8341185     0.8541222
+72    0.01000185 0.4313483         0.4313483    -0.8354253     0.8554290
+73    0.01000185 0.4321975         0.4321975    -0.8370896     0.8570933
+74    0.01000185 0.4328540         0.4328540    -0.8383764     0.8583800
+75    0.01000185 0.4335148         0.4335148    -0.8396716     0.8596753
+76    0.01000185 0.4343261         0.4343261    -0.8412617     0.8612654
+77    0.01000185 0.4350029         0.4350029    -0.8425881     0.8625918
+78    0.01000185 0.4356620         0.4356620    -0.8438800     0.8638837
+79    0.01000185 0.4364419         0.4364419    -0.8454086     0.8654123
+80    0.01000185 0.4371303         0.4371303    -0.8467579     0.8667615
+81    0.01000185 0.4377899         0.4377899    -0.8480505     0.8680542
+82    0.01000185 0.4385440         0.4385440    -0.8495286     0.8695323
+83    0.01000185 0.4392379         0.4392379    -0.8508886     0.8708923
+84    0.01000185 0.4398986         0.4398986    -0.8521835     0.8721872
+85    0.01000185 0.4406317         0.4406317    -0.8536204     0.8736241
+86    0.01000185 0.4413267         0.4413267    -0.8549827     0.8749864
+87    0.01000185 0.4419885         0.4419885    -0.8562796     0.8762833
+88    0.01000185 0.4427045         0.4427045    -0.8576830     0.8776867
+89    0.01000185 0.4433977         0.4433977    -0.8590417     0.8790454
+90    0.01000185 0.4440600         0.4440600    -0.8603398     0.8803435
+91    0.01000185 0.4447620         0.4447620    -0.8617156     0.8817193
+92    0.01000185 0.4454515         0.4454515    -0.8630671     0.8830708
+93    0.01000185 0.4461136         0.4461136    -0.8643648     0.8843685
+94    0.01000185 0.4468040         0.4468040    -0.8657179     0.8857216
+95    0.01000185 0.4474886         0.4474886    -0.8670597     0.8870634
+96    0.01000185 0.4481498         0.4481498    -0.8683555     0.8883592
+97    0.01000185 0.4488304         0.4488304    -0.8696896     0.8896933
+98    0.01000185 0.4495094         0.4495094    -0.8710204     0.8910241
+99    0.01000185 0.4501688         0.4501688    -0.8723129     0.8923166
+100   0.01000185 0.4508412         0.4508412    -0.8736307     0.8936344</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> final.fit<span class="sc">@</span>h.t</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ht, <span class="fu">index</span>(cxw))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">index</span>(cxw), <span class="at">y =</span> ht)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">'Conditional Variance'</span>) <span class="sc">+</span> </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Date'</span>) <span class="sc">+</span> </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Volatality plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="financial_time_series_models_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Periods of very high volatility can be seen, especially in the late 2010’s.</p>
 
 
 

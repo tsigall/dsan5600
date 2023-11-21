@@ -484,7 +484,7 @@ ggplot() +
   geom_line(data = rmse1, aes(x = Date, y = unemployment),color = "blue") +
   geom_line(data = rmse2, aes(x = Date, y = unemployment),color = "red") +
   labs(
-    title = "CV RMSE for heater",
+    title = "CV RMSE for unemployment",
     x = "Date",
     y = "RMSE",
     guides(colour=guide_legend(title="Fit")))

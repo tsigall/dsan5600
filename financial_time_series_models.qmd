@@ -1,3 +1,139 @@
 ---
 title: "Financial Time Series Models (ARCH/GARCH)"
+editor_options: 
+  chunk_output_type: inline
+toc: false
 ---
+
+```{r setup, include = FALSE}
+library(plotly)
+library(caret)
+library(car)
+library(ggplot2)
+library(forecast)
+library(gridExtra)
+library(tseries)
+library(quantmod)
+library(fGarch)
+library(FinTS)
+```
+
+An interesting financial asset to model that would be useful in predicting crime rates would be CoreCivic (`CXW`), a company that owns and operates many private prisons throughout the United States. We will go through the model build process with this asset, considering financial time series models in addition to the traditional ones we have already seen. 
+
+```{r}
+# obtain data
+cxw <- getSymbols("CXW", auto.assign = FALSE, from = "2006-01-01", to = "2022-12-31")
+chartSeries(cxw, theme = chartTheme("white"), # Theme
+            bar.type = "hlc",  # High low close 
+            up.col = "green",  # Up candle color
+            dn.col = "red")   # Down candle color
+```
+
+```{r}
+returns <- cxw$CXW.Adjusted %>% diff()
+autoplot(returns) + ggtitle("CXW Returns")
+```
+
+Volatility clustering is visible, an ARCH model may be appropriate.
+
+```{r}
+grid.arrange(ggAcf(returns),
+             ggPacf(returns),
+             ncol = 1)
+
+grid.arrange(ggAcf(abs(returns)),
+             ggPacf(returns^2),
+             ncol = 1)
+```
+
+Correlation is visible in both plots, meaning conditional variation is present. 
+
+```{r}
+ArchTest(returns, lags = 1, demean = TRUE)
+```
+
+The p-value is < 0.05, we reject the null hypothesis and can conclude that ARCH(1) effects are present in our data.
+
+```{r}
+grid.arrange(ggAcf(returns),
+             ggPacf(returns),
+             ncol = 1)
+```
+
+The first differenced series looks good, we will try the following parameters:
+
+p: 1, 3
+
+d: 0, 1
+
+q: 1, 3
+
+```{r}
+i <- 1
+
+temp <- data.frame()
+ls <- matrix(rep(NA,6*17), nrow=17)
+
+for(p in c(1, 3)){
+  for(q in c(1, 3)){
+    for(d in c(0, 1)){
+      if(p + d + q <= 8){
+        model <- Arima(cxw$CXW.Adjusted, order = c(p, d, q), include.drift = FALSE)
+        ls[i,] <- c(p, d, q, model$aic, model$bic, model$aicc)
+        i <- i +1
+      }
+    }
+  }
+}
+
+temp <- as.data.frame(ls)
+names(temp) <- c("p","d","q","AIC","BIC","AICc")
+temp[which.min(temp$AIC),]
+temp[which.min(temp$BIC),]
+temp[which.min(temp$AICc),]
+
+arima113 <- Arima(cxw$CXW.Adjusted, order = c(1, 1, 3), include.drift = FALSE)
+arima.res <- arima113$residuals
+auto.arima(cxw$CXW.Adjusted)
+```
+
+An ARIMA(1, 1, 3) model was clearly the best model, both when fitting by hand and when using auto.arima().
+
+```{r}
+grid.arrange(ggAcf(arima.res^2), ggPacf(arima.res^2), ncol = 1)
+
+model <- list()
+cc <- 1
+
+for (p in 1:7) {
+  for(q in 1:7) {
+    model[[cc]] <- garch(arima.res, order = c(q, p), trace = FALSE)
+    cc <- cc + 1
+  }
+}
+
+ARCH_AIC <- sapply(model, AIC)
+model[[which(ARCH_AIC == min(ARCH_AIC))]]
+min(ARCH_AIC)
+summary(garch(arima.res, order = c(7, 1), trace = FALSE))
+```
+
+```{r}
+summary(arima.fit <- Arima(cxw$CXW.Adjusted, order = c(1, 1, 3), include.drift = FALSE))
+summary(final.fit <- garchFit(~garch(1, 7), arima.res, trace = FALSE))
+```
+
+GARCH(1, 7) is the best model. p-Values for the Ljung-Box test indicate that there is not enough evidence to reject the null hypothesis that there is no autocorrelation between residuals, meaning this is an adequate model. 
+
+```{r}
+predict(final.fit, n.ahead = 100, plot = TRUE, table = FALSE)
+ht <- final.fit@h.t
+data <- data.frame(ht, index(cxw))
+ggplot(data, aes(x = index(cxw), y = ht)) +
+  geom_line() +
+  ylab('Conditional Variance') + 
+  xlab('Date') + 
+  ggtitle("Volatality plot")
+```
+
+Periods of very high volatility can be seen, especially in the late 2010's.
