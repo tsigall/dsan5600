@@ -44,5 +44,8 @@
   },
   "data_cleaning.qmd": {
     "data_cleaning.html": "bb24ffdd"
+  },
+  "deep_learning_for_ts.ipynb": {
+    "deep_learning_for_ts.html": "43cb1209"
   }
 }
