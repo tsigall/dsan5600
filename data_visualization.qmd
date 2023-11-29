@@ -12,7 +12,7 @@ library(lubridate)
 library(plotly)
 library(kableExtra)
 use_condaenv("r-env", required = TRUE)
-load("raw_data.Rdata")
+load("data/raw_data.Rdata")
 ```
 
 ```{python, obtain_data, include = FALSE}
@@ -186,5 +186,16 @@ plot_ly(data = arrests_by_crime,
 This graph includes the eight most common types of arrests made over the time period. Some interesting patterns reveal themselves when the data are categorized as such, particularly the arrests for marijuana possession. They spike around 2011 but then drop off quickly and today are non-existent. This is an excellent example to use to observe the effect that real-world events have on the trends we observe here. In 2014, New York City mayor Bill de Blasio told the NYPD to stop arrests for marijuana possession and instead issue tickets in attempts to decriminalize marijuana [@Dizard_2014]. A drop in arrests is clearly seen around that time period. Around the same time, New York Governor Andrew Cuomo signed legislation which would allow the use of cannabis for medicinal purposes [@Campbell_2014]. Then, in 2021, recreational cannabis was legalized for adults over 21, up to a specific amount. Since then, the NYPD has not listed any crime related to marijuana, as evidenced by there being no arrests for possession on the graph past 2021.
 
 ```{r save_data, include = FALSE}
-save(list = c("arrests_by_crime", "arrests_by_date"), file = "arrest_data.Rdata")
+save(list = c("arrests_by_crime", "arrests_by_date"), file = "data/arrest_data.Rdata")
+```
+
+```{r}
+arrests_by_crime <- arrests_by_crime %>%
+  mutate(month = format(ymd(month), "%d.%m.%Y"))
+
+arrests_by_date <- arrests_by_date %>%
+  mutate(month = format(ymd(month), "%d.%m.%Y"))
+
+write.csv(arrests_by_crime, "data/arrests_by_crime.csv", row.names = FALSE)
+write.csv(arrests_by_date, "data/arrests_by_date.csv", row.names = FALSE)
 ```

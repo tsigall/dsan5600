@@ -151,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./deep_learning_for_ts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Visualization in TS</span></a>
+ <span class="menu-text">Deep Learning for Time Series</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -460,6 +460,27 @@ Training set -121.183 1714.047 1202.141 -0.5315764 5.725607 0.46482 0.02141618</
 <div class="cell">
 <div class="cell-output-display">
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Fit a normalized model for later comparison.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: scale(arrests_ts) 
+ARIMA(1,1,1) 
+
+Coefficients:
+         ar1      ma1
+      0.1167  -0.6958
+s.e.  0.1340   0.1071
+
+sigma^2 = 0.09398:  log likelihood = -47.28
+AIC=100.56   AICc=100.68   BIC=110.5
+
+Training set error measures:
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.02560131 0.3042994 0.2212103 4.521114 83.05331 0.8148428
+                  ACF1
+Training set -0.022668</code></pre>
 </div>
 </div>
 </section>

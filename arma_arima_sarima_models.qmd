@@ -22,7 +22,7 @@ library(tseries)
 library(gridExtra)
 library(kableExtra)
 library(astsa)
-load("arrests_ts.Rdata")
+load("data/arrests_ts.Rdata")
 ```
 
 ::: panel-tabset
@@ -196,6 +196,16 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
+
+
+Fit a normalized model for later comparison.
+
+```{r, "code-fold = TRUE"}
+model_fit <- Arima(scale(arrests_ts), order = c(1, 1, 1), seasonal = c(1, 1, 1))
+summary(model_fit)
+```
+
+
 
 # Assault
 

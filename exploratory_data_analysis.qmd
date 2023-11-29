@@ -22,8 +22,8 @@ library(plotly)
 ```
 
 ```{r load_data, include = FALSE}
-load("arrest_data.Rdata")
-recidivism <- read.csv("recidivism.csv")
+load("data/arrest_data.Rdata")
+recidivism <- read.csv("data/recidivism.csv")
 ```
 
 ## By Crime
@@ -617,5 +617,7 @@ save(arrests_ts,
        marijuana_pos_ts, 
        motor_theft_ts,
        murder_ts,
-       robbery_ts, file = "arrests_ts.Rdata")
+       robbery_ts, file = "data/arrests_ts.Rdata")
+
+write.csv(arrests_ts, "data/arrests_ts.csv")
 ```

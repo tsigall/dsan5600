@@ -21,9 +21,9 @@ library(tseries)
 library(gridExtra)
 library(kableExtra)
 library(astsa)
-load("unrate.Rdata")
-load("arrest_data.Rdata")
-load("arrests_ts.Rdata")
+load("data/unrate.Rdata")
+load("data/arrest_data.Rdata")
+load("data/arrests_ts.Rdata")
 ```
 
 ```{r}
