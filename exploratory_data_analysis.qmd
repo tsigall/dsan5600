@@ -48,7 +48,7 @@ There appears to be some seasonality in the plot, as there are noticeable dips i
 #### Lag Plots
 
 ```{r lag_plots, echo = FALSE}
-arrests_ts <- ts(arrests_by_date$total, start = c(2006, 1), frequency = 12)
+arrests_ts <- ts(scale(arrests_by_date$total), start = c(2006, 1), frequency = 12)
 
 ts_lags(arrests_ts, lags = 1:12)
 ```
@@ -100,7 +100,6 @@ The ADF tests returns a p-value of 0.26, meaning we do not have enough evidence 
 ```{r detrend_and_difference}
 detrend <- resid(lm(arrests_by_date$total ~ arrests_by_date$month, na.action = NULL))
 difference <- diff(arrests_ts)
-
 ```
 
 ```{r multifigure_1}
@@ -138,7 +137,7 @@ This time series follows a very similar pattern to the overall arrests series. T
 #### Lag Plots
 
 ```{r, echo = FALSE}
-assault_ts <- ts(arrests_by_crime$assault, start = c(2006, 1), frequency = 12)
+assault_ts <- ts(scale(arrests_by_crime$assault), start = c(2006, 1), frequency = 12)
 
 ts_lags(assault_ts, lags = 1:12)
 ```
@@ -223,7 +222,7 @@ This looks different from the overall arrests time series. There is a clear nega
 #### Lag Plots
 
 ```{r}
-controlled_pos_ts <- ts(arrests_by_crime$controlled_substance_possession, start = c(2006, 1), frequency = 12)
+controlled_pos_ts <- ts(scale(arrests_by_crime$controlled_substance_possession), start = c(2006, 1), frequency = 12)
 
 ts_lags(controlled_pos_ts, lags = 1:12)
 ```
@@ -307,7 +306,7 @@ This is an interesting one, as there is a clear positive trend at the start of t
 #### Lag Plots
 
 ```{r}
-marijuana_pos_ts <- ts(arrests_by_crime$marijuana_possession, start = c(2006, 1), frequency = 12)
+marijuana_pos_ts <- ts(scale(arrests_by_crime$marijuana_possession), start = c(2006, 1), frequency = 12)
 
 ts_lags(marijuana_pos_ts, lags = 1:12)
 ```
@@ -388,7 +387,7 @@ This series looks the most stationary out of any so far, there really does not s
 #### Lag Plots
 
 ```{r}
-motor_theft_ts <- ts(arrests_by_crime$motor_vehicle_theft, start = c(2006, 1), frequency = 12)
+motor_theft_ts <- ts(scale(arrests_by_crime$motor_vehicle_theft), start = c(2006, 1), frequency = 12)
 
 ts_lags(motor_theft_ts, lags = 1:12)
 ```
@@ -469,7 +468,7 @@ The series here is mostly stationary until recently when the trend begins to inc
 #### Lag Plots
 
 ```{r}
-murder_ts <- ts(arrests_by_crime$murder, start = c(2006, 1), frequency = 12)
+murder_ts <- ts(scale(arrests_by_crime$murder), start = c(2006, 1), frequency = 12)
 
 ts_lags(murder_ts, lags = 1:12)
 ```
@@ -549,7 +548,7 @@ There is a clear negative trend throughout the series until 2020 when it changes
 #### Lag Plots
 
 ```{r}
-robbery_ts <- ts(arrests_by_crime$robbery, start = c(2006, 1), frequency = 12)
+robbery_ts <- ts(scale(arrests_by_crime$robbery), start = c(2006, 1), frequency = 12)
 
 ts_lags(robbery_ts, lags = 1:12)
 ```

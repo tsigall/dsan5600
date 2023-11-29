@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Crime as a Time Series"
 author: "Thomas Sigall"
 bibliography: reference.bib
 ---
@@ -25,19 +25,21 @@ This approach can also be seen when analyzing crime alongside the economy, as th
 ```{mermaid}
 flowchart TD
 
-crime(Crime) --> types(Types of Crime)
-crime --> policy(Policy Impact)
-crime --> reasons(Reasons for Crime)
-crime --> rehab(Rehabilitation)
-crime --> economy(The Economy)
+data(Raw Crime Data) --> crime(Model Crime)
+data --> indicators(Model Economic Indicators)
+data --> stocks(Model Stocks)
 
-types --> types2(Violent vs. Non-Violent)
-policy --> policy2(Government Action)
-reasons --> reasons2(Drugs, Mental Health,\n Economic Situation, etc.)
-rehab --> rehab2(How to Help Criminals)
-economy --> economy2(Economic Influences\n on Crime)
+crime --> intervention(Intervention Analysis)
+indicators --> intervention
+stocks --> intervention
 
 ```
+
+The overall process can be seen in the flowchart above and can be understood as follows:
+
+1. Raw crime data will be obtained
+2. Various models including those using just the raw crime data, models with economic indicators as exogenous variables, and financial models with related assets will all be fit. 
+3. The best and most accurate models from those will be used in an interrupted time series analysis using various events as the interventions to compare the effect those events had on crime rate to determine which events were the most and least successful at impacting those rates. 
 
 # Guiding Questions
 

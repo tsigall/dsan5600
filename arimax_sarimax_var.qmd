@@ -58,7 +58,8 @@ We have a univariate time series in total arrests and we want to see the effect 
 
 ```{r}
 month <- as.Date(arrests_by_crime$month)
-dd <- data.frame(month, arrests = arrests_ts, unrate = unrate_ts)
+dd <- data.frame(month, arrests = arrests_ts, unrate = unrate_ts) %>%
+  rename(arrests = Series.1)
 
 kable(head(dd))
 ```

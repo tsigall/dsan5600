@@ -59,10 +59,6 @@ ggplotly(arrests_plot)
 
 It is important to get an understanding of what types of crimes are commonly committed in New York City, the area we are currently looking at. We want to look at crimes that give us a good idea of the state of public safety in New York City. Those crimes along with their total counts from 2006-2022 are listed below.
 
-Homicide, Burglary, Drug-Related Offenses, Assault, Motor Vehicle Theft, Robbery, Drug-Related Violent Crimes, Domestic Violence
-
-Weapons possession?
-
 ```{r arrests_by_crime, echo = FALSE}
 arrests_by_crime <- df %>%
   mutate(pd_desc = ifelse(str_detect(pd_desc, "ASSAULT"), "assault",
@@ -79,7 +75,6 @@ arrests_by_crime <- df %>%
   filter(str_detect(pd_desc, "assault|robbery|marijuana_possession|marijuana_sale|controlled|substance_possession|controlled_substance_sale|murder|motor_vehicle_theft|larceny"))
 
 kable(arrests_by_crime)
-arrests_by_crime
 ```
 
 These categories include multiple types of crimes, each of which is outlined below.
@@ -89,7 +84,7 @@ arrests_by_crime_detail <- df %>%
   filter(str_detect(pd_desc, "ASSAULT|ROBBERY|MARIJUANA, POSSESSION|MARIJUANA, SALE|CE,P|NCE, PE,I|CE, I|E,S|E, S|MURDER,UNCLASSIFIED|AUTO|LARCENY")) %>% group_by(pd_desc) %>%
   summarize(total = n())
 
-arrests_by_crime_detail
+kable(arrests_by_crime_detail)
 ```
 
 Lets look at how each of these crimes is changing over time.
@@ -157,22 +152,8 @@ plot_ly(data = arrests_by_crime,
         showlegend = TRUE) %>%
   add_trace(data = arrests_by_crime, 
             x = ~month, 
-            y = ~marijuana_sale, 
-            name = "Marijuana Sale",
-            type = "scatter",
-            mode = "lines",
-        showlegend = TRUE) %>%
-  add_trace(data = arrests_by_crime, 
-            x = ~month, 
             y = ~controlled_substance_possession, 
             name = "Controlled Substance Possession",
-            type = "scatter",
-            mode = "lines",
-        showlegend = TRUE) %>%
-  add_trace(data = arrests_by_crime, 
-            x = ~month, 
-            y = ~controlled_substance_sale, 
-            name = "Controlled Substance Sale/Intent",
             type = "scatter",
             mode = "lines",
         showlegend = TRUE) %>%
@@ -189,7 +170,7 @@ This graph includes the eight most common types of arrests made over the time pe
 save(list = c("arrests_by_crime", "arrests_by_date"), file = "data/arrest_data.Rdata")
 ```
 
-```{r}
+```{r, include = FALSE}
 arrests_by_crime <- arrests_by_crime %>%
   mutate(month = format(ymd(month), "%d.%m.%Y"))
 

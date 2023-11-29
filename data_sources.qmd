@@ -2,6 +2,9 @@
 title: "Data Sources"
 author: "Thomas Sigall"
 bibliography: reference.bib
+editor:
+  markdown:
+    wrap: 72
 ---
 
 ```{r include = FALSE}
@@ -13,10 +16,8 @@ The data needed for this project can be divided as such:
 ```{mermaid}
 flowchart TD
 raw(Raw Crime Data)
-individuals("Victimization and Recidivism")
 government(Government Programs) 
 economy(Economic Data)
-
 ```
 
 # Raw Crime Data
@@ -25,13 +26,6 @@ The Socrata Open Data API (SODA) gives access to many sources of government data
 
 [![](data/chicago-data-portal.png)](https://data.cityofchicago.org/) [![](data/nyc-open-data-logo.svg){width="50%"}](https://opendata.cityofnewyork.us/)
 
-# Victims and Recidivism
-
-The National Crime Victimization Survey (NCVS) Series is an important source of information on criminal victimization.
-
-[![](data/NCVS-Logo.jpeg){width="50%" fig-align="center"}](https://bjs.ojp.gov/data-collection/ncvs)
-
-Other more specific studies such as "Gender, Mental Illness, and Crime in the United States" [@thompson_gender_2011] help to give more detail on why crimes were commited by getting more detail on the individuals who commited them. In addition there is a useful [dataset](https://data.ojp.usdoj.gov/Courts/NIJ-s-Recidivism-Challenge-Full-Dataset/ynf5-u8nk) published by the Department of Justice with recidivism data, meaning data specifically looking at which criminals commit crimes again once they are out of prison and which ones do not.
 
 # Government Programs
 
@@ -39,6 +33,7 @@ Detailed time-series data is not critical here, but rather an understanding of w
 
 # Economic Data
 
+## General Economic Statistics
 Economic data can be accessed in similar ways as crime data, as the data needed for this project is maintained by the government. For example, comparing unemployment rate against crime rate could be a useful comparison. This unemployment data would be obtained from [FRED](https://fred.stlouisfed.org/). An example with data from [here](https://fred.stlouisfed.org/series/UNRATE) can be seen below.
 
 ```{r echo = FALSE}
@@ -49,5 +44,10 @@ plot_ly(x = unrate$DATE, y = unrate$UNRATE, type = 'scatter', mode = 'lines') %>
          xaxis = list(title = "Date"),
          yaxis = list(title = "Unemployment Rate"))
 ```
+
+## Specific Asset Data
+![](data/CoreCivic_Logo.png){width="40%"}
+
+When fitting financial time series models, certain stocks can give important information about changes in crime rates due to their relation to crimes. For example, CoreCivic , a company that owns and operates private prisons across the United States, would be a worthwhile stock to look at to attempt to better understand crime rates. This data will be obtained through the `quantmod` package in R. 
 
 # References
