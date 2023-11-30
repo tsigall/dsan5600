@@ -345,32 +345,32 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2006-01-01</td>
-<td style="text-align: right;">31161</td>
+<td style="text-align: right;">0.5041010</td>
 <td style="text-align: right;">5.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-02-01</td>
-<td style="text-align: right;">28962</td>
+<td style="text-align: right;">0.2405968</td>
 <td style="text-align: right;">5.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-03-01</td>
-<td style="text-align: right;">34014</td>
+<td style="text-align: right;">0.8459733</td>
 <td style="text-align: right;">4.8</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-04-01</td>
-<td style="text-align: right;">30636</td>
+<td style="text-align: right;">0.4411907</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-05-01</td>
-<td style="text-align: right;">32368</td>
+<td style="text-align: right;">0.6487347</td>
 <td style="text-align: right;">4.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-06-01</td>
-<td style="text-align: right;">30540</td>
+<td style="text-align: right;">0.4296871</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 </tbody>
@@ -393,18 +393,18 @@ div.csl-indent {
 Regression with ARIMA(0,1,2)(2,0,0)[12] errors 
 
 Coefficients:
-          ma1      ma2    sar1    sar2       xreg
-      -0.4433  -0.2617  0.4377  0.3516  -415.3528
-s.e.   0.0716   0.0717  0.0636  0.0664   104.6520
+          ma1      ma2    sar1    sar2     xreg
+      -0.4433  -0.2617  0.4377  0.3516  -0.0498
+s.e.   0.0716   0.0717  0.0636  0.0664   0.0125
 
-sigma^2 = 3278067:  log likelihood = -1813.8
-AIC=3639.59   AICc=3640.02   BIC=3659.47
+sigma^2 = 0.04707:  log likelihood = 19.18
+AIC=-26.36   AICc=-25.93   BIC=-6.48
 
 Training set error measures:
-                    ME     RMSE      MAE        MPE     MAPE      MASE
-Training set -72.90552 1783.719 1245.697 -0.4868256 5.528259 0.4816615
+                       ME      RMSE      MAE      MPE     MAPE      MASE
+Training set -0.008752053 0.2137413 0.149255 18.41134 68.24703 0.4816106
                     ACF1
-Training set -0.02051394</code></pre>
+Training set -0.02046308</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
@@ -414,7 +414,7 @@ Training set -0.02051394</code></pre>
     Ljung-Box test
 
 data:  Residuals from Regression with ARIMA(0,1,2)(2,0,0)[12] errors
-Q* = 23.864, df = 20, p-value = 0.2484
+Q* = 23.882, df = 20, p-value = 0.2476
 
 Model df: 4.   Total lags used: 24</code></pre>
 </div>
@@ -431,17 +431,17 @@ Call:
 lm(formula = arrests ~ unrate, data = dd)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--22923  -6217   2578   6683  11433 
+    Min      1Q  Median      3Q     Max 
+-2.7469 -0.7450  0.3090  0.8008  1.3700 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  24364.8     1627.5  14.971   &lt;2e-16 ***
-unrate         409.5      240.4   1.704     0.09 .  
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept) -0.31028    0.19502  -1.591    0.113  
+unrate       0.04907    0.02880   1.704    0.090 .
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 8306 on 202 degrees of freedom
+Residual standard error: 0.9953 on 202 degrees of freedom
 Multiple R-squared:  0.01416,   Adjusted R-squared:  0.009283 
 F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 </div>
@@ -501,9 +501,9 @@ F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3439.632</td>
-<td style="text-align: right;">3462.398</td>
-<td style="text-align: right;">3440.244</td>
+<td style="text-align: right;">-9.61531</td>
+<td style="text-align: right;">13.1506</td>
+<td style="text-align: right;">-9.003288</td>
 </tr>
 </tbody>
 </table>
@@ -540,9 +540,9 @@ F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">3439.95</td>
-<td style="text-align: right;">3456.211</td>
-<td style="text-align: right;">3440.274</td>
+<td style="text-align: right;">-9.297588</td>
+<td style="text-align: right;">6.963779</td>
+<td style="text-align: right;">-8.973264</td>
 </tr>
 </tbody>
 </table>
@@ -579,9 +579,9 @@ F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3439.632</td>
-<td style="text-align: right;">3462.398</td>
-<td style="text-align: right;">3440.244</td>
+<td style="text-align: right;">-9.61531</td>
+<td style="text-align: right;">13.1506</td>
+<td style="text-align: right;">-9.003288</td>
 </tr>
 </tbody>
 </table>
@@ -664,32 +664,32 @@ Warning in window.default(x, ...): 'end' value not changed</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2006-01-01</td>
-<td style="text-align: right;">90</td>
+<td style="text-align: right;">0.2787145</td>
 <td style="text-align: right;">5.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-02-01</td>
-<td style="text-align: right;">56</td>
+<td style="text-align: right;">-1.1396010</td>
 <td style="text-align: right;">5.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-03-01</td>
-<td style="text-align: right;">74</td>
+<td style="text-align: right;">-0.3887281</td>
 <td style="text-align: right;">4.8</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-04-01</td>
-<td style="text-align: right;">84</td>
+<td style="text-align: right;">0.0284236</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-05-01</td>
-<td style="text-align: right;">74</td>
+<td style="text-align: right;">-0.3887281</td>
 <td style="text-align: right;">4.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-06-01</td>
-<td style="text-align: right;">79</td>
+<td style="text-align: right;">-0.1801522</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 </tbody>
@@ -713,15 +713,17 @@ Regression with ARIMA(0,1,1) errors
 
 Coefficients:
           ma1     xreg
-      -0.7259  -0.4942
-s.e.   0.0674   0.9076
+      -0.7259  -0.0206
+s.e.   0.0674   0.0379
 
-sigma^2 = 280.1:  log likelihood = -859.4
-AIC=1724.8   AICc=1724.92   BIC=1734.74
+sigma^2 = 0.4875:  log likelihood = -214.49
+AIC=434.98   AICc=435.1   BIC=444.92
 
 Training set error measures:
-                   ME     RMSE      MAE       MPE     MAPE     MASE       ACF1
-Training set 1.041573 16.61411 12.66717 -2.430242 15.61884 0.696676 0.05569138</code></pre>
+                   ME      RMSE       MAE      MPE     MAPE      MASE
+Training set 0.043429 0.6930606 0.5283975 12.96559 166.7963 0.6966557
+                   ACF1
+Training set 0.05571558</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
@@ -731,7 +733,7 @@ Training set 1.041573 16.61411 12.66717 -2.430242 15.61884 0.696676 0.05569138</
     Ljung-Box test
 
 data:  Residuals from Regression with ARIMA(0,1,1) errors
-Q* = 49.231, df = 23, p-value = 0.001161
+Q* = 49.236, df = 23, p-value = 0.001159
 
 Model df: 1.   Total lags used: 24</code></pre>
 </div>
@@ -749,16 +751,14 @@ lm(formula = murder ~ unrate, data = dd)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--37.977 -16.070  -5.972   6.820  77.749 
+-1.5842 -0.6704 -0.2491  0.2845  3.2433 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  89.0559     4.6885   18.99   &lt;2e-16 ***
-unrate       -0.9073     0.6925   -1.31    0.192    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  0.23933    0.19558   1.224    0.223
+unrate      -0.03785    0.02889  -1.310    0.192
 
-Residual standard error: 23.93 on 202 degrees of freedom
+Residual standard error: 0.9982 on 202 degrees of freedom
 Multiple R-squared:  0.008426,  Adjusted R-squared:  0.003517 
 F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 </div>
@@ -805,9 +805,9 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1723.056</td>
-<td style="text-align: right;">1732.996</td>
-<td style="text-align: right;">1723.177</td>
+<td style="text-align: right;">433.2384</td>
+<td style="text-align: right;">443.1781</td>
+<td style="text-align: right;">433.359</td>
 </tr>
 </tbody>
 </table>
@@ -838,9 +838,9 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1723.056</td>
-<td style="text-align: right;">1732.996</td>
-<td style="text-align: right;">1723.177</td>
+<td style="text-align: right;">433.2384</td>
+<td style="text-align: right;">443.1781</td>
+<td style="text-align: right;">433.359</td>
 </tr>
 </tbody>
 </table>
@@ -871,9 +871,9 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1723.056</td>
-<td style="text-align: right;">1732.996</td>
-<td style="text-align: right;">1723.177</td>
+<td style="text-align: right;">433.2384</td>
+<td style="text-align: right;">443.1781</td>
+<td style="text-align: right;">433.359</td>
 </tr>
 </tbody>
 </table>
@@ -925,32 +925,32 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">2006-01-01</td>
-<td style="text-align: right;">1072</td>
+<td style="text-align: right;">1.2970231</td>
 <td style="text-align: right;">5.0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-02-01</td>
-<td style="text-align: right;">890</td>
+<td style="text-align: right;">0.0812727</td>
 <td style="text-align: right;">5.2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-03-01</td>
-<td style="text-align: right;">1081</td>
+<td style="text-align: right;">1.3571426</td>
 <td style="text-align: right;">4.8</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-04-01</td>
-<td style="text-align: right;">838</td>
+<td style="text-align: right;">-0.2660846</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2006-05-01</td>
-<td style="text-align: right;">1063</td>
+<td style="text-align: right;">1.2369036</td>
 <td style="text-align: right;">4.4</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2006-06-01</td>
-<td style="text-align: right;">1143</td>
+<td style="text-align: right;">1.7712994</td>
 <td style="text-align: right;">4.5</td>
 </tr>
 </tbody>
@@ -974,16 +974,16 @@ AIC(n)  HQ(n)  SC(n) FPE(n)
      3      3      3      3 
 
 $criteria
-                 1           2           3           4           5           6
-AIC(n)    8.811450    8.653570    8.542288    8.559735    8.554125    8.545074
-HQ(n)     8.866017    8.735420    8.651422    8.696153    8.717826    8.736058
-SC(n)     8.946207    8.855705    8.811802    8.896628    8.958396    9.016724
-FPE(n) 6710.718932 5730.792125 5127.543707 5218.254569 5189.751973 5143.950006
-                 7           8           9          10
-AIC(n)    8.576251    8.582496    8.587842    8.611119
-HQ(n)     8.794519    8.828047    8.860677    8.911237
-SC(n)     9.115279    9.188902    9.261627    9.352283
-FPE(n) 5308.169440 5343.126431 5373.917935 5503.165040</code></pre>
+                1          2          3          4          5          6
+AIC(n) -1.2058407 -1.3637208 -1.4750019 -1.4575550 -1.4631654 -1.4722165
+HQ(n)  -1.1512737 -1.2818704 -1.3658681 -1.3211377 -1.2994647 -1.2812322
+SC(n)  -1.0710836 -1.1615852 -1.2054878 -1.1206624 -1.0588943 -1.0005668
+FPE(n)  0.2994437  0.2557177  0.2287997  0.2328474  0.2315755  0.2295318
+                7          8          9         10
+AIC(n) -1.4410391 -1.4347946 -1.4294481 -1.4061713
+HQ(n)  -1.2227714 -1.1892435 -1.1566135 -1.1060532
+SC(n)  -0.9020109 -0.8283880 -0.7556629 -0.6650076
+FPE(n)  0.2368595  0.2384194  0.2397933  0.2455606</code></pre>
 </div>
 </div>
 <p>Clearly p = 3 is a good parameter, we will also try VAR(1) in addition to VAR(3)</p>
@@ -995,7 +995,7 @@ VAR Estimation Results:
 Endogenous variables: robbery, unrate 
 Deterministic variables: both 
 Sample size: 203 
-Log Likelihood: -1463.609 
+Log Likelihood: -446.854 
 Roots of the characteristic polynomial:
 0.9406 0.2057
 Call:
@@ -1006,16 +1006,16 @@ Estimation results for equation robbery:
 ======================================== 
 robbery = robbery.l1 + unrate.l1 + const + trend 
 
-            Estimate Std. Error t value Pr(&gt;|t|)    
-robbery.l1   0.20839    0.06938   3.004  0.00301 ** 
-unrate.l1   -8.72946    2.91948  -2.990  0.00314 ** 
-const      903.78956   82.66946  10.933  &lt; 2e-16 ***
-trend       -1.50118    0.17672  -8.495  4.6e-15 ***
+           Estimate Std. Error t value Pr(&gt;|t|)    
+robbery.l1  0.20839    0.06938   3.004  0.00301 ** 
+unrate.l1  -0.05831    0.01950  -2.990  0.00314 ** 
+const       1.39536    0.19884   7.018 3.47e-11 ***
+trend      -0.01003    0.00118  -8.495 4.60e-15 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
-Residual standard error: 96.96 on 199 degrees of freedom
+Residual standard error: 0.6477 on 199 degrees of freedom
 Multiple R-Squared: 0.5853, Adjusted R-squared: 0.579 
 F-statistic: 93.62 on 3 and 199 DF,  p-value: &lt; 2.2e-16 
 
@@ -1024,11 +1024,11 @@ Estimation results for equation unrate:
 ======================================= 
 unrate = robbery.l1 + unrate.l1 + const + trend 
 
-             Estimate Std. Error t value Pr(&gt;|t|)    
-robbery.l1 -0.0002225  0.0005965  -0.373    0.710    
-unrate.l1   0.9379922  0.0251024  37.367   &lt;2e-16 ***
-const       0.7071527  0.7108128   0.995    0.321    
-trend      -0.0012162  0.0015194  -0.800    0.424    
+            Estimate Std. Error t value Pr(&gt;|t|)    
+robbery.l1 -0.033302   0.089298  -0.373   0.7096    
+unrate.l1   0.937992   0.025102  37.367   &lt;2e-16 ***
+const       0.511873   0.255939   2.000   0.0469 *  
+trend      -0.001216   0.001519  -0.800   0.4244    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1040,9 +1040,9 @@ F-statistic: 505.5 on 3 and 199 DF,  p-value: &lt; 2.2e-16
 
 
 Covariance matrix of residuals:
-         robbery  unrate
-robbery 9401.877 -2.6771
-unrate    -2.677  0.6951
+         robbery   unrate
+robbery  0.41953 -0.01788
+unrate  -0.01788  0.69508
 
 Correlation matrix of residuals:
          robbery   unrate
@@ -1056,7 +1056,7 @@ VAR Estimation Results:
 Endogenous variables: robbery, unrate 
 Deterministic variables: both 
 Sample size: 201 
-Log Likelihood: -1413.95 
+Log Likelihood: -407.212 
 Roots of the characteristic polynomial:
 0.9289 0.6725 0.5582 0.5582 0.3277 0.3277
 Call:
@@ -1068,19 +1068,19 @@ Estimation results for equation robbery:
 robbery = robbery.l1 + unrate.l1 + robbery.l2 + unrate.l2 + robbery.l3 + unrate.l3 + const + trend 
 
             Estimate Std. Error t value Pr(&gt;|t|)    
-robbery.l1   0.11734    0.06921   1.695  0.09162 .  
-unrate.l1  -12.27304    8.36123  -1.468  0.14377    
-robbery.l2   0.19228    0.06843   2.810  0.00547 ** 
-unrate.l2  -13.60799   13.07032  -1.041  0.29911    
-robbery.l3   0.21359    0.07056   3.027  0.00281 ** 
-unrate.l3   21.96316    8.28195   2.652  0.00867 ** 
-const      536.28009  113.03850   4.744 4.06e-06 ***
-trend       -0.91250    0.21922  -4.162 4.74e-05 ***
+robbery.l1  0.117336   0.069210   1.695 0.091619 .  
+unrate.l1  -0.081983   0.055853  -1.468 0.143772    
+robbery.l2  0.192277   0.068429   2.810 0.005467 ** 
+unrate.l2  -0.090901   0.087309  -1.041 0.299115    
+robbery.l3  0.213591   0.070565   3.027 0.002808 ** 
+unrate.l3   0.146713   0.055323   2.652 0.008669 ** 
+const       0.786443   0.230902   3.406 0.000802 ***
+trend      -0.006095   0.001464  -4.162 4.74e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
-Residual standard error: 91.34 on 193 degrees of freedom
+Residual standard error: 0.6101 on 193 degrees of freedom
 Multiple R-Squared: 0.6397, Adjusted R-squared: 0.6267 
 F-statistic: 48.96 on 7 and 193 DF,  p-value: &lt; 2.2e-16 
 
@@ -1089,15 +1089,15 @@ Estimation results for equation unrate:
 ======================================= 
 unrate = robbery.l1 + unrate.l1 + robbery.l2 + unrate.l2 + robbery.l3 + unrate.l3 + const + trend 
 
-             Estimate Std. Error t value Pr(&gt;|t|)    
-robbery.l1 -0.0010184  0.0005781  -1.762  0.07971 .  
-unrate.l1   1.3043726  0.0698394  18.677  &lt; 2e-16 ***
-robbery.l2  0.0012443  0.0005716   2.177  0.03070 *  
-unrate.l2  -0.5625895  0.1091733  -5.153 6.31e-07 ***
-robbery.l3  0.0010322  0.0005894   1.751  0.08149 .  
-unrate.l3   0.2039627  0.0691772   2.948  0.00359 ** 
-const      -0.9391336  0.9441842  -0.995  0.32115    
-trend       0.0016859  0.0018311   0.921  0.35835    
+            Estimate Std. Error t value Pr(&gt;|t|)    
+robbery.l1 -0.152458   0.086542  -1.762  0.07971 .  
+unrate.l1   1.304373   0.069839  18.677  &lt; 2e-16 ***
+robbery.l2  0.186272   0.085565   2.177  0.03070 *  
+unrate.l2  -0.562589   0.109173  -5.153 6.31e-07 ***
+robbery.l3  0.154524   0.088236   1.751  0.08149 .  
+unrate.l3   0.203963   0.069177   2.948  0.00359 ** 
+const       0.165255   0.288726   0.572  0.56774    
+trend       0.001686   0.001831   0.921  0.35835    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1109,9 +1109,9 @@ F-statistic: 264.2 on 7 and 193 DF,  p-value: &lt; 2.2e-16
 
 
 Covariance matrix of residuals:
-         robbery  unrate
-robbery 8342.568 -8.0105
-unrate    -8.011  0.5821
+         robbery   unrate
+robbery  0.37226 -0.05351
+unrate  -0.05351  0.58205
 
 Correlation matrix of residuals:
         robbery unrate
@@ -1130,10 +1130,10 @@ unrate   -0.115  1.000</code></pre>
 <p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 132.5029</code></pre>
+<pre><code>[1] 0.8851127</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 131.5768</code></pre>
+<pre><code>[1] 0.8789264</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.254941</code></pre>

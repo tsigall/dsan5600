@@ -267,8 +267,8 @@ div.csl-indent {
   <li><a href="#marijuana-possession" id="toc-marijuana-possession" class="nav-link active" data-scroll-target="#marijuana-possession">Marijuana Possession</a>
   <ul class="collapse">
   <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data Visualization</a></li>
-  <li><a href="#fitting-pre-intervention-model" id="toc-fitting-pre-intervention-model" class="nav-link" data-scroll-target="#fitting-pre-intervention-model">Fitting Pre-Intervention Model</a></li>
-  <li><a href="#the-counterfactual" id="toc-the-counterfactual" class="nav-link" data-scroll-target="#the-counterfactual">The Counterfactual</a></li>
+  <li><a href="#observing-treatment" id="toc-observing-treatment" class="nav-link" data-scroll-target="#observing-treatment">Observing Treatment</a></li>
+  <li><a href="#fitting-y-and-counterfactuals" id="toc-fitting-y-and-counterfactuals" class="nav-link" data-scroll-target="#fitting-y-and-counterfactuals">Fitting Y and Counterfactuals</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -306,18 +306,21 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/arrests_ts.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TSstudio)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/arrests_ts.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="marijuana-possession" class="level1">
 <h1>Marijuana Possession</h1>
-<p>The first intervention analysis we will do will be on a topic discussed previously in the data visualization section. The decriminalization of marijuana in New York City clearly changed how the statistics looked for arrests related to the possession or sale of marijuana. It would be interesting, now that we have an accurate model for predicting marijuana possession arrests, to see what would have happened to those statistics if the policy interventions never occured.</p>
+<p>The first intervention analysis we will do will be on a topic discussed previously in the data visualization section. The decriminalization of marijuana in New York City clearly changed how the statistics looked for arrests related to the possession or sale of marijuana. It would be interesting, now that we have an accurate model for predicting marijuana possession arrests, to see what would have happened to those statistics if the policy interventions never occurred.</p>
 <section id="data-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization">Data Visualization</h2>
 <p>First, lets look again at marijuana possession arrests over time, this time with policy interventions labelled on the graph.</p>
-<div class="cell">
+<div class="cell" width="5">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(marijuana_pos_ts,</span>
@@ -326,19 +329,19 @@ div.csl-indent {
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">2014.917</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">2015</span>, <span class="fl">1.5</span>, <span class="st">"Possession Fines Begin (Nov. 2014)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">2015</span>, <span class="fl">1.5</span>, <span class="st">"Possession Fines Begin</span><span class="sc">\n</span><span class="st">(Nov. 2014)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Marijuana Possession Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="interrupted_series_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>There definitely appears to be a difference in marijuana possession arrests before and after the intervention, which occured in November 2014 when New York City Mayor Bill De Blasio announced that tickets would be given to those possessing marijuana, rather than arresting offenders <span class="citation" data-cites="Dizard_2014">(<a href="#ref-Dizard_2014" role="doc-biblioref">Dizard 2014</a>)</span>. We should proceed with our interrupted time series analysis, modeling the events before the interruption and seeing how they would have looked had the change never occured.</p>
+<p>There definitely appears to be a difference in marijuana possession arrests before and after the intervention, which occured in November 2014 when New York City Mayor Bill De Blasio announced that tickets would be given to those possessing marijuana, rather than arresting offenders <span class="citation" data-cites="Dizard_2014">(<a href="#ref-Dizard_2014" role="doc-biblioref">Dizard 2014</a>)</span>. We should proceed with our interrupted time series analysis, modeling the events before the interruption and seeing how they would have looked had the change never occurred.</p>
 </section>
-<section id="fitting-pre-intervention-model" class="level2">
-<h2 class="anchored" data-anchor-id="fitting-pre-intervention-model">Fitting Pre-Intervention Model</h2>
-<p>Here we can see exaclty when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.</p>
-<div class="cell">
+<section id="observing-treatment" class="level2">
+<h2 class="anchored" data-anchor-id="observing-treatment">Observing Treatment</h2>
+<p>Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.</p>
+<div>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(marijuana_pos_ts) <span class="sc">%&gt;%</span></span>
@@ -364,7 +367,9 @@ div.csl-indent {
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(df.temp) <span class="sc">%&gt;%</span></span>
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_paper</span>(<span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <table class="lightable-paper table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
@@ -467,58 +472,47 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 
 
 </div>
 </div>
-<p>Now we fit a model considering these variables.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">lm</span> ( Y <span class="sc">~</span> T <span class="sc">+</span> D <span class="sc">+</span> P, <span class="at">data =</span> df)  <span class="co"># Our time series model</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = Y ~ T + D + P, data = df)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1.1152 -0.2462 -0.0220  0.2393  1.1799 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  1.045994   0.078737  13.285  &lt; 2e-16 ***
-T           -0.004045   0.001266  -3.196  0.00162 ** 
-D           -0.849367   0.113476  -7.485 2.23e-12 ***
-P           -0.009764   0.001937  -5.041 1.04e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4044 on 200 degrees of freedom
-Multiple R-squared:  0.8389,    Adjusted R-squared:  0.8365 
-F-statistic: 347.1 on 3 and 200 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Plotting the model onto the initial visualization.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(marijuana_pos_ts,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2005</span>,<span class="dv">2023</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">2014.917</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">2015</span>, <span class="fl">1.5</span>, <span class="st">"Possession Fines Begin (Nov. 2014)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Marijuana Possession Arrests"</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">index</span>(marijuana_pos_ts), ts<span class="sc">$</span>fitted.values, <span class="at">col =</span> <span class="st">"steelblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="interrupted_series_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="the-counterfactual" class="level2">
-<h2 class="anchored" data-anchor-id="the-counterfactual">The Counterfactual</h2>
+<section id="fitting-y-and-counterfactuals" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-y-and-counterfactuals">Fitting Y and Counterfactuals</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>regTS <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> T <span class="sc">+</span> D <span class="sc">+</span> P, <span class="at">data =</span> df)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="at">T =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">:</span> <span class="dv">365</span>), <span class="at">D =</span> <span class="fu">rep</span>(<span class="dv">0</span>), <span class="at">P =</span> <span class="fu">rep</span>(<span class="dv">0</span>)))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df2)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>T, df<span class="sc">$</span>Y,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">204</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Time"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">107</span>), pred1[<span class="dv">1</span><span class="sc">:</span><span class="dv">107</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">108</span><span class="sc">:</span><span class="dv">204</span>), pred1[<span class="dv">108</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">108</span><span class="sc">:</span><span class="dv">204</span>), pred2[<span class="dv">108</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"darkorange2"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">5</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># interruption line</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">107</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">108</span>, <span class="fl">1.5</span>, <span class="st">"Possession Fines Begin</span><span class="sc">\n</span><span class="st">(Nov. 2014)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Marijuana Possession Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="interrupted_series_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can confidently say that intervention resulted in a change in marijuana possession arrests. They decreasing before, but the change resulted in a short and long term decrease in arrests.</p>
 </section>
 </section>
 <section id="references" class="level1">

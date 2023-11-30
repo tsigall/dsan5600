@@ -288,7 +288,6 @@ ul.task-list li input[type="checkbox"] {
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -302,16 +301,15 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3417.252</td>
-<td style="text-align: right;">3433.513</td>
-<td style="text-align: right;">3417.576</td>
+<td style="text-align: right;">-32.55671</td>
+<td style="text-align: right;">-15.99068</td>
+<td style="text-align: right;">-32.25214</td>
 </tr>
 </tbody>
 </table>
@@ -327,7 +325,6 @@ ul.task-list li input[type="checkbox"] {
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -341,16 +338,15 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3417.252</td>
-<td style="text-align: right;">3433.513</td>
-<td style="text-align: right;">3417.576</td>
+<td style="text-align: right;">-32.55671</td>
+<td style="text-align: right;">-15.99068</td>
+<td style="text-align: right;">-32.25214</td>
 </tr>
 </tbody>
 </table>
@@ -366,7 +362,6 @@ ul.task-list li input[type="checkbox"] {
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -380,16 +375,15 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3417.252</td>
-<td style="text-align: right;">3433.513</td>
-<td style="text-align: right;">3417.576</td>
+<td style="text-align: right;">-32.55671</td>
+<td style="text-align: right;">-15.99068</td>
+<td style="text-align: right;">-32.25214</td>
 </tr>
 </tbody>
 </table>
@@ -414,11 +408,11 @@ ARIMA(1,1,1)(0,1,1)[12]
 
 Coefficients:
          ar1      ma1     sma1
-      0.4337  -0.7444  -0.6934
-s.e.  0.1367   0.1018   0.0554
+      0.4338  -0.7443  -0.6934
+s.e.  0.1368   0.1019   0.0554
 
-sigma^2 = 3187995:  log likelihood = -1703.68
-AIC=3415.36   AICc=3415.57   BIC=3428.37</code></pre>
+sigma^2 = 0.04578:  log likelihood = 20.95
+AIC=-33.89   AICc=-33.68   BIC=-20.88</code></pre>
 </div>
 </div>
 <p>The information criteria are all better that the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is absolutely worth considering moving forward.</p>
@@ -448,8 +442,8 @@ AIC=3415.36   AICc=3415.57   BIC=3428.37</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                  ME     RMSE     MAE       MPE     MAPE MASE     ACF1
-Training set -948.75 3352.033 2586.25 -6.206225 13.38735    1 0.717891</code></pre>
+<pre><code>                     ME     RMSE      MAE       MPE     MAPE MASE     ACF1
+Training set -0.1136878 0.401671 0.309908 -22.97998 217.0115    1 0.717891</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -460,17 +454,17 @@ ARIMA(1,1,1)(1,1,1)[12]
 
 Coefficients:
          ar1      ma1     sar1     sma1
-      0.4357  -0.7447  -0.0331  -0.6762
+      0.4358  -0.7447  -0.0331  -0.6763
 s.e.  0.1362   0.1012   0.1009   0.0774
 
-sigma^2 = 3203058:  log likelihood = -1703.63
-AIC=3417.25   AICc=3417.58   BIC=3433.51
+sigma^2 = 0.04599:  log likelihood = 21
+AIC=-32   AICc=-31.67   BIC=-15.74
 
 Training set error measures:
-                    ME     RMSE     MAE        MPE     MAPE      MASE
-Training set -118.0164 1713.516 1202.21 -0.5149775 5.722823 0.4648468
+                      ME      RMSE       MAE      MPE    MAPE    MASE
+Training set -0.01410203 0.2053272 0.1439894 39.06935 74.2216 0.46462
                    ACF1
-Training set 0.02157491</code></pre>
+Training set 0.02119928</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: arrests_ts 
@@ -478,15 +472,17 @@ ARIMA(1,1,1)(0,1,1)[12]
 
 Coefficients:
          ar1      ma1     sma1
-      0.4337  -0.7444  -0.6934
-s.e.  0.1367   0.1018   0.0554
+      0.4338  -0.7443  -0.6934
+s.e.  0.1368   0.1019   0.0554
 
-sigma^2 = 3187995:  log likelihood = -1703.68
-AIC=3415.36   AICc=3415.57   BIC=3428.37
+sigma^2 = 0.04578:  log likelihood = 20.95
+AIC=-33.89   AICc=-33.68   BIC=-20.88
 
 Training set error measures:
-                   ME     RMSE      MAE        MPE     MAPE    MASE       ACF1
-Training set -121.183 1714.047 1202.141 -0.5315764 5.725607 0.46482 0.02141618</code></pre>
+                    ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.014476 0.2053915 0.1439828 37.82999 73.83899 0.4645986
+                   ACF1
+Training set 0.02092654</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
@@ -499,21 +495,21 @@ Training set -121.183 1714.047 1202.141 -0.5315764 5.725607 0.46482 0.02141618</
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: scale(arrests_ts) 
-ARIMA(1,1,1) 
+ARIMA(1,1,1)(1,1,1)[12] 
 
 Coefficients:
-         ar1      ma1
-      0.1167  -0.6958
-s.e.  0.1340   0.1071
+         ar1      ma1     sar1     sma1
+      0.4358  -0.7447  -0.0331  -0.6763
+s.e.  0.1362   0.1012   0.1009   0.0774
 
-sigma^2 = 0.09398:  log likelihood = -47.28
-AIC=100.56   AICc=100.68   BIC=110.5
+sigma^2 = 0.04599:  log likelihood = 21
+AIC=-32   AICc=-31.67   BIC=-15.74
 
 Training set error measures:
-                      ME      RMSE       MAE      MPE     MAPE      MASE
-Training set -0.02560131 0.3042994 0.2212103 4.521114 83.05331 0.8148428
-                  ACF1
-Training set -0.022668</code></pre>
+                      ME      RMSE       MAE      MPE    MAPE    MASE
+Training set -0.01410203 0.2053272 0.1439894 39.06935 74.2216 0.46462
+                   ACF1
+Training set 0.02119928</code></pre>
 </div>
 </div>
 </section>
@@ -597,9 +593,9 @@ Training set -0.022668</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2547.193</td>
-<td style="text-align: right;">2563.455</td>
-<td style="text-align: right;">2547.517</td>
+<td style="text-align: right;">215.2202</td>
+<td style="text-align: right;">231.4816</td>
+<td style="text-align: right;">215.5446</td>
 </tr>
 </tbody>
 </table>
@@ -636,9 +632,9 @@ Training set -0.022668</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2547.193</td>
-<td style="text-align: right;">2563.455</td>
-<td style="text-align: right;">2547.517</td>
+<td style="text-align: right;">215.2202</td>
+<td style="text-align: right;">231.4816</td>
+<td style="text-align: right;">215.5446</td>
 </tr>
 </tbody>
 </table>
@@ -675,9 +671,9 @@ Training set -0.022668</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2547.193</td>
-<td style="text-align: right;">2563.455</td>
-<td style="text-align: right;">2547.517</td>
+<td style="text-align: right;">215.2202</td>
+<td style="text-align: right;">231.4816</td>
+<td style="text-align: right;">215.5446</td>
 </tr>
 </tbody>
 </table>
@@ -702,11 +698,11 @@ ARIMA(1,0,1)(0,1,1)[12] with drift
 
 Coefficients:
          ar1      ma1     sma1    drift
-      0.9355  -0.3413  -0.8120  -2.1155
-s.e.  0.0321   0.0744   0.0588   2.6734
+      0.9355  -0.3413  -0.8120  -0.0047
+s.e.  0.0321   0.0744   0.0588   0.0060
 
-sigma^2 = 31875:  log likelihood = -1272.62
-AIC=2555.23   AICc=2555.55   BIC=2571.52</code></pre>
+sigma^2 = 0.1589:  log likelihood = -100.52
+AIC=211.05   AICc=211.37   BIC=227.34</code></pre>
 </div>
 </div>
 <p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is not worth considering moving forward.</p>
@@ -736,8 +732,8 @@ AIC=2555.23   AICc=2555.55   BIC=2571.52</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE       MPE     MAPE MASE      ACF1
-Training set -8.65625 339.4464 238.4479 -1.031363 8.016814    1 0.7024543</code></pre>
+<pre><code>                      ME      RMSE       MAE      MPE     MAPE MASE      ACF1
+Training set -0.01932497 0.7578097 0.5323319 155.2004 422.9095    1 0.7024543</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -748,17 +744,17 @@ ARIMA(1,1,1)(1,1,1)[12]
 
 Coefficients:
           ar1      ma1     sar1     sma1
-      -0.0661  -0.3138  -0.0818  -0.7732
-s.e.   0.1953   0.1882   0.0962   0.0746
+      -0.0638  -0.3161  -0.0817  -0.7733
+s.e.   0.1959   0.1884   0.0962   0.0745
 
-sigma^2 = 32889:  log likelihood = -1268.6
-AIC=2547.19   AICc=2547.52   BIC=2563.45
+sigma^2 = 0.1639:  log likelihood = -102.61
+AIC=215.22   AICc=215.54   BIC=231.48
 
 Training set error measures:
-                    ME     RMSE      MAE       MPE     MAPE      MASE
-Training set -5.383942 173.6338 121.9244 -0.361724 4.000579 0.5113253
+                      ME      RMSE       MAE       MPE     MAPE      MASE
+Training set -0.01193998 0.3876284 0.2720116 -81.78453 154.0811 0.5109812
                      ACF1
-Training set -0.001146537</code></pre>
+Training set -0.001187566</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: assault_ts 
@@ -766,17 +762,17 @@ ARIMA(1,0,1)(0,1,1)[12] with drift
 
 Coefficients:
          ar1      ma1     sma1    drift
-      0.9355  -0.3413  -0.8120  -2.1155
-s.e.  0.0321   0.0744   0.0588   2.6734
+      0.9355  -0.3413  -0.8120  -0.0047
+s.e.  0.0321   0.0744   0.0588   0.0060
 
-sigma^2 = 31875:  log likelihood = -1272.62
-AIC=2555.23   AICc=2555.55   BIC=2571.52
+sigma^2 = 0.1589:  log likelihood = -100.52
+AIC=211.05   AICc=211.37   BIC=227.34
 
 Training set error measures:
-                   ME     RMSE      MAE        MPE     MAPE      MASE
-Training set 3.774822 171.3926 119.2401 -0.1977777 3.905564 0.5000679
-                   ACF1
-Training set -0.0132078</code></pre>
+                      ME      RMSE       MAE       MPE     MAPE      MASE
+Training set 0.007988694 0.3826276 0.2657987 -42.81001 113.7842 0.4993101
+                    ACF1
+Training set -0.01329669</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
@@ -859,16 +855,16 @@ Training set -0.0132078</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">14</td>
+<td style="text-align: left;">13</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2534.408</td>
-<td style="text-align: right;">2553.922</td>
-<td style="text-align: right;">2534.865</td>
+<td style="text-align: right;">-31.9426</td>
+<td style="text-align: right;">-12.06336</td>
+<td style="text-align: right;">-31.51402</td>
 </tr>
 </tbody>
 </table>
@@ -898,16 +894,16 @@ Training set -0.0132078</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">14</td>
+<td style="text-align: left;">13</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2534.408</td>
-<td style="text-align: right;">2553.922</td>
-<td style="text-align: right;">2534.865</td>
+<td style="text-align: right;">-31.9426</td>
+<td style="text-align: right;">-12.06336</td>
+<td style="text-align: right;">-31.51402</td>
 </tr>
 </tbody>
 </table>
@@ -937,16 +933,16 @@ Training set -0.0132078</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">14</td>
+<td style="text-align: left;">13</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2534.408</td>
-<td style="text-align: right;">2553.922</td>
-<td style="text-align: right;">2534.865</td>
+<td style="text-align: right;">-31.9426</td>
+<td style="text-align: right;">-12.06336</td>
+<td style="text-align: right;">-31.51402</td>
 </tr>
 </tbody>
 </table>
@@ -971,11 +967,11 @@ ARIMA(2,1,1)(2,0,0)[12] with drift
 
 Coefficients:
           ar1      ar2      ma1    sar1    sar2    drift
-      -0.1522  -0.2875  -0.4061  0.3955  0.2736  -1.2514
-s.e.   0.1430   0.0932   0.1465  0.0679  0.0732  13.6691
+      -0.1522  -0.2874  -0.4061  0.3955  0.2736  -0.0015
+s.e.   0.1430   0.0932   0.1465  0.0679  0.0732   0.0168
 
-sigma^2 = 32636:  log likelihood = -1343.24
-AIC=2700.47   AICc=2701.05   BIC=2723.67</code></pre>
+sigma^2 = 0.0494:  log likelihood = 16.96
+AIC=-19.92   AICc=-19.35   BIC=3.27</code></pre>
 </div>
 </div>
 <p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12. This model is not worth considering moving forward.</p>
@@ -1005,8 +1001,8 @@ AIC=2700.47   AICc=2701.05   BIC=2723.67</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                    ME     RMSE      MAE       MPE   MAPE MASE      ACF1
-Training set -129.3281 292.8638 231.6927 -19.49965 27.347    1 0.4911806</code></pre>
+<pre><code>                     ME      RMSE       MAE      MPE     MAPE MASE      ACF1
+Training set -0.1591141 0.3603143 0.2850547 57.74682 104.1726    1 0.4911806</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -1017,17 +1013,17 @@ ARIMA(1,1,1)(1,1,1)[12]
 
 Coefficients:
          ar1      ma1    sar1     sma1
-      0.1299  -0.6668  0.0022  -0.7269
+      0.1299  -0.6667  0.0023  -0.7269
 s.e.  0.1172   0.0879  0.1046   0.0801
 
-sigma^2 = 32009:  log likelihood = -1264.4
-AIC=2538.79   AICc=2539.12   BIC=2555.05
+sigma^2 = 0.04845:  log likelihood = 15.4
+AIC=-20.79   AICc=-20.47   BIC=-4.53
 
 Training set error measures:
-                    ME     RMSE      MAE       MPE     MAPE      MASE
-Training set -19.52719 171.2926 120.6894 -3.057452 13.16291 0.5209028
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.02399794 0.2107427 0.1484459 9.835336 42.68932 0.5207628
                    ACF1
-Training set 0.03014107</code></pre>
+Training set 0.02970125</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: controlled_pos_ts 
@@ -1035,17 +1031,17 @@ ARIMA(2,1,1)(2,0,0)[12] with drift
 
 Coefficients:
           ar1      ar2      ma1    sar1    sar2    drift
-      -0.1522  -0.2875  -0.4061  0.3955  0.2736  -1.2514
-s.e.   0.1430   0.0932   0.1465  0.0679  0.0732  13.6691
+      -0.1522  -0.2874  -0.4061  0.3955  0.2736  -0.0015
+s.e.   0.1430   0.0932   0.1465  0.0679  0.0732   0.0168
 
-sigma^2 = 32636:  log likelihood = -1343.24
-AIC=2700.47   AICc=2701.05   BIC=2723.67
+sigma^2 = 0.0494:  log likelihood = 16.96
+AIC=-19.92   AICc=-19.35   BIC=3.27
 
 Training set error measures:
-                    ME     RMSE      MAE       MPE     MAPE      MASE
-Training set -8.202674 177.5279 123.8372 -3.311035 12.68277 0.5344889
+                      ME     RMSE       MAE       MPE     MAPE      MASE
+Training set -0.01010566 0.218415 0.1523486 -16.98116 61.98025 0.5344541
                     ACF1
-Training set -0.02145194</code></pre>
+Training set -0.02147658</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
@@ -1124,7 +1120,6 @@ Training set -0.02145194</code></pre>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -1138,16 +1133,15 @@ Training set -0.02145194</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2700.755</td>
-<td style="text-align: right;">2717.017</td>
-<td style="text-align: right;">2701.08</td>
+<td style="text-align: right;">-131.9417</td>
+<td style="text-align: right;">-115.3757</td>
+<td style="text-align: right;">-131.6371</td>
 </tr>
 </tbody>
 </table>
@@ -1163,7 +1157,6 @@ Training set -0.02145194</code></pre>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -1177,16 +1170,15 @@ Training set -0.02145194</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2700.755</td>
-<td style="text-align: right;">2717.017</td>
-<td style="text-align: right;">2701.08</td>
+<td style="text-align: right;">-131.9417</td>
+<td style="text-align: right;">-115.3757</td>
+<td style="text-align: right;">-131.6371</td>
 </tr>
 </tbody>
 </table>
@@ -1202,7 +1194,6 @@ Training set -0.02145194</code></pre>
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
@@ -1216,16 +1207,15 @@ Training set -0.02145194</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2700.755</td>
-<td style="text-align: right;">2717.017</td>
-<td style="text-align: right;">2701.08</td>
+<td style="text-align: right;">-131.9417</td>
+<td style="text-align: right;">-115.3757</td>
+<td style="text-align: right;">-131.6371</td>
 </tr>
 </tbody>
 </table>
@@ -1253,8 +1243,8 @@ Coefficients:
       0.2557  -0.5081  -0.6226
 s.e.  0.2258   0.2001   0.0552
 
-sigma^2 = 75884:  log likelihood = -1345.62
-AIC=2699.24   AICc=2699.46   BIC=2712.25</code></pre>
+sigma^2 = 0.02916:  log likelihood = 65.08
+AIC=-122.16   AICc=-121.95   BIC=-109.15</code></pre>
 </div>
 </div>
 <p>The information criteria are all slightly better than the previously used model of SARIMA(1, 1, 1)(1, 1, 1)12, but not so much better that this model would be worth considering moving forward.</p>
@@ -1284,8 +1274,8 @@ AIC=2699.24   AICc=2699.46   BIC=2712.25</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE  MPE MAPE MASE     ACF1
-Training set -181.224 644.5754 463.6198 -Inf  Inf    1 0.832498</code></pre>
+<pre><code>                     ME      RMSE       MAE      MPE     MAPE MASE     ACF1
+Training set -0.1123487 0.3996005 0.2874182 1.037198 61.19043    1 0.832498</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -1297,14 +1287,16 @@ ARIMA(1,1,1)(1,1,1)[12]
 Coefficients:
          ar1      ma1     sar1     sma1
       0.2848  -0.5273  -0.0775  -0.5769
-s.e.  0.2307   0.2019   0.1100   0.0897
+s.e.  0.2306   0.2018   0.1100   0.0897
 
-sigma^2 = 76059:  log likelihood = -1345.38
-AIC=2700.76   AICc=2701.08   BIC=2717.02
+sigma^2 = 0.02923:  log likelihood = 65.33
+AIC=-120.65   AICc=-120.33   BIC=-104.39
 
 Training set error measures:
-                    ME     RMSE      MAE MPE MAPE      MASE        ACF1
-Training set -16.58966 264.0473 178.6642 NaN  Inf 0.3853679 0.003799704</code></pre>
+                      ME      RMSE       MAE       MPE     MAPE      MASE
+Training set -0.01026806 0.1636941 0.1107387 0.6302746 23.70606 0.3852878
+                    ACF1
+Training set 0.003563427</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: marijuana_pos_ts 
@@ -1315,12 +1307,14 @@ Coefficients:
       0.2557  -0.5081  -0.6226
 s.e.  0.2258   0.2001   0.0552
 
-sigma^2 = 75884:  log likelihood = -1345.62
-AIC=2699.24   AICc=2699.46   BIC=2712.25
+sigma^2 = 0.02916:  log likelihood = 65.08
+AIC=-122.16   AICc=-121.95   BIC=-109.15
 
 Training set error measures:
-                    ME     RMSE      MAE MPE MAPE      MASE        ACF1
-Training set -17.25645 264.4465 179.9504 NaN  Inf 0.3881422 0.003041133</code></pre>
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.01068143 0.1639416 0.1115361 1.036487 23.75623 0.3880621
+                    ACF1
+Training set 0.002802718</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
@@ -1389,9 +1383,9 @@ Training set -17.25645 264.4465 179.9504 NaN  Inf 0.3881422 0.003041133</code></
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">1811.959</td>
-<td style="text-align: right;">1831.838</td>
-<td style="text-align: right;">1812.387</td>
+<td style="text-align: right;">531.7265</td>
+<td style="text-align: right;">551.6058</td>
+<td style="text-align: right;">532.1551</td>
 </tr>
 </tbody>
 </table>
@@ -1422,9 +1416,9 @@ Training set -17.25645 264.4465 179.9504 NaN  Inf 0.3881422 0.003041133</code></
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">1811.959</td>
-<td style="text-align: right;">1831.838</td>
-<td style="text-align: right;">1812.387</td>
+<td style="text-align: right;">531.7265</td>
+<td style="text-align: right;">551.6058</td>
+<td style="text-align: right;">532.1551</td>
 </tr>
 </tbody>
 </table>
@@ -1455,9 +1449,9 @@ Training set -17.25645 264.4465 179.9504 NaN  Inf 0.3881422 0.003041133</code></
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">1811.959</td>
-<td style="text-align: right;">1831.838</td>
-<td style="text-align: right;">1812.387</td>
+<td style="text-align: right;">531.7265</td>
+<td style="text-align: right;">551.6058</td>
+<td style="text-align: right;">532.1551</td>
 </tr>
 </tbody>
 </table>
@@ -1482,11 +1476,11 @@ ARIMA(1,1,2)(1,0,1)[12]
 
 Coefficients:
          ar1      ma1     ma2    sar1     sma1
-      0.6833  -1.3608  0.3769  0.5664  -0.2539
-s.e.  0.1504   0.1765  0.1616  0.1865   0.2174
+      0.6836  -1.3614  0.3775  0.5699  -0.2578
+s.e.  0.1505   0.1767  0.1618  0.1867   0.2183
 
-sigma^2 = 403.1:  log likelihood = -895.92
-AIC=1803.84   AICc=1804.26   BIC=1823.72</code></pre>
+sigma^2 = 0.7354:  log likelihood = -255.8
+AIC=523.6   AICc=524.03   BIC=543.48</code></pre>
 </div>
 </div>
 <p>The information criteria are all slightly better than the previously used model of ARIMA(2, 1, 3), and it considers the seasonal component, so this model would be worth considering moving forward.</p>
@@ -1516,8 +1510,8 @@ AIC=1803.84   AICc=1804.26   BIC=1823.72</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE       MPE     MAPE MASE      ACF1
-Training set 0.359375 25.82059 20.25521 -3.821604 23.16162    1 0.3607956</code></pre>
+<pre><code>                     ME     RMSE       MAE     MPE     MAPE MASE      ACF1
+Training set 0.01534954 1.102843 0.8651354 78.4586 280.3894    1 0.3607956</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -1528,17 +1522,17 @@ ARIMA(2,1,3)
 
 Coefficients:
          ar1      ar2      ma1     ma2      ma3
-      1.3083  -0.8111  -2.1162  1.9925  -0.8230
-s.e.  0.0575   0.1751   0.1216  0.3478   0.2065
+      1.3083  -0.8110  -2.1161  1.9923  -0.8229
+s.e.  0.0575   0.1745   0.1212  0.3464   0.2057
 
-sigma^2 = 420.6:  log likelihood = -899.98
-AIC=1811.96   AICc=1812.39   BIC=1831.84
+sigma^2 = 0.7673:  log likelihood = -259.86
+AIC=531.73   AICc=532.16   BIC=551.61
 
 Training set error measures:
-                    ME     RMSE      MAE       MPE     MAPE      MASE
-Training set 0.1933576 20.20498 15.75906 -4.812673 18.54937 0.7780249
-                   ACF1
-Training set 0.08911728</code></pre>
+                      ME      RMSE      MAE      MPE     MAPE      MASE
+Training set 0.008238411 0.8629927 0.673068 88.31137 136.4341 0.7779915
+                  ACF1
+Training set 0.0891247</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: motor_theft_ts 
@@ -1546,17 +1540,17 @@ ARIMA(1,1,2)(1,0,1)[12]
 
 Coefficients:
          ar1      ma1     ma2    sar1     sma1
-      0.6833  -1.3608  0.3769  0.5664  -0.2539
-s.e.  0.1504   0.1765  0.1616  0.1865   0.2174
+      0.6836  -1.3614  0.3775  0.5699  -0.2578
+s.e.  0.1505   0.1767  0.1618  0.1867   0.2183
 
-sigma^2 = 403.1:  log likelihood = -895.92
-AIC=1803.84   AICc=1804.26   BIC=1823.72
+sigma^2 = 0.7354:  log likelihood = -255.8
+AIC=523.6   AICc=524.03   BIC=543.48
 
 Training set error measures:
-                     ME     RMSE      MAE       MPE    MAPE      MASE
-Training set 0.04309529 19.78048 15.27388 -4.755127 17.8983 0.7540717
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set 0.001864579 0.8448407 0.6522227 69.26282 148.5133 0.7538966
                     ACF1
-Training set 0.007660609</code></pre>
+Training set 0.007715526</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method. The seasonal, auto fitted model slightly outperforms the non-seasonal ARIMA model, so we will go with that model.</p>
@@ -1624,9 +1618,9 @@ Training set 0.007660609</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">1722.681</td>
-<td style="text-align: right;">1735.934</td>
-<td style="text-align: right;">1722.883</td>
+<td style="text-align: right;">432.8634</td>
+<td style="text-align: right;">446.1162</td>
+<td style="text-align: right;">433.0654</td>
 </tr>
 </tbody>
 </table>
@@ -1657,9 +1651,9 @@ Training set 0.007660609</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">1723.207</td>
-<td style="text-align: right;">1733.147</td>
-<td style="text-align: right;">1723.328</td>
+<td style="text-align: right;">433.3898</td>
+<td style="text-align: right;">443.3294</td>
+<td style="text-align: right;">433.5104</td>
 </tr>
 </tbody>
 </table>
@@ -1690,9 +1684,9 @@ Training set 0.007660609</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">1722.681</td>
-<td style="text-align: right;">1735.934</td>
-<td style="text-align: right;">1722.883</td>
+<td style="text-align: right;">432.8634</td>
+<td style="text-align: right;">446.1162</td>
+<td style="text-align: right;">433.0654</td>
 </tr>
 </tbody>
 </table>
@@ -1720,8 +1714,8 @@ Coefficients:
       -0.7223
 s.e.   0.0674
 
-sigma^2 = 279.2:  log likelihood = -859.55
-AIC=1723.09   AICc=1723.15   BIC=1729.72</code></pre>
+sigma^2 = 0.4858:  log likelihood = -214.64
+AIC=433.27   AICc=433.33   BIC=439.9</code></pre>
 </div>
 </div>
 <p>The information criteria are all slightly better than the previously used model of ARIMA(1, 1, 2), but not so much better that this model would be worth considering moving forward.</p>
@@ -1751,8 +1745,8 @@ AIC=1723.09   AICc=1723.15   BIC=1729.72</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE        MPE     MAPE MASE      ACF1
-Training set 3.338542 23.85863 18.18229 -0.9214067 22.28037    1 0.2861511</code></pre>
+<pre><code>                    ME      RMSE       MAE      MPE     MAPE MASE      ACF1
+Training set 0.1392678 0.9952668 0.7584773 76.53631 213.1399    1 0.2861511</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -1763,15 +1757,17 @@ ARIMA(1,1,2)
 
 Coefficients:
          ar1      ma1     ma2
-      0.5923  -1.2474  0.3314
-s.e.  0.1945   0.2024  0.1613
+      0.5921  -1.2472  0.3312
+s.e.  0.1946   0.2024  0.1613
 
-sigma^2 = 275.8:  log likelihood = -857.34
-AIC=1722.68   AICc=1722.88   BIC=1735.93
+sigma^2 = 0.4799:  log likelihood = -212.43
+AIC=432.86   AICc=433.07   BIC=446.12
 
 Training set error measures:
-                   ME     RMSE    MAE       MPE     MAPE      MASE        ACF1
-Training set 1.301421 16.44369 12.523 -2.198117 15.40046 0.6887473 -0.03843839</code></pre>
+                     ME      RMSE       MAE      MPE     MAPE      MASE
+Training set 0.05427136 0.6859509 0.5223828 29.21775 153.0348 0.6887258
+                    ACF1
+Training set -0.03840516</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>
@@ -1833,8 +1829,8 @@ Training set 1.301421 16.44369 12.523 -2.198117 15.40046 0.6887473 -0.03843839</
 <h2 class="anchored" data-anchor-id="build-model-6">Build Model</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>error:  1 1 1 1 0 1 
-error:  1 1 1 1 1 1 </code></pre>
+<pre><code>error:  1 1 1 1 1 1 
+error:  1 1 1 1 0 2 </code></pre>
 </div>
 </div>
 </section>
@@ -1868,9 +1864,9 @@ error:  1 1 1 1 1 1 </code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">2225.528</td>
-<td style="text-align: right;">2245.042</td>
-<td style="text-align: right;">2225.985</td>
+<td style="text-align: right;">312.2259</td>
+<td style="text-align: right;">331.7395</td>
+<td style="text-align: right;">312.6824</td>
 </tr>
 </tbody>
 </table>
@@ -1907,9 +1903,9 @@ error:  1 1 1 1 1 1 </code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">2225.528</td>
-<td style="text-align: right;">2245.042</td>
-<td style="text-align: right;">2225.985</td>
+<td style="text-align: right;">312.2259</td>
+<td style="text-align: right;">331.7395</td>
+<td style="text-align: right;">312.6824</td>
 </tr>
 </tbody>
 </table>
@@ -1946,9 +1942,9 @@ error:  1 1 1 1 1 1 </code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">2225.528</td>
-<td style="text-align: right;">2245.042</td>
-<td style="text-align: right;">2225.985</td>
+<td style="text-align: right;">312.2259</td>
+<td style="text-align: right;">331.7395</td>
+<td style="text-align: right;">312.6824</td>
 </tr>
 </tbody>
 </table>
@@ -1969,15 +1965,15 @@ error:  1 1 1 1 1 1 </code></pre>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: robbery_ts 
-ARIMA(1,1,1)(1,0,0)[12] 
+ARIMA(2,1,2)(1,0,0)[12] with drift 
 
 Coefficients:
-         ar1      ma1   sar1
-      0.0540  -0.6564  0.524
-s.e.  0.1219   0.0937  0.063
+          ar1      ar2     ma1      ma2    sar1    drift
+      -0.6359  -0.0516  0.0360  -0.3955  0.5189  -0.0009
+s.e.   0.4151   0.1324  0.4049   0.2949  0.0649   0.0294
 
-sigma^2 = 7144:  log likelihood = -1189.41
-AIC=2386.83   AICc=2387.03   BIC=2400.08</code></pre>
+sigma^2 = 0.3224:  log likelihood = -172.23
+AIC=358.46   AICc=359.03   BIC=381.65</code></pre>
 </div>
 </div>
 <p>The information criteria are all worse than the previously used model of SARIMA(1, 1, 1)(1, 1, 2)12, this model is not worth considering moving forward.</p>
@@ -2007,8 +2003,8 @@ AIC=2386.83   AICc=2387.03   BIC=2400.08</code></pre>
 <p>SNaïve model error measurements:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>                    ME     RMSE      MAE       MPE     MAPE MASE      ACF1
-Training set -12.01042 115.8672 90.13542 -2.377496 11.06785    1 0.5657567</code></pre>
+<pre><code>                      ME      RMSE       MAE      MPE     MAPE MASE      ACF1
+Training set -0.08022895 0.7739868 0.6020998 35.54048 220.9091    1 0.5657567</code></pre>
 </div>
 </div>
 <p>Fitted model error measurements:</p>
@@ -2019,17 +2015,17 @@ ARIMA(1,1,1)(1,1,2)[12]
 
 Coefficients:
          ar1      ma1     sar1    sma1     sma2
-      0.1076  -0.6704  -0.8783  0.2000  -0.7483
-s.e.  0.1279   0.0992   0.1794  0.2808   0.2064
+      0.1080  -0.6706  -0.8787  0.2005  -0.7487
+s.e.  0.1279   0.0992   0.1785  0.2820   0.2073
 
-sigma^2 = 6017:  log likelihood = -1106.76
-AIC=2225.53   AICc=2225.98   BIC=2245.04
+sigma^2 = 0.2684:  log likelihood = -150.11
+AIC=312.23   AICc=312.68   BIC=331.74
 
 Training set error measures:
-                   ME     RMSE      MAE        MPE     MAPE      MASE
-Training set 1.098047 74.06755 56.32804 -0.3259382 6.784593 0.6249268
+                     ME      RMSE       MAE      MPE     MAPE      MASE
+Training set 0.00740656 0.4947167 0.3760977 8.118388 150.3828 0.6246433
                      ACF1
-Training set -0.002933577</code></pre>
+Training set -0.003315134</code></pre>
 </div>
 </div>
 <p>The model error measurements the model are all much lower than the SNaïve benchmark method.</p>

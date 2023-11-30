@@ -197,15 +197,12 @@ The model error measurements the model are all much lower than the SNaïve bench
 model_fit %>% forecast %>% autoplot()
 ```
 
-
 Fit a normalized model for later comparison.
 
 ```{r, "code-fold = TRUE"}
 model_fit <- Arima(scale(arrests_ts), order = c(1, 1, 1), seasonal = c(1, 1, 1))
 summary(model_fit)
 ```
-
-
 
 # Assault
 
@@ -559,14 +556,15 @@ ggtsdisplay(marijuana_pos_ts)
 marijuana_pos_ts %>% diff %>% ggtsdisplay()
 ```
 
-There still looks to be a trend at this level, we should try to difference one more time. We should also try a seasonal differencing at a seasonal period of 12. 
+There still looks to be a trend at this level, we should try to difference one more time. We should also try a seasonal differencing at a seasonal period of 12.
 
 ## Second Difference
+
 ```{r}
 marijuana_pos_ts %>% diff() %>% diff() %>% ggtsdisplay()
 ```
 
-This looks more stationary, we should determine parameters to try from here. 
+This looks more stationary, we should determine parameters to try from here.
 
 The seasonal period `s` is clearly 12. There are spikes at 1 and 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.
 
@@ -708,7 +706,7 @@ The model error measurements the model are all much lower than the SNaïve bench
 model_fit %>% forecast %>% autoplot()
 ```
 
-It doesn't really make sense to forecast here as we can be sure that there will be no more arrests for marijuana possession, but it is good to know that we have fitted a good model. We can predict what would have happened to the level of arrests if the policy changes that were instituded over the years never happened. 
+It doesn't really make sense to forecast here as we can be sure that there will be no more arrests for marijuana possession, but it is good to know that we have fitted a good model. We can predict what would have happened to the level of arrests if the policy changes that were instituded over the years never happened.
 
 # Motor Vehicle Theft
 
@@ -730,7 +728,7 @@ ggtsdisplay(motor_theft_ts)
 motor_theft_ts %>% diff %>% ggtsdisplay()
 ```
 
-This looks to be slightly more stationary than the original series, we can proceed with the model build process. There are spikes at 1 and 3 on the ACF plot and spikes at 1, 2 on the PACF plot. 
+This looks to be slightly more stationary than the original series, we can proceed with the model build process. There are spikes at 1 and 3 on the ACF plot and spikes at 1, 2 on the PACF plot.
 
 We will try the following parameters:
 
@@ -835,7 +833,7 @@ autoplot(motor_theft_ts) +
   guides(color = guide_legend(title = "Forecast"))
 ```
 
-Both models appear to be better than SNaïve as they does a better job of capturing the trend. It is hard to tell which is better between the fit and the auto fit. 
+Both models appear to be better than SNaïve as they does a better job of capturing the trend. It is hard to tell which is better between the fit and the auto fit.
 
 SNaïve model error measurements:
 
@@ -850,7 +848,7 @@ summary(model_fit)
 summary(auto_model)
 ```
 
-The model error measurements the model are all much lower than the SNaïve benchmark method. The seasonal, auto fitted model slightly outperforms the non-seasonal ARIMA model, so we will go with that model. 
+The model error measurements the model are all much lower than the SNaïve benchmark method. The seasonal, auto fitted model slightly outperforms the non-seasonal ARIMA model, so we will go with that model.
 
 ```{r, echo = FALSE}
 auto_model %>% forecast %>% autoplot()
@@ -876,7 +874,7 @@ ggtsdisplay(murder_ts)
 murder_ts %>% diff %>% ggtsdisplay()
 ```
 
-This looks to be much more stationary than the original series, we can proceed with the model build process. There are spikes at 1 on the ACF plot and spikes at 1 and 2 on the PACF plot. 
+This looks to be much more stationary than the original series, we can proceed with the model build process. There are spikes at 1 on the ACF plot and spikes at 1 and 2 on the PACF plot.
 
 We will try the following parameters:
 
@@ -1022,7 +1020,7 @@ ggtsdisplay(robbery_ts)
 robbery_ts %>% diff %>% ggtsdisplay()
 ```
 
-The series looks to be stationary here. We should also try a seasonal differencing at a seasonal period of 12. 
+The series looks to be stationary here. We should also try a seasonal differencing at a seasonal period of 12.
 
 The seasonal period `s` is clearly 12. There are spikes at 1 and 4 on the ACF plot and spikes at 1, 2, and 4 on the PACF plot. Seasonal spikes occur at 1, 2, and 3 on the ACF plot, and 1 on the PACF plot.
 
@@ -1167,7 +1165,4 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
-
-
-
 :::

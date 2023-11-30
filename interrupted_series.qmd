@@ -2,6 +2,8 @@
 title: "Interrupted Time Series"
 author: "Thomas Sigall"
 bibliography: reference.bib
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r output = FALSE}
@@ -11,20 +13,23 @@ bibliography: reference.bib
 library(tidyverse)
 library(ggplot2)
 library(zoo)
-library(stargazer)
 library(kableExtra)
+library(tseries)
+library(forecast)
+library(TSstudio)
+library(astsa)
 load("data/arrests_ts.Rdata")
 ```
 
 # Marijuana Possession
 
-The first intervention analysis we will do will be on a topic discussed previously in the data visualization section. The decriminalization of marijuana in New York City clearly changed how the statistics looked for arrests related to the possession or sale of marijuana. It would be interesting, now that we have an accurate model for predicting marijuana possession arrests, to see what would have happened to those statistics if the policy interventions never occured. 
+The first intervention analysis we will do will be on a topic discussed previously in the data visualization section. The decriminalization of marijuana in New York City clearly changed how the statistics looked for arrests related to the possession or sale of marijuana. It would be interesting, now that we have an accurate model for predicting marijuana possession arrests, to see what would have happened to those statistics if the policy interventions never occurred.
 
 ## Data Visualization
 
-First, lets look again at marijuana possession arrests over time, this time with policy interventions labelled on the graph. 
+First, lets look again at marijuana possession arrests over time, this time with policy interventions labelled on the graph.
 
-```{r}
+```{r width=5}
 #| code-fold: true
 
 plot(marijuana_pos_ts,
@@ -33,18 +38,19 @@ plot(marijuana_pos_ts,
     xlab = "Year",
     ylab = "")
 abline(v = 2014.917, col = "firebrick", lty = 2)
-text(2015, 1.5, "Possession Fines Begin (Nov. 2014)", col="firebrick", cex=1, pos=4 )
+text(2015, 1.5, "Possession Fines Begin\n(Nov. 2014)", col="firebrick", cex=1, pos=4 )
 title("Marijuana Possession Arrests")
 ```
 
-There definitely appears to be a difference in marijuana possession arrests before and after the intervention, which occured in November 2014 when New York City Mayor Bill De Blasio announced that tickets would be given to those possessing marijuana, rather than arresting offenders [@Dizard_2014]. We should proceed with our interrupted time series analysis, modeling the events before the interruption and seeing how they would have looked had the change never occured. 
+There definitely appears to be a difference in marijuana possession arrests before and after the intervention, which occured in November 2014 when New York City Mayor Bill De Blasio announced that tickets would be given to those possessing marijuana, rather than arresting offenders [@Dizard_2014]. We should proceed with our interrupted time series analysis, modeling the events before the interruption and seeing how they would have looked had the change never occurred.
 
-## Fitting Pre-Intervention Model
+## Observing Treatment
 
-Here we can see exaclty when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.
+Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.
 
 ```{r}
 #| code-fold: true
+#| layout-ncol: 2
 
 df <- data.frame(marijuana_pos_ts) %>%
     rename(Y = Series.1) %>%
@@ -70,59 +76,34 @@ kbl(df.temp) %>%
     kable_paper(full_width = F)
 ```
 
-Now we fit a model considering these variables. As our previous model was a SARIMA(1, 1, 1)(1, 1, 1)12 model, we will fit a SARIMAX model using these variables. 
-
-```{r}
-xreg <- cbind(df[,"D"], df[,"P"])
-
-auto_model <- auto.arima(df[,"Y"], xreg = xreg)
-summary(auto_model)
-checkresiduals(auto_model)
-```
-
-Plotting the model onto the initial visualization.
+## Fitting Y and Counterfactuals
 
 ```{r}
 #| code-fold: true
-plot(marijuana_pos_ts,
+regTS <- lm(Y ~ T + D + P, data = df)
+pred1 <- predict(regTS, df)
+
+df2 <- as.data.frame(cbind(T = rep(1 : 365), D = rep(0), P = rep(0)))
+pred2 <- predict(regTS, df2)
+
+plot(df$T, df$Y,
     bty="n", pch=19, col="gray",
-    xlim = c(2005,2023),
-    xlab = "Year",
-    ylab = "")
-abline(v = 2014.917, col = "firebrick", lty = 2)
-text(2015, 1.5, "Possession Fines Begin (Nov. 2014)", col="firebrick", cex=1, pos=4 )
-title("Marijuana Possession Arrests")
-lines(x = index(marijuana_pos_ts), y = fitted(auto_model), col = "steelblue", lwd = 2)
-```
-## The Counterfactual
-
-Now we will model the data as if the intervention had never occured. 
-
-```{r}
-#| code-fold: true
-pred1 <- forecast(auto_model, xreg = xreg)
-
-df2 <- as.data.frame(cbind(T = rep(1:204), D = rep(0), P = rep(0)))
-xreg2 <- cbind(df2[,"D"], df2[,"P"])
-
-pred2 <- forecast(auto_model, xreg = xreg2)
-
-plot(marijuana_pos_ts,
-    bty="n", pch=19, col="gray",
-    xlim = c(2005,2023),
-    xlab = "Year",
+    xlim = c(0,204),
+    xlab = "Time",
     ylab = "")
 
-lines(index(marijuana_pos_ts)[1:107], pred1$mean[1:107], col = "dodgerblue4", lwd = 3)
-lines(index(marijuana_pos_ts)[108:204], pred1$mean[108:204], col = "dodgerblue4", lwd = 3)
-lines(index(marijuana_pos_ts)[108:204], pred2$mean[108:204], col = "darkorange2", lwd = 3)
+lines(rep(1:107), pred1[1:107], col = "dodgerblue4", lwd = 3)
+lines(rep(108:204), pred1[108:204], col = "dodgerblue4", lwd = 3)
+lines(rep(108:204), pred2[108:204], col = "darkorange2", lwd = 3, lty = 5)
 
 # interruption line
-abline(v = 2014.917, col = "firebrick", lty = 2)
-text(2015, 1.5, "Possession Fines Begin (Nov. 2014)", col="firebrick", cex=1, pos=4 )
+abline(v = 107, col = "firebrick", lty = 2)
+text(108, 1.5, "Possession Fines Begin\n(Nov. 2014)", col="firebrick", cex=1, pos=4 )
 
 title("Marijuana Possession Arrests")
 ```
+
+We can confidently say that intervention resulted in a change in marijuana possession arrests. They decreasing before, but the change resulted in a short and long term decrease in arrests. 
 
 
 # References
