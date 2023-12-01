@@ -12,7 +12,7 @@ Time-series data for crime throughout the United States is readily available and
 
 Determining which attempts by the government at city, state, and national levels have been successful and which attempts have been unsuccessful is an incredibly important task. Doing this will help the government to make better decisions to not only keep people safe, but also put their citizens in the best position to life prosperous lives, arguably the most important role the government can play.
 
-Understanding why criminals commit the crimes they do can help keep citizens safe, but it can also help potential criminals find a better path in life. Being aware of signals that suggest a crime is likely to be committed can help to stop those crimes before they happen. We can also use these data to help address problems that led criminals to commit crimes in the first place. Rehabilitation is an often overlooked part of the criminal justice process and something that can be addressed if we know more about why people commit the crimes they do.
+Understanding the patterns in crimes committed can help keep citizens safe, but it can also help potential criminals find a better path in life. Knowing when we may be due for an increase in certain types of crimes can help us to take proactive, rather than reactive measures to those potential increases. A detailed understanding of crime patters is arguably one of the the most important things a government cam do in keeping its citizens safe and prosperous.
 
 # Literature Review
 
@@ -45,11 +45,11 @@ The overall process can be seen in the flowchart above and can be understood as 
 
 1.  How can we use the economy as a means by which to analyze crime data?
 2.  What are some metrics we can use to determine the effectiveness of government action?
-3.  Are there changes that we need to make in how we sentence criminals?
+3.  What are good predictors of crime?
 4.  Is it more effective to try and stop crimes before they are commited or to help those who commit crimes after they do so?
-5.  What ethical concerns do we need to be aware of if we are attempting to predict who will commit crimes?
+5.  What ethical concerns do we need to be aware of if we are attempting to predict what crimes will be committed?
 6.  Is action needed the most at the city, state, or federal level?
-7.  In terms of rehabilitation, are there some people who are simply beyond help?
+7.  Does the economy influence crime, does crime influence the economy, or is it a mix of both?
 8.  Is it worth looking at other countries to see what works and what doesn't? Or are all countries more or less the same in their relationship with crime?
 9.  Which area of crime would be the most effective to attempt reform in?
 10. Could we quantify the negative effect different crimes have on society?

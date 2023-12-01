@@ -155,10 +155,6 @@ legend(x = "topright", legend = c("arrests_ts", "fit1", "fit2"), fill = 4:1)
 
 Both fitted models look similar to the actual time series. The two fitted models look incredibly similar, so we will just go with the one we fit by hand.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -203,6 +199,34 @@ Fit a normalized model for later comparison.
 model_fit <- Arima(scale(arrests_ts), order = c(1, 1, 1), seasonal = c(1, 1, 1))
 summary(model_fit)
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,1)(1,1,1)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12}$
+
+ordinary difference = $(1-B)$
+
+seasonal difference = $(1-B^{12})$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t$
+
+With Coefficients:
+
+$(1 - 0.435B)(1 - (-0.0331)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.7447)B)(1 + (-0.6763)B^{12})w_t$
 
 # Assault
 
@@ -326,10 +350,6 @@ legend(x = "topright", legend = c("assault_ts", "fit1"), fill = 4:1)
 
 The fitted model looks similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -367,6 +387,34 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,1)(1,1,1)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12}$
+
+ordinary difference = $(1-B)$
+
+seasonal difference = $(1-B^{12})$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t$
+
+With Coefficients:
+
+$(1 - (-0.0638)B)(1 - (-0.0817)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.3161)B)(1 + (-0.7733)B^{12})w_t$
 
 # Controlled Substance Possession
 
@@ -490,10 +538,6 @@ legend(x = "topright", legend = c("controlled_pos_ts", "fit1"), fill = 4:1)
 
 The fitted model looks similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -531,6 +575,34 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,1)(1,1,1)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12}$
+
+ordinary difference = $(1-B)$
+
+seasonal difference = $(1-B^{12})$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t$
+
+With Coefficients:
+
+$(1 - (0.1299)B)(1 - (0.0023)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.6667)B)(1 + (-0.7269)B^{12})w_t$
 
 # Marijuana Possession
 
@@ -664,10 +736,6 @@ legend(x = "topright", legend = c("marijuana_pos_ts", "fit1"), fill = 4:1)
 
 The fitted model looks similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -707,6 +775,34 @@ model_fit %>% forecast %>% autoplot()
 ```
 
 It doesn't really make sense to forecast here as we can be sure that there will be no more arrests for marijuana possession, but it is good to know that we have fitted a good model. We can predict what would have happened to the level of arrests if the policy changes that were instituded over the years never happened.
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,1)(1,1,1)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12}$
+
+ordinary difference = $(1-B)$
+
+seasonal difference = $(1-B^{12})$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t$
+
+With Coefficients:
+
+$(1 - (0.2848)B)(1 - (-0.0775)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.5273)B)(1 + (-0.5769)B^{12})w_t$
 
 # Motor Vehicle Theft
 
@@ -810,10 +906,6 @@ legend(x = "topright", legend = c("motor_theft_ts", "fit1", "auto_fit"), fill = 
 
 The fitted model and auto mdoel look similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -853,6 +945,32 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 auto_model %>% forecast %>% autoplot()
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,2)(1,0,2)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B + \theta_2B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12}$
+
+ordinary difference = $(1-B)$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)x_t = (1 + \theta_1B + \theta_2B)(1 + \Theta_1B^{12})w_t$
+
+With Coefficients:
+
+$(1 - (0.6836)B)(1 - (0.5699)B^{12})(1-B)x_t = (1 + (-1.3614)B + (0.3775)2B)(1 + (-0.2578)B^{12})w_t$
 
 # Murder
 
@@ -955,10 +1073,6 @@ legend(x = "topleft", legend = c("murder_ts", "fit1"), fill = 4:1)
 
 The fitted model and auto mdoel look similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -995,6 +1109,28 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have an ARIMA(1,1,2) model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B + \theta_2B$
+
+ordinary difference = $(1-B)$
+
+General Model:
+
+$(1 - \phi_1B)(1-B)x_t = (1 + \theta_1B + \theta_2B)w_t$
+
+With Coefficients:
+
+$(1 - (0.5921)B)(1-B)x_t = (1 + (-1.2472)B + (0.3312)2B)w_t$
 
 # Robbery
 
@@ -1125,10 +1261,6 @@ legend(x = "topright", legend = c("robbery_ts", "fit1"), fill = 4:1)
 
 The fitted model looks similar to the actual time series.
 
-## Seasonal Cross Validation
-
-1 step ahead and 12 steps ahead
-
 ## Forecasting
 
 ```{r, echo=FALSE}
@@ -1165,4 +1297,33 @@ The model error measurements the model are all much lower than the SNaïve bench
 ```{r, echo = FALSE}
 model_fit %>% forecast %>% autoplot()
 ```
+
+## Model Equation
+
+Our final model equation is as follows:
+
+We have a SARIMA(1,1,1)(1,1,2)[12] model.
+
+Components:
+
+AR: $\phi(B) = 1 - \phi_1B$
+
+MA: $\theta(B) = 1 + \theta_1B$
+
+SAR: $\Phi_P(B^s) = 1 - \Phi_1B^{12}$
+
+SMA: $\Theta_Q(B^s) = 1 + \Theta_1B^{12} + \Theta_2B^{24}$
+
+ordinary difference = $(1-B)$
+
+seasonal difference = $(1-B^{12})$
+
+General Model:
+
+$(1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12} + \Theta_2B^{24})w_t$
+
+With Coefficients:
+
+$(1 - (0.1080)B)(1 - (-0.8787)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.6706)B)(1 + (0.2005)B^{12} + (-0.7487)B^{24})w_t$
+
 :::

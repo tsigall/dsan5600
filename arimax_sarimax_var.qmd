@@ -193,8 +193,8 @@ The Ljung-Box statistic p-values suggest that there is no correlation between re
 
 ```{r}
 #| code-fold: true
-model_fit <- Arima(res.fit, order = c(1, 1, 1), seasonal = c(1, 1, 3))
-plot(res.fit, col = "blue")
+model_fit <- Arima(arrests_ts, order = c(1, 1, 1), seasonal = c(1, 1, 3), xreg = unrate_ts)
+plot(arrests_ts, col = "blue")
 lines(fitted(model_fit), col = "green")
 legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
 ```
@@ -248,11 +248,24 @@ legend("topleft",legend=c("manual fit","auto fit"),col=2:3,lty=1)
 
 The manual fit looks slightly better, we will continue and forecast with that model.
 
+```{r}
+summary(model_fit)
+```
+
+Model Equation: 
+
+$\text{arrests}_t = 0.4156(\text{arrests})_{t-1} - 0.7760(\text{arrests})_{t-1} + 0.3179(\text{arrests})_{t-12} - 1.0422(\text{arrests})_{t-24} + 0.2259(\text{arrests})_{t-36}- 0.0438(\text{unrate})_{t}$
+
+
+
 ### Forecasting
 
 ```{r}
 #| code-fold: true
-model_fit %>% forecast %>% autoplot()
+
+unrate_forecast <- forecast(auto.arima(unrate_ts))
+
+autoplot(forecast(model_fit, xreg = unrate_forecast$mean))
 ```
 
 ## Total Arrests \~ Election Year
@@ -396,13 +409,13 @@ The Ljung-Box statistic p-values suggest that there is no correlation between re
 
 ```{r}
 #| code-fold: true
-model_fit <- Arima(res.fit, order = c(1, 1, 1), seasonal = c(1, 0, 1))
+model_fit <- Arima(arrests_ts, order = c(1, 1, 1), seasonal = c(1, 0, 1), xreg = dd$election)
 plot(res.fit, col = "blue")
 lines(fitted(model_fit), col = "green")
 legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
 ```
 
-The the fitted model looks fairly similar to the actual model.
+The fitted model looks fairly similar to the actual model.
 
 ### Cross Validation
 
@@ -453,11 +466,20 @@ The auto fitted model is clearly better, we will continue to forecast with that 
 
 ```{r}
 #| code-fold: true
-model_fit <- Arima(res.fit, order = c(1, 1, 1), seasonal = c(0, 1, 1)) 
-model_fit %>% forecast %>% autoplot()
+model_fit <- Arima(arrests_ts, order = c(1, 1, 1), seasonal = c(0, 1, 1), xreg = dd$election) 
+election_forecast <- forecast(auto.arima(ts(dd$election)), h = 60)
+autoplot(forecast(model_fit, xreg = election_forecast$mean))
 ```
 
 This looks very similar to the original arrests model, meaning we cannot conclude that the presence of an election year has any impact on arrest rate. 
+
+```{r}
+summary(model_fit)
+```
+
+Model Equation: 
+
+$\text{arrests}_t = 0.4274(\text{arrests})_{t-1} - 0.7401(\text{arrests})_{t-1} - 0.6937(\text{arrests})_{t-12} + 0.0189(\text{election})_{t}$
 
 ## Murder \~ Unemployment Rate
 
@@ -579,8 +601,8 @@ The Ljung-Box statistic p-values suggest there may be some correlation between r
 ```{r}
 #| code-fold: true
 
-model_fit <- Arima(res.fit, order = c(1, 1, 1))
-plot(res.fit, col = "blue")
+model_fit <- Arima(murder_ts, order = c(1, 1, 1), xreg = unrate_ts)
+plot(murder_ts, col = "blue")
 lines(fitted(model_fit), col = "green")
 legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
 ```
@@ -637,10 +659,22 @@ The manual fit is clearly better than the auto fit. We will proceed with ARIMAX(
 
 ```{r}
 #| code-fold: true
-model_fit %>% forecast %>% autoplot()
+
+unrate_forecast <- forecast(auto.arima(unrate_ts))
+
+autoplot(forecast(model_fit, xreg = unrate_forecast$mean))
 ```
 
 Adding unemployment rate resulted in little change from the previous model, suggesting that the two are not related.
+
+```{r}
+summary(model_fit)
+```
+
+Model Equation: 
+
+$\text{muder}_t = 0.1436(\text{murder})_{t-1} - 0.8117(\text{murder})_{t-1} - 0.0218(\text{unrate})_{t}$
+
 
 ## Robbery \~ Unemployment Rate
 
@@ -801,6 +835,14 @@ plot(forecast(fit, 24))
 
 Robbery and unemployment rate appear to be inversely related, as their forecasts look similar but in opposite directions. Robbery arrests are expected to decrease in the coming years, while unemployment rate is expected to increase. 
 
+```{r}
+summary(fit)
+```
+
+This shows us model equations for both robbery and unemployment rate. Robbery rate appears to be a better predictor of unemployment rate than vice versa.
+
+
+
 
 ## Controlled Substance Possession \~ Marijuana Possession
 
@@ -824,7 +866,7 @@ autoplot(dd.ts[,c(2,3)], facets = TRUE) +
   ggtitle("Controlled Substance and Marijuana Possession Arrests in NYC")
 ```
 
-There looks to be some relation between these two variables, as wehen marijuana arrests hit 0, controlled substance arrests rose for the first time.
+There looks to be some relation between these two variables, as when marijuana arrests hit 0, controlled substance arrests rose for the first time.
 
 ### Fitting Using VARSelect
 
@@ -959,5 +1001,11 @@ plot(forecast(fit, 24))
 ```
 
 The models have similar forecasts, suggesting they are closely related. Despite the uptick in controlled substance possession arrests, we expect the trend to reverse when considering how the marijuana arrests series has behaved over the years. 
+
+```{r}
+summary(fit)
+```
+
+Equations for both models can be seen in the output above. Both models are excellent predictors of each other, suggesting they are closely related.
 
 :::

@@ -49,5 +49,3 @@ plot_ly(x = unrate$DATE, y = unrate$UNRATE, type = 'scatter', mode = 'lines') %>
 ![](data/CoreCivic_Logo.png){width="40%"}
 
 When fitting financial time series models, certain stocks can give important information about changes in crime rates due to their relation to crimes. For example, CoreCivic , a company that owns and operates private prisons across the United States, would be a worthwhile stock to look at to attempt to better understand crime rates. This data will be obtained through the `quantmod` package in R. 
-
-# References

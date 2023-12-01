@@ -427,10 +427,6 @@ AIC=-33.89   AICc=-33.68   BIC=-20.88</code></pre>
 <p>Both fitted models look similar to the actual time series. The two fitted models look incredibly similar, so we will just go with the one we fit by hand.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting">Forecasting</h2>
 <div class="cell">
@@ -512,6 +508,22 @@ Training set -0.01410203 0.2053272 0.1439894 39.06935 74.2216 0.46462
 Training set 0.02119928</code></pre>
 </div>
 </div>
+</section>
+<section id="model-equation" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,1)(1,1,1)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>seasonal difference = <span class="math inline">\((1-B^{12})\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - 0.435B)(1 - (-0.0331)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.7447)B)(1 + (-0.6763)B^{12})w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
@@ -717,10 +729,6 @@ AIC=211.05   AICc=211.37   BIC=227.34</code></pre>
 <p>The fitted model looks similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-1" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-1">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-1" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-1">Forecasting</h2>
 <div class="cell">
@@ -781,6 +789,22 @@ Training set -0.01329669</code></pre>
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="model-equation-1" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-1">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,1)(1,1,1)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>seasonal difference = <span class="math inline">\((1-B^{12})\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (-0.0638)B)(1 - (-0.0817)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.3161)B)(1 + (-0.7733)B^{12})w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
@@ -986,10 +1010,6 @@ AIC=-19.92   AICc=-19.35   BIC=3.27</code></pre>
 <p>The fitted model looks similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-2" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-2">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-2" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-2">Forecasting</h2>
 <div class="cell">
@@ -1050,6 +1070,22 @@ Training set -0.02147658</code></pre>
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="model-equation-2" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-2">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,1)(1,1,1)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>seasonal difference = <span class="math inline">\((1-B^{12})\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (0.1299)B)(1 - (0.0023)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.6667)B)(1 + (-0.7269)B^{12})w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
@@ -1259,10 +1295,6 @@ AIC=-122.16   AICc=-121.95   BIC=-109.15</code></pre>
 <p>The fitted model looks similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-3" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-3">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-3" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-3">Forecasting</h2>
 <div class="cell">
@@ -1324,6 +1356,22 @@ Training set 0.002802718</code></pre>
 </div>
 </div>
 <p>It doesn’t really make sense to forecast here as we can be sure that there will be no more arrests for marijuana possession, but it is good to know that we have fitted a good model. We can predict what would have happened to the level of arrests if the policy changes that were instituded over the years never happened.</p>
+</section>
+<section id="model-equation-3" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-3">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,1)(1,1,1)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>seasonal difference = <span class="math inline">\((1-B^{12})\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (0.2848)B)(1 - (-0.0775)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.5273)B)(1 + (-0.5769)B^{12})w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
@@ -1495,10 +1543,6 @@ AIC=523.6   AICc=524.03   BIC=543.48</code></pre>
 <p>The fitted model and auto mdoel look similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-4" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-4">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-4" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-4">Forecasting</h2>
 <div class="cell">
@@ -1559,6 +1603,21 @@ Training set 0.007715526</code></pre>
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="model-equation-4" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-4">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,2)(1,0,2)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B + \theta_2B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)x_t = (1 + \theta_1B + \theta_2B)(1 + \Theta_1B^{12})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (0.6836)B)(1 - (0.5699)B^{12})(1-B)x_t = (1 + (-1.3614)B + (0.3775)2B)(1 + (-0.2578)B^{12})w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
@@ -1730,10 +1789,6 @@ AIC=433.27   AICc=433.33   BIC=439.9</code></pre>
 <p>The fitted model and auto mdoel look similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-5" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-5">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-5" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-5">Forecasting</h2>
 <div class="cell">
@@ -1776,6 +1831,19 @@ Training set -0.03840516</code></pre>
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-84-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="model-equation-5" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-5">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have an ARIMA(1,1,2) model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B + \theta_2B\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1-B)x_t = (1 + \theta_1B + \theta_2B)w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (0.5921)B)(1-B)x_t = (1 + (-1.2472)B + (0.3312)2B)w_t\)</span></p>
 </section>
 </div>
 <div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
@@ -1988,10 +2056,6 @@ AIC=358.46   AICc=359.03   BIC=381.65</code></pre>
 <p>The fitted model looks similar to the actual time series.</p>
 </section>
 </section>
-<section id="seasonal-cross-validation-6" class="level2">
-<h2 class="anchored" data-anchor-id="seasonal-cross-validation-6">Seasonal Cross Validation</h2>
-<p>1 step ahead and 12 steps ahead</p>
-</section>
 <section id="forecasting-6" class="level2">
 <h2 class="anchored" data-anchor-id="forecasting-6">Forecasting</h2>
 <div class="cell">
@@ -2034,6 +2098,22 @@ Training set -0.003315134</code></pre>
 <p><img src="arma_arima_sarima_models_files/figure-html/unnamed-chunk-98-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="model-equation-6" class="level2">
+<h2 class="anchored" data-anchor-id="model-equation-6">Model Equation</h2>
+<p>Our final model equation is as follows:</p>
+<p>We have a SARIMA(1,1,1)(1,1,2)[12] model.</p>
+<p>Components:</p>
+<p>AR: <span class="math inline">\(\phi(B) = 1 - \phi_1B\)</span></p>
+<p>MA: <span class="math inline">\(\theta(B) = 1 + \theta_1B\)</span></p>
+<p>SAR: <span class="math inline">\(\Phi_P(B^s) = 1 - \Phi_1B^{12}\)</span></p>
+<p>SMA: <span class="math inline">\(\Theta_Q(B^s) = 1 + \Theta_1B^{12} + \Theta_2B^{24}\)</span></p>
+<p>ordinary difference = <span class="math inline">\((1-B)\)</span></p>
+<p>seasonal difference = <span class="math inline">\((1-B^{12})\)</span></p>
+<p>General Model:</p>
+<p><span class="math inline">\((1 - \phi_1B)(1 - \Phi_1B^{12})(1-B)(1-B^{12})x_t = (1 + \theta_1B)(1 + \Theta_1B^{12} + \Theta_2B^{24})w_t\)</span></p>
+<p>With Coefficients:</p>
+<p><span class="math inline">\((1 - (0.1080)B)(1 - (-0.8787)B^{12})(1-B)(1-B^{12})x_t = (1 + (-0.6706)B)(1 + (0.2005)B^{12} + (-0.7487)B^{24})w_t\)</span></p>
 </section>
 </div>
 </div>
