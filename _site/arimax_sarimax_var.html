@@ -310,9 +310,9 @@ div.csl-indent {
 <li><p>(VAR) Controlled Substance Possession ~ Marijuana Possession</p></li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" aria-current="page">Total Arrests ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Total Arrests ~ Election Year</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Murder ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Robbery ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false">Controlled Substance Possession ~ Marijuana Possession</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" aria-current="page">Total Arrests ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Total Arrests ~ Election Year</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Murder ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Robbery ~ Unemployment Rate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false">Controlled Substance Possession ~ Marijuana Possession</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p>We have a univariate time series in total arrests and we want to see the effect the exogenous variable of unemployment rate has on that time series. We will fit an ARIMAX model, Total Arrests ~ Unemployment Rate. Unemployment data is for the New York City Metropolitan Area and obtained from <a href="https://fred.stlouisfed.org/categories/30789">here</a>.</p>
 <div class="cell">
 <details>
@@ -432,7 +432,7 @@ Model df: 4.   Total lags used: 24</code></pre>
 </section>
 <section id="fitting-manually" class="level3">
 <h3 class="anchored" data-anchor-id="fitting-manually">Fitting Manually</h3>
-<p>We first fit a linear regression model predicting arrests using unemployment rate. The we will fit a SARIMA model for the residuals.</p>
+<p>We first fit a linear regression model predicting arrests using unemployment rate. Then we will fit a SARIMA model for the residuals.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fit.reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(arrests <span class="sc">~</span> unrate, <span class="at">data =</span> dd)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -747,18 +747,451 @@ F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 </div>
 </section>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<p>insert model here</p>
-</div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<p>It would be interesting to see if total arrests changes in the presence of an election year. In theory, an election year would mean elected officials are under more pressure to bring about real change in their city, so you may see arrests change as a result. Maybe they go up as they want to appear as if they are doing more to get criminals off the streets, or maybe they go down as they want to decriminalize certain actions. Regardless, it would be interesting to look at total arrests in that context.</p>
+<p>New York City holds mayoral elections every 4 years, with the most recent being in 2021.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_crime<span class="sc">$</span>month)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">murder =</span> murder_ts, <span class="at">unrate =</span> unrate_ts) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">murder =</span> Series<span class="fl">.1</span>)</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_date<span class="sc">$</span>month)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">arrests =</span> arrests_ts) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">arrests =</span> Series<span class="fl">.1</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>election_years <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2021</span>, <span class="dv">2017</span>, <span class="dv">2013</span>, <span class="dv">2009</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> dd <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">election =</span> <span class="fu">if_else</span>(<span class="fu">year</span>(month) <span class="sc">%in%</span> election_years, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">month</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">arrests</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">election</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2006-01-01</td>
+<td style="text-align: right;">0.5041010</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-02-01</td>
+<td style="text-align: right;">0.2405968</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-03-01</td>
+<td style="text-align: right;">0.8459733</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-04-01</td>
+<td style="text-align: right;">0.4411907</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-05-01</td>
+<td style="text-align: right;">0.6487347</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-06-01</td>
+<td style="text-align: right;">0.4296871</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Variables influencing Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It is hard to tell if there is any relationship, we should continue with the model build process.</p>
+<section id="fitting-using-auto.arima-1" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-using-auto.arima-1">Fitting Using auto.arima</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">election =</span> dd.ts[,<span class="st">"election"</span>])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>auto_model <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(dd.ts[,<span class="st">"arrests"</span>], <span class="at">xreg =</span> xreg)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: dd.ts[, "arrests"] 
+Regression with ARIMA(1,1,1)(0,1,1)[12] errors 
+
+Coefficients:
+         ar1      ma1     sma1    xreg
+      0.4274  -0.7401  -0.6937  0.0189
+s.e.  0.1397   0.1042   0.0554  0.0593
+
+sigma^2 = 0.04599:  log likelihood = 21
+AIC=-31.99   AICc=-31.67   BIC=-15.73
+
+Training set error measures:
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.01432022 0.2053334 0.1438347 37.75989 73.85223 0.4641209
+                   ACF1
+Training set 0.01935804</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from Regression with ARIMA(1,1,1)(0,1,1)[12] errors
+Q* = 19.631, df = 21, p-value = 0.5447
+
+Model df: 3.   Total lags used: 24</code></pre>
+</div>
+</div>
+<p>We have a SARIMAX mode, a regression model with ARIMA(1,1,1)(0,1,1)[12] errors</p>
+</section>
+<section id="fitting-manually-1" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-manually-1">Fitting Manually</h3>
+<p>We first fit a linear regression model predicting arrests using unemployment rate. Then we will fit a SARIMA model for the residuals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit.reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(arrests <span class="sc">~</span> election, <span class="at">data =</span> dd)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = arrests ~ election, data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.3642 -0.9092  0.2859  0.8338  1.4699 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  0.02838    0.08016   0.354    0.724
+election    -0.12060    0.16525  -0.730    0.466
+
+Residual standard error: 1.001 on 202 degrees of freedom
+Multiple R-squared:  0.00263,   Adjusted R-squared:  -0.002307 
+F-statistic: 0.5327 on 1 and 202 DF,  p-value: 0.4663</code></pre>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Residuals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Differenced Residuals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Seasonally Differenced Residuals</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>res.fit <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">residuals</span>(fit.reg), <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit <span class="sc">%&gt;%</span> <span class="fu">diff</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit <span class="sc">%&gt;%</span> <span class="fu">diff</span>() <span class="sc">%&gt;%</span> <span class="fu">diff</span>(<span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>We will try the following parameters:</p>
+<ul>
+<li>p: 1, 2, 4</li>
+<li>d: 0, 1</li>
+<li>q: 1, 4</li>
+<li>P: 1</li>
+<li>D: 0, 1</li>
+<li>Q: 1, 2, 3</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Fitting Model</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>ls <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">9</span><span class="sc">*</span><span class="dv">28</span>), <span class="at">nrow=</span><span class="dv">28</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)){</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(q <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)){</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)){</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span>(P <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>)){</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span>(Q <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)){</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span>(D <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)){</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span>(p <span class="sc">+</span> d <span class="sc">+</span> q <span class="sc">+</span> P <span class="sc">+</span> D <span class="sc">+</span> Q<span class="sc">&lt;=</span> <span class="dv">9</span>){</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>              <span class="fu">tryCatch</span>({</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>                model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(p, d, q), <span class="at">seasonal =</span> <span class="fu">c</span>(P, D, Q))</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>                ls[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(p, d, q, P, D, Q, model<span class="sc">$</span>aic, model<span class="sc">$</span>bic, model<span class="sc">$</span>aicc)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>              }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">cat</span>()</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>              }, <span class="at">finally =</span> {</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>                i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>              })</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ls)</span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p"</span>,<span class="st">"d"</span>,<span class="st">"q"</span>,<span class="st">"P"</span>, <span class="st">"D"</span>, <span class="st">"Q"</span>, <span class="st">"AIC"</span>,<span class="st">"BIC"</span>,<span class="st">"AICc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>BIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AICc),], <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-26.91</td>
+<td style="text-align: right;">-10.34</td>
+<td style="text-align: right;">-26.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+
+
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-26.91</td>
+<td style="text-align: right;">-10.64</td>
+<td style="text-align: right;">-26.58</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+
+
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">d</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">P</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AICc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-26.91</td>
+<td style="text-align: right;">-10.34</td>
+<td style="text-align: right;">-26.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 16.7%;justify-content: center;">
+
+
+</div>
+</div>
+</div>
+</div>
+<p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1, P=1, D=0, Q=1\)</span>. We now check the model diagnostics.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">621</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>model_output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(<span class="fu">sarima</span>(res.fit, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Ljung-Box statistic p-values suggest that there is no correlation between residuals, meaning we have a good enough model. We will proceed with the model SARIMA(1, 1, 1)(1, 0, 1)12. The information criteria are all similar between the auto model and this model. We will proceed with this model.</p>
+<section id="fitted-vs.-actual-1" class="level4">
+<h4 class="anchored" data-anchor-id="fitted-vs.-actual-1">Fitted vs.&nbsp;Actual</h4>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res.fit, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(model_fit), <span class="at">col =</span> <span class="st">"green"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"res.fit"</span>, <span class="st">"fit1"</span>), <span class="at">fill =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The the fitted model looks fairly similar to the actual model.</p>
+</section>
+</section>
+<section id="cross-validation-1" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-1">Cross Validation</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># minimum data length for fitting</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">48</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(res.fit)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>st <span class="ot">&lt;-</span> <span class="fu">tsp</span>(res.fit)[<span class="dv">1</span>] <span class="sc">+</span> (k <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">/</span><span class="dv">12</span> <span class="co"># ending point: October 2009</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,n<span class="sc">-</span>k,<span class="dv">12</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,n<span class="sc">-</span>k,<span class="dv">12</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, n <span class="sc">-</span> k, <span class="at">by =</span> <span class="dv">1</span>)) {</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    xtrain <span class="ot">&lt;-</span> <span class="fu">window</span>(res.fit, <span class="at">end =</span> st <span class="sc">+</span> i<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    xtest <span class="ot">&lt;-</span> <span class="fu">window</span>(res.fit, <span class="at">start =</span> st <span class="sc">+</span> (i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">end =</span> st <span class="sc">+</span> (i <span class="sc">+</span> <span class="dv">12</span>)<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    fit1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(xtrain, </span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"ML"</span>)</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    fcast1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit1, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    fit2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(xtrain, </span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>                 <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"ML"</span>)</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    fcast2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    rmse1[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(xtest)] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((fcast1<span class="sc">$</span>mean<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    rmse2[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(xtest)] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((fcast2<span class="sc">$</span>mean<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">cat</span>()</span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>              })</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">colMeans</span>(rmse1,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">"horizon"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>)</span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">colMeans</span>(rmse2,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="dv">3</span>, <span class="at">xlab=</span><span class="st">"horizon"</span>, <span class="at">ylab=</span><span class="st">"RMSE2"</span>)</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"manual fit"</span>,<span class="st">"auto fit"</span>),<span class="at">col=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The auto fitted model is clearly better, we will continue to forecast with that model.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)) </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>model_fit <span class="sc">%&gt;%</span> forecast <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks very similar to the original arrests model, meaning we cannot conclude that the presence of an election year has any impact on arrest rate.</p>
+</section>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>It would be interesting to look at the relationship between unemployment rate and a specific crime, such as murder.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_crime<span class="sc">$</span>month)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">murder =</span> murder_ts, <span class="at">unrate =</span> unrate_ts) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">murder =</span> Series<span class="fl">.1</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
@@ -809,26 +1242,26 @@ F-statistic: 2.902 on 1 and 202 DF,  p-value: 0.09</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Variables influencing Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Variables influencing Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>There looks to be some relation between these two variables, though we should fit a model to see if this relationship is substantial.</p>
-<section id="fitting-using-auto.arima-1" class="level3">
-<h3 class="anchored" data-anchor-id="fitting-using-auto.arima-1">Fitting Using auto.arima</h3>
+<section id="fitting-using-auto.arima-2" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-using-auto.arima-2">Fitting Using auto.arima</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">unrate =</span> dd.ts[,<span class="st">"unrate"</span>])</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>auto_model <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(dd.ts[,<span class="st">"murder"</span>], <span class="at">xreg =</span> xreg)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>xreg <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">unrate =</span> dd.ts[,<span class="st">"unrate"</span>])</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>auto_model <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(dd.ts[,<span class="st">"murder"</span>], <span class="at">xreg =</span> xreg)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: dd.ts[, "murder"] 
@@ -850,10 +1283,10 @@ Training set 0.05571558</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(auto_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -867,12 +1300,12 @@ Model df: 1.   Total lags used: 24</code></pre>
 </div>
 <p>We have an ARIMAX model, a regression model with ARIMA(0,1,1) errors.</p>
 </section>
-<section id="fitting-manually-1" class="level3">
-<h3 class="anchored" data-anchor-id="fitting-manually-1">Fitting Manually</h3>
+<section id="fitting-manually-2" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-manually-2">Fitting Manually</h3>
 <p>We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA model for the residuals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fit.reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(murder <span class="sc">~</span> unrate, <span class="at">data =</span> dd)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fit.reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(murder <span class="sc">~</span> unrate, <span class="at">data =</span> dd)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit.reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -893,22 +1326,22 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Residuals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Differenced Residuals</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Residuals</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Differenced Residuals</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>res.fit <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">residuals</span>(fit.reg), <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>res.fit <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">residuals</span>(fit.reg), <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit <span class="sc">%&gt;%</span> <span class="fu">diff</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtsdisplay</span>(res.fit <span class="sc">%&gt;%</span> <span class="fu">diff</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -923,30 +1356,30 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>ls <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">6</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow=</span><span class="dv">5</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)){</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(q <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)){</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)){</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(p <span class="sc">+</span> d <span class="sc">+</span> q <span class="sc">+</span> P <span class="sc">+</span> D <span class="sc">+</span> Q<span class="sc">&lt;=</span> <span class="dv">9</span>){</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tryCatch</span>({</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>          model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(p, d, q))</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>          ls[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(p, d, q, model<span class="sc">$</span>aic, model<span class="sc">$</span>bic, model<span class="sc">$</span>aicc)</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">cat</span>()</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        }, <span class="at">finally =</span> {</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>          i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ls)</span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p"</span>,<span class="st">"d"</span>,<span class="st">"q"</span>, <span class="st">"AIC"</span>,<span class="st">"BIC"</span>,<span class="st">"AICc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>ls <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="cn">NA</span>,<span class="dv">6</span><span class="sc">*</span><span class="dv">5</span>), <span class="at">nrow=</span><span class="dv">5</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(p <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)){</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(q <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)){</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(d <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)){</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(p <span class="sc">+</span> d <span class="sc">+</span> q <span class="sc">+</span> P <span class="sc">+</span> D <span class="sc">+</span> Q<span class="sc">&lt;=</span> <span class="dv">9</span>){</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tryCatch</span>({</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>          model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(p, d, q))</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>          ls[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(p, d, q, model<span class="sc">$</span>aic, model<span class="sc">$</span>bic, model<span class="sc">$</span>aicc)</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>        }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">cat</span>()</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>        }, <span class="at">finally =</span> {</span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>          i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ls)</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p"</span>,<span class="st">"d"</span>,<span class="st">"q"</span>, <span class="st">"AIC"</span>,<span class="st">"BIC"</span>,<span class="st">"AICc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -955,9 +1388,9 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>BIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AICc),], <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>BIC),], <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(temp[<span class="fu">which.min</span>(temp<span class="sc">$</span>AICc),], <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1057,54 +1490,100 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <p>It is clear that the best model is one with parameters <span class="math inline">\(p=1, d=1, q=1\)</span>. We now check the model diagnostics.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The Ljung-Box statistic p-values suggest there may be some correlation between residuals, thoug the normal Q-Q plot looks fairly linear. We can proceed with the model build process.</p>
-<section id="fitted-vs.-actual-1" class="level4">
-<h4 class="anchored" data-anchor-id="fitted-vs.-actual-1">Fitted vs.&nbsp;Actual</h4>
+<section id="fitted-vs.-actual-2" class="level4">
+<h4 class="anchored" data-anchor-id="fitted-vs.-actual-2">Fitted vs.&nbsp;Actual</h4>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res.fit, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(model_fit), <span class="at">col =</span> <span class="st">"green"</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"res.fit"</span>, <span class="st">"fit1"</span>), <span class="at">fill =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(res.fit, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res.fit, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(model_fit), <span class="at">col =</span> <span class="st">"green"</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"res.fit"</span>, <span class="st">"fit1"</span>), <span class="at">fill =</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The the fitted model looks fairly similar to the actual model.</p>
+<p>The the fitted model looks fairly similar to the actual model, though with less variance.</p>
 </section>
 </section>
-<section id="cross-validation-1" class="level3">
-<h3 class="anchored" data-anchor-id="cross-validation-1">Cross Validation</h3>
-<p>Insert cross validation</p>
+<section id="cross-validation-2" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-2">Cross Validation</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># minimum data length for fitting</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">48</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(res.fit)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>st <span class="ot">&lt;-</span> <span class="fu">tsp</span>(res.fit)[<span class="dv">1</span>] <span class="sc">+</span> (k <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">/</span><span class="dv">12</span> <span class="co"># ending point: October 2009</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,n<span class="sc">-</span>k,<span class="dv">12</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>,n<span class="sc">-</span>k,<span class="dv">12</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span>, n <span class="sc">-</span> k, <span class="at">by =</span> <span class="dv">1</span>)) {</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    xtrain <span class="ot">&lt;-</span> <span class="fu">window</span>(res.fit, <span class="at">end =</span> st <span class="sc">+</span> i<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    xtest <span class="ot">&lt;-</span> <span class="fu">window</span>(res.fit, <span class="at">start =</span> st <span class="sc">+</span> (i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">end =</span> st <span class="sc">+</span> (i <span class="sc">+</span> <span class="dv">12</span>)<span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    fit1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(xtrain, </span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"ML"</span>)</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>    fcast1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit1, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>    fit2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(xtrain, </span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"ML"</span>)</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>    fcast2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h =</span> <span class="dv">12</span>)</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>    rmse1[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(xtest)] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((fcast1<span class="sc">$</span>mean<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>    rmse2[i, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(xtest)] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((fcast2<span class="sc">$</span>mean<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>                <span class="fu">cat</span>()</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>              })</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">colMeans</span>(rmse1,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">xlab=</span><span class="st">"horizon"</span>, <span class="at">ylab=</span><span class="st">"RMSE"</span>)</span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">colMeans</span>(rmse2,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="dv">3</span>, <span class="at">xlab=</span><span class="st">"horizon"</span>, <span class="at">ylab=</span><span class="st">"RMSE2"</span>)</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"manual fit"</span>,<span class="st">"auto fit"</span>),<span class="at">col=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,<span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The manual fit is clearly better than the auto fit. We will proceed with ARIMAX(1, 1, 1).</p>
 </section>
 <section id="forecasting-1" class="level3">
 <h3 class="anchored" data-anchor-id="forecasting-1">Forecasting</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="sc">%&gt;%</span> forecast <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="sc">%&gt;%</span> forecast <span class="sc">%&gt;%</span> <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Adding unemployment rate resulted in little change from the previous model, suggesting that the two are not related.</p>
 </section>
 </div>
-<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<p>The first relationship we will look at between two time series will be between robbery and unemployment rate.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_crime<span class="sc">$</span>month)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">robbery =</span> robbery_ts, <span class="at">unrate =</span> unrate_ts) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">robbery =</span> Series<span class="fl">.1</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_crime<span class="sc">$</span>month)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">robbery =</span> robbery_ts, <span class="at">unrate =</span> unrate_ts) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">robbery =</span> Series<span class="fl">.1</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
@@ -1155,14 +1634,14 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Variables influencing Robbery Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Variables influencing Robbery Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>There looks to be some relation between these two variables, with the spike in 2020 in unemployment rate being at the same time as the low arrest rate, though we should fit a model to see if this relationship is substantial.</p>
@@ -1171,7 +1650,7 @@ F-statistic: 1.717 on 1 and 202 DF,  p-value: 0.1916</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VARselect</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VARselect</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>$selection
@@ -1195,8 +1674,8 @@ FPE(n)  0.2368595  0.2384194  0.2397933  0.2455606</code></pre>
 <div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1334,138 +1813,138 @@ unrate   -0.115  1.000</code></pre>
 </div>
 </div>
 </section>
-<section id="cross-validation-2" class="level3">
-<h3 class="anchored" data-anchor-id="cross-validation-2">Cross Validation</h3>
+<section id="cross-validation-3" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-3">Cross Validation</h3>
 <div class="cell">
 <details>
 <summary>Cross Validation</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">72</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>st <span class="ot">&lt;-</span> <span class="fu">tsp</span>(ts)[<span class="dv">1</span>] <span class="sc">+</span> (k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">12</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>) {</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  xtrain <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">end=</span>st <span class="sc">+</span> i<span class="dv">-1</span>)</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  xtest <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">start=</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="at">end=</span>st <span class="sc">+</span> i)</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first model</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>robbery</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>unrate</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 2 variables</span></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">ts</span>(ff,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>    rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>      rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second model</span></span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>  fit2 <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">3</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a>  fcast2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>robbery</span>
-<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>unrate</span>
-<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 3 variables</span></span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">ts</span>(ff2,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
-<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
-<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
-<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a>    rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
-<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
-<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a>      rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">72</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>st <span class="ot">&lt;-</span> <span class="fu">tsp</span>(ts)[<span class="dv">1</span>] <span class="sc">+</span> (k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>) {</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  xtrain <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">end=</span>st <span class="sc">+</span> i<span class="dv">-1</span>)</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  xtest <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">start=</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="at">end=</span>st <span class="sc">+</span> i)</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first model</span></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>robbery</span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>unrate</span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 2 variables</span></span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
+<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">ts</span>(ff,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
+<span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
+<span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>    rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
+<span id="cb58-36"><a href="#cb58-36" aria-hidden="true" tabindex="-1"></a>      rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb58-37"><a href="#cb58-37" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-39"><a href="#cb58-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-40"><a href="#cb58-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second model</span></span>
+<span id="cb58-41"><a href="#cb58-41" aria-hidden="true" tabindex="-1"></a>  fit2 <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">3</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
+<span id="cb58-42"><a href="#cb58-42" aria-hidden="true" tabindex="-1"></a>  fcast2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
+<span id="cb58-43"><a href="#cb58-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-44"><a href="#cb58-44" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>robbery</span>
+<span id="cb58-45"><a href="#cb58-45" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>unrate</span>
+<span id="cb58-46"><a href="#cb58-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-47"><a href="#cb58-47" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 3 variables</span></span>
+<span id="cb58-48"><a href="#cb58-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-49"><a href="#cb58-49" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
+<span id="cb58-50"><a href="#cb58-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-51"><a href="#cb58-51" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">ts</span>(ff2,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb58-52"><a href="#cb58-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-53"><a href="#cb58-53" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
+<span id="cb58-54"><a href="#cb58-54" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
+<span id="cb58-55"><a href="#cb58-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-56"><a href="#cb58-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb58-57"><a href="#cb58-57" aria-hidden="true" tabindex="-1"></a>    rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb58-58"><a href="#cb58-58" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb58-59"><a href="#cb58-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
+<span id="cb58-60"><a href="#cb58-60" aria-hidden="true" tabindex="-1"></a>      rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb58-61"><a href="#cb58-61" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb58-62"><a href="#cb58-62" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>yr <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2012</span><span class="sc">:</span><span class="dv">2022</span>),<span class="at">each =</span><span class="dv">12</span>) <span class="co">#year</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),<span class="dv">11</span>) <span class="co">#month</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse1)</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>rmse1<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse1<span class="sc">$</span>yr, rmse1<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"robbery"</span>,<span class="st">"unemployment"</span>, <span class="st">"Date"</span>)</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse2)</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>rmse2<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse2<span class="sc">$</span>yr, rmse2<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"robbery"</span>,<span class="st">"unemployment"</span>, <span class="st">"Date"</span>)</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> robbery),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> robbery),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for robbery"</span>,</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>yr <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2012</span><span class="sc">:</span><span class="dv">2022</span>),<span class="at">each =</span><span class="dv">12</span>) <span class="co">#year</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),<span class="dv">11</span>) <span class="co">#month</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse1)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>rmse1<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse1<span class="sc">$</span>yr, rmse1<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"robbery"</span>,<span class="st">"unemployment"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse2)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>rmse2<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse2<span class="sc">$</span>yr, rmse2<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"robbery"</span>,<span class="st">"unemployment"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> robbery),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> robbery),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for robbery"</span>,</span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> unemployment),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> unemployment),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for unemployment"</span>,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> unemployment),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> unemployment),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for unemployment"</span>,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-31-2.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-45-2.png" class="img-fluid" width="672"></p>
 </div>
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>robbery)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>robbery)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8851127</code></pre>
 </div>
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>robbery)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>robbery)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8789264</code></pre>
 </div>
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.254941</code></pre>
 </div>
 <details>
 <summary>Plot Results</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>unemployment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.948857</code></pre>
@@ -1473,22 +1952,452 @@ unrate   -0.115  1.000</code></pre>
 </div>
 <p>The models are very close in performance, but it looks like VAR(3) is slightly better so we will forecast with that model.</p>
 </section>
-<section id="forecast" class="level3">
-<h3 class="anchored" data-anchor-id="forecast">Forecast</h3>
+<section id="forecasting-2" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting-2">Forecasting</h3>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Robbery and unemployment rate appear to be inversely related, as their forecasts look similar but in opposite directions. Robbery arrests are expected to decrease in the coming years, while unemployment rate is expected to increase.</p>
+</section>
+</div>
+<div id="tabset-4-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-5-tab">
+<p>Looking at the relationship between two drug crimes would be interesting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(arrests_by_crime<span class="sc">$</span>month)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(month, <span class="at">controlled =</span> controlled_pos_ts, <span class="at">marijuana =</span> marijuana_pos_ts) <span class="sc">%&gt;%</span> </span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">controlled =</span> Series<span class="fl">.1</span>,</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">marijuana =</span> Series.<span class="fl">1.1</span>)</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(dd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">month</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">controlled</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">marijuana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2006-01-01</td>
+<td style="text-align: right;">1.0731108</td>
+<td style="text-align: right;">0.2764828</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-02-01</td>
+<td style="text-align: right;">0.8159753</td>
+<td style="text-align: right;">0.2200679</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-03-01</td>
+<td style="text-align: right;">1.2638094</td>
+<td style="text-align: right;">0.4420078</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-04-01</td>
+<td style="text-align: right;">1.0558864</td>
+<td style="text-align: right;">0.4829241</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006-05-01</td>
+<td style="text-align: right;">1.1604630</td>
+<td style="text-align: right;">0.5697162</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2006-06-01</td>
+<td style="text-align: right;">0.8012115</td>
+<td style="text-align: right;">0.4606061</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>dd.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dd.ts[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">facets =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Controlled Substance and Marijuana Possession Arrests in NYC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There looks to be some relation between these two variables, as wehen marijuana arrests hit 0, controlled substance arrests rose for the first time.</p>
+<section id="fitting-using-varselect-1" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-using-varselect-1">Fitting Using VARSelect</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VARselect</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">lag.max =</span> <span class="dv">10</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$selection
+AIC(n)  HQ(n)  SC(n) FPE(n) 
+     9      1      1      9 
+
+$criteria
+                  1            2            3           4            5
+AIC(n) -6.511681992 -6.485344544 -6.528033097 -6.51655163 -6.587315798
+HQ(n)  -6.457115076 -6.403494170 -6.418899264 -6.38013434 -6.423615050
+SC(n)  -6.376924954 -6.283208988 -6.258519022 -6.17965904 -6.183044686
+FPE(n)  0.001485996  0.001525695  0.001462015  0.00147903  0.001378169
+                  6            7            8            9           10
+AIC(n) -6.590980025 -6.556831567 -6.562486672 -6.643458339 -6.637545519
+HQ(n)  -6.399995819 -6.338563902 -6.316935550 -6.370623758 -6.337427480
+SC(n)  -6.119330394 -6.017803417 -5.956080004 -5.969673152 -5.896381813
+FPE(n)  0.001373384  0.001421446  0.001413882  0.001304431  0.001312809</code></pre>
+</div>
+</div>
+<p>p = 6 and 9 seem like good parameters, we will try both VAR(6) and VAR(9).</p>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">6</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(vars<span class="sc">::</span><span class="fu">VAR</span>(dd[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">p =</span> <span class="dv">9</span>, <span class="at">type =</span> <span class="st">"both"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>
+VAR Estimation Results:
+========================= 
+Endogenous variables: controlled, marijuana 
+Deterministic variables: both 
+Sample size: 198 
+Log Likelihood: 118.205 
+Roots of the characteristic polynomial:
+0.951 0.8609 0.7545 0.7545 0.7395 0.7395 0.7383 0.7383 0.7306 0.7306 0.6895 0.2869
+Call:
+vars::VAR(y = dd[, c(2, 3)], p = 6, type = "both")
+
+
+Estimation results for equation controlled: 
+=========================================== 
+controlled = controlled.l1 + marijuana.l1 + controlled.l2 + marijuana.l2 + controlled.l3 + marijuana.l3 + controlled.l4 + marijuana.l4 + controlled.l5 + marijuana.l5 + controlled.l6 + marijuana.l6 + const + trend 
+
+               Estimate Std. Error t value Pr(&gt;|t|)    
+controlled.l1  0.168650   0.100410   1.680  0.09473 .  
+marijuana.l1   0.029242   0.123430   0.237  0.81299    
+controlled.l2 -0.030578   0.118815  -0.257  0.79719    
+marijuana.l2   0.147341   0.169155   0.871  0.38486    
+controlled.l3  0.509902   0.118424   4.306 2.70e-05 ***
+marijuana.l3  -0.489623   0.169150  -2.895  0.00426 ** 
+controlled.l4  0.086337   0.122235   0.706  0.48088    
+marijuana.l4  -0.230342   0.172259  -1.337  0.18281    
+controlled.l5 -0.083414   0.120365  -0.693  0.48918    
+marijuana.l5   0.372071   0.170976   2.176  0.03082 *  
+controlled.l6 -0.070728   0.098143  -0.721  0.47204    
+marijuana.l6   0.148065   0.129024   1.148  0.25264    
+const          0.765453   0.172415   4.440 1.55e-05 ***
+trend         -0.007556   0.001619  -4.667 5.88e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.2432 on 184 degrees of freedom
+Multiple R-Squared: 0.9446, Adjusted R-squared: 0.9407 
+F-statistic: 241.2 on 13 and 184 DF,  p-value: &lt; 2.2e-16 
+
+
+Estimation results for equation marijuana: 
+========================================== 
+marijuana = controlled.l1 + marijuana.l1 + controlled.l2 + marijuana.l2 + controlled.l3 + marijuana.l3 + controlled.l4 + marijuana.l4 + controlled.l5 + marijuana.l5 + controlled.l6 + marijuana.l6 + const + trend 
+
+               Estimate Std. Error t value Pr(&gt;|t|)    
+controlled.l1 -0.436764   0.081576  -5.354 2.54e-07 ***
+marijuana.l1   0.969598   0.100279   9.669  &lt; 2e-16 ***
+controlled.l2 -0.061242   0.096530  -0.634 0.526584    
+marijuana.l2   0.163875   0.137427   1.192 0.234619    
+controlled.l3  0.378015   0.096212   3.929 0.000121 ***
+marijuana.l3  -0.455087   0.137423  -3.312 0.001117 ** 
+controlled.l4  0.004183   0.099308   0.042 0.966444    
+marijuana.l4  -0.070335   0.139949  -0.503 0.615865    
+controlled.l5  0.062998   0.097788   0.644 0.520233    
+marijuana.l5   0.147411   0.138907   1.061 0.289982    
+controlled.l6 -0.183714   0.079735  -2.304 0.022337 *  
+marijuana.l6   0.177225   0.104824   1.691 0.092590 .  
+const          0.530862   0.140077   3.790 0.000204 ***
+trend         -0.005208   0.001315  -3.959 0.000108 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.1976 on 184 degrees of freedom
+Multiple R-Squared: 0.9644, Adjusted R-squared: 0.9619 
+F-statistic: 383.7 on 13 and 184 DF,  p-value: &lt; 2.2e-16 
+
+
+
+Covariance matrix of residuals:
+           controlled marijuana
+controlled    0.05913   0.03325
+marijuana     0.03325   0.03903
+
+Correlation matrix of residuals:
+           controlled marijuana
+controlled      1.000     0.692
+marijuana       0.692     1.000</code></pre>
+</div>
+<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<pre><code>
+VAR Estimation Results:
+========================= 
+Endogenous variables: controlled, marijuana 
+Deterministic variables: both 
+Sample size: 195 
+Log Likelihood: 133.385 
+Roots of the characteristic polynomial:
+0.9634 0.8886 0.8886 0.8871 0.8871 0.8658 0.8658 0.8598 0.8598 0.8534 0.8464 0.8464 0.7841 0.7841 0.7046 0.7046 0.5531 0.5531
+Call:
+vars::VAR(y = dd[, c(2, 3)], p = 9, type = "both")
+
+
+Estimation results for equation controlled: 
+=========================================== 
+controlled = controlled.l1 + marijuana.l1 + controlled.l2 + marijuana.l2 + controlled.l3 + marijuana.l3 + controlled.l4 + marijuana.l4 + controlled.l5 + marijuana.l5 + controlled.l6 + marijuana.l6 + controlled.l7 + marijuana.l7 + controlled.l8 + marijuana.l8 + controlled.l9 + marijuana.l9 + const + trend 
+
+               Estimate Std. Error t value Pr(&gt;|t|)    
+controlled.l1  0.176637   0.101152   1.746 0.082523 .  
+marijuana.l1   0.063460   0.124271   0.511 0.610234    
+controlled.l2  0.007320   0.121334   0.060 0.951959    
+marijuana.l2   0.064843   0.171259   0.379 0.705427    
+controlled.l3  0.506367   0.121376   4.172 4.75e-05 ***
+marijuana.l3  -0.424332   0.171100  -2.480 0.014083 *  
+controlled.l4  0.037569   0.126780   0.296 0.767328    
+marijuana.l4  -0.236271   0.174420  -1.355 0.177287    
+controlled.l5 -0.052540   0.123341  -0.426 0.670650    
+marijuana.l5   0.309209   0.173263   1.785 0.076055 .  
+controlled.l6 -0.106393   0.124753  -0.853 0.394919    
+marijuana.l6   0.205201   0.174989   1.173 0.242531    
+controlled.l7 -0.036502   0.123189  -0.296 0.767344    
+marijuana.l7   0.191893   0.173734   1.105 0.270885    
+controlled.l8  0.116662   0.121056   0.964 0.336524    
+marijuana.l8  -0.487069   0.172821  -2.818 0.005383 ** 
+controlled.l9 -0.095039   0.098772  -0.962 0.337276    
+marijuana.l9   0.292566   0.130150   2.248 0.025830 *  
+const          0.812548   0.209513   3.878 0.000149 ***
+trend         -0.007974   0.001949  -4.092 6.51e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.2391 on 175 degrees of freedom
+Multiple R-Squared: 0.9478, Adjusted R-squared: 0.9421 
+F-statistic: 167.2 on 19 and 175 DF,  p-value: &lt; 2.2e-16 
+
+
+Estimation results for equation marijuana: 
+========================================== 
+marijuana = controlled.l1 + marijuana.l1 + controlled.l2 + marijuana.l2 + controlled.l3 + marijuana.l3 + controlled.l4 + marijuana.l4 + controlled.l5 + marijuana.l5 + controlled.l6 + marijuana.l6 + controlled.l7 + marijuana.l7 + controlled.l8 + marijuana.l8 + controlled.l9 + marijuana.l9 + const + trend 
+
+               Estimate Std. Error t value Pr(&gt;|t|)    
+controlled.l1 -0.414932   0.078736  -5.270 3.98e-07 ***
+marijuana.l1   0.994857   0.096732  10.285  &lt; 2e-16 ***
+controlled.l2 -0.049927   0.094445  -0.529 0.597732    
+marijuana.l2   0.086355   0.133306   0.648 0.517969    
+controlled.l3  0.353311   0.094478   3.740 0.000249 ***
+marijuana.l3  -0.419259   0.133183  -3.148 0.001933 ** 
+controlled.l4 -0.087257   0.098684  -0.884 0.377798    
+marijuana.l4  -0.036391   0.135767  -0.268 0.788983    
+controlled.l5  0.083437   0.096008   0.869 0.386003    
+marijuana.l5   0.086543   0.134866   0.642 0.521910    
+controlled.l6 -0.160851   0.097107  -1.656 0.099427 .  
+marijuana.l6   0.174636   0.136210   1.282 0.201500    
+controlled.l7 -0.047619   0.095889  -0.497 0.620096    
+marijuana.l7   0.169475   0.135233   1.253 0.211804    
+controlled.l8  0.215914   0.094229   2.291 0.023133 *  
+marijuana.l8  -0.578613   0.134523  -4.301 2.82e-05 ***
+controlled.l9 -0.212893   0.076883  -2.769 0.006229 ** 
+marijuana.l9   0.456117   0.101308   4.502 1.22e-05 ***
+const          0.695540   0.163083   4.265 3.27e-05 ***
+trend         -0.006725   0.001517  -4.434 1.63e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.1861 on 175 degrees of freedom
+Multiple R-Squared: 0.9698, Adjusted R-squared: 0.9665 
+F-statistic: 295.4 on 19 and 175 DF,  p-value: &lt; 2.2e-16 
+
+
+
+Covariance matrix of residuals:
+           controlled marijuana
+controlled    0.05717   0.02994
+marijuana     0.02994   0.03464
+
+Correlation matrix of residuals:
+           controlled marijuana
+controlled     1.0000    0.6728
+marijuana      0.6728    1.0000</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
+<section id="cross-validation-4" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-4">Cross Validation</h3>
+<div class="cell">
+<details>
+<summary>Cross Validation</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(dd[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)], <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2006</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">72</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">132</span>, <span class="dv">2</span>)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>st <span class="ot">&lt;-</span> <span class="fu">tsp</span>(ts)[<span class="dv">1</span>] <span class="sc">+</span> (k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>) {</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a>  xtrain <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">end=</span>st <span class="sc">+</span> i<span class="dv">-1</span>)</span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a>  xtest <span class="ot">&lt;-</span> <span class="fu">window</span>(ts, <span class="at">start=</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>, <span class="at">end=</span>st <span class="sc">+</span> i)</span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-16"><a href="#cb77-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first model</span></span>
+<span id="cb77-17"><a href="#cb77-17" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">6</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
+<span id="cb77-18"><a href="#cb77-18" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
+<span id="cb77-19"><a href="#cb77-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-20"><a href="#cb77-20" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>controlled</span>
+<span id="cb77-21"><a href="#cb77-21" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast<span class="sc">$</span>fcst<span class="sc">$</span>marijuana</span>
+<span id="cb77-22"><a href="#cb77-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-23"><a href="#cb77-23" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 2 variables</span></span>
+<span id="cb77-24"><a href="#cb77-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-25"><a href="#cb77-25" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
+<span id="cb77-26"><a href="#cb77-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-27"><a href="#cb77-27" aria-hidden="true" tabindex="-1"></a>  ff<span class="ot">&lt;-</span><span class="fu">ts</span>(ff,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb77-28"><a href="#cb77-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-29"><a href="#cb77-29" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
+<span id="cb77-30"><a href="#cb77-30" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
+<span id="cb77-31"><a href="#cb77-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-32"><a href="#cb77-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb77-33"><a href="#cb77-33" aria-hidden="true" tabindex="-1"></a>    rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb77-34"><a href="#cb77-34" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb77-35"><a href="#cb77-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
+<span id="cb77-36"><a href="#cb77-36" aria-hidden="true" tabindex="-1"></a>      rmse1[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb77-37"><a href="#cb77-37" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb77-38"><a href="#cb77-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-39"><a href="#cb77-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-40"><a href="#cb77-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second model</span></span>
+<span id="cb77-41"><a href="#cb77-41" aria-hidden="true" tabindex="-1"></a>  fit2 <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p=</span><span class="dv">9</span>, <span class="at">type=</span><span class="st">'both'</span>)</span>
+<span id="cb77-42"><a href="#cb77-42" aria-hidden="true" tabindex="-1"></a>  fcast2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, <span class="at">n.ahead =</span> <span class="dv">12</span>)</span>
+<span id="cb77-43"><a href="#cb77-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-44"><a href="#cb77-44" aria-hidden="true" tabindex="-1"></a>  frob<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>controlled</span>
+<span id="cb77-45"><a href="#cb77-45" aria-hidden="true" tabindex="-1"></a>  funr<span class="ot">&lt;-</span>fcast2<span class="sc">$</span>fcst<span class="sc">$</span>marijuana</span>
+<span id="cb77-46"><a href="#cb77-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-47"><a href="#cb77-47" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">data.frame</span>(frob[,<span class="dv">1</span>],funr[,<span class="dv">1</span>]) <span class="co">#collecting the forecasts for 3 variables</span></span>
+<span id="cb77-48"><a href="#cb77-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-49"><a href="#cb77-49" aria-hidden="true" tabindex="-1"></a>  year<span class="ot">&lt;-</span>st <span class="sc">+</span> (i<span class="dv">-1</span>) <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span> <span class="co">#starting year</span></span>
+<span id="cb77-50"><a href="#cb77-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-51"><a href="#cb77-51" aria-hidden="true" tabindex="-1"></a>  ff2<span class="ot">&lt;-</span><span class="fu">ts</span>(ff2,<span class="at">start=</span><span class="fu">c</span>(year,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb77-52"><a href="#cb77-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-53"><a href="#cb77-53" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i<span class="dv">-11</span></span>
+<span id="cb77-54"><a href="#cb77-54" aria-hidden="true" tabindex="-1"></a>  b<span class="ot">=</span> <span class="dv">12</span><span class="sc">*</span>i </span>
+<span id="cb77-55"><a href="#cb77-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb77-56"><a href="#cb77-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb77-57"><a href="#cb77-57" aria-hidden="true" tabindex="-1"></a>    rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb77-58"><a href="#cb77-58" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(err) {</span>
+<span id="cb77-59"><a href="#cb77-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(a, b)</span>
+<span id="cb77-60"><a href="#cb77-60" aria-hidden="true" tabindex="-1"></a>      rmse2[<span class="fu">c</span>(a<span class="sc">:</span>b),]  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((ff2<span class="sc">-</span>xtest)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb77-61"><a href="#cb77-61" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb77-62"><a href="#cb77-62" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="tabset-3-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-5-tab">
-<p>Insert model here</p>
+<div class="cell">
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>yr <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2012</span><span class="sc">:</span><span class="dv">2022</span>),<span class="at">each =</span><span class="dv">12</span>) <span class="co">#year</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),<span class="dv">11</span>) <span class="co">#month</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>rmse1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse1)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>rmse1<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse1<span class="sc">$</span>yr, rmse1<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"controlled"</span>,<span class="st">"marijuana"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>rmse2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yr,m,rmse2)</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>rmse2<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(rmse2<span class="sc">$</span>yr, rmse2<span class="sc">$</span>m, <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rmse2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>,<span class="st">"controlled"</span>,<span class="st">"marijuana"</span>, <span class="st">"Date"</span>)</span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> controlled),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> controlled),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for controlled substance possession"</span>,</span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse1, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> marijuana),<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> rmse2, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> marijuana),<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CV RMSE for marijuana possession"</span>,</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"RMSE"</span>,</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Fit"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-52-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>controlled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.147872</code></pre>
+</div>
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>controlled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.145504</code></pre>
+</div>
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse1<span class="sc">$</span>marijuana)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.101446</code></pre>
+</div>
+<details>
+<summary>Plot Results</summary>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(rmse2<span class="sc">$</span>marijuana)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.212972</code></pre>
+</div>
+</div>
+<p>Both models are very close in performance, we will go with VAR(6) as it is the more parsimonious model.</p>
+</section>
+<section id="forecasting-3" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting-3">Forecasting</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(ts, <span class="at">p =</span> <span class="dv">6</span>, <span class="at">type =</span> <span class="st">"both"</span>)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="arimax_sarimax_var_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The models have similar forecasts, suggesting they are closely related. Despite the uptick in controlled substance possession arrests, we expect the trend to reverse when considering how the marijuana arrests series has behaved over the years.</p>
+</section>
 </div>
 </div>
 </div>
