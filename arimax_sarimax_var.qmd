@@ -3,13 +3,15 @@ title: "ARIMAX/SARIMAX/VAR"
 editor_options: 
   chunk_output_type: inline
 bibliography: reference.bib
+output:
+  html_document:
+    code_folding: hide
 ---
 
-```{r include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
 
 ```{r setup, include = FALSE}
+#| code-fold: true
+
 library(vars)
 library(reticulate)
 library(tidyverse)
@@ -27,6 +29,7 @@ load("data/arrests_ts.Rdata")
 ```
 
 ```{r}
+#| code-fold: true
 unrate_ts <- ts(df$unrate, start = c(2006, 1), frequency = 12)
 ```
 
@@ -52,11 +55,14 @@ Two types of models will be fit here. We will use an ARIMAX or SARIMAX model whe
 
 -   (VAR) Controlled Substance Possession \~ Marijuana Possession
 
+::: panel-tabset
+
 ## Total Arrests \~ Unemployment Rate
 
 We have a univariate time series in total arrests and we want to see the effect the exogenous variable of unemployment rate has on that time series. We will fit an ARIMAX model, Total Arrests \~ Unemployment Rate. Unemployment data is for the New York City Metropolitan Area and obtained from [here](https://fred.stlouisfed.org/categories/30789).
 
 ```{r}
+#| code-fold: true
 month <- as.Date(arrests_by_crime$month)
 dd <- data.frame(month, arrests = arrests_ts, unrate = unrate_ts) %>%
   rename(arrests = Series.1)
@@ -65,6 +71,7 @@ kable(head(dd))
 ```
 
 ```{r}
+#| code-fold: true
 dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
 
 autoplot(dd.ts[,c(2,3)], facets = TRUE) +
@@ -77,6 +84,7 @@ There looks to be some relation between these two variables, with the spike in 2
 ### Fitting Using auto.arima
 
 ```{r}
+#| code-fold: true
 xreg <- cbind(unrate = dd.ts[,"unrate"])
 
 auto_model <- auto.arima(dd.ts[,"arrests"], xreg = xreg)
@@ -88,19 +96,33 @@ We have a SARIMAX model, a regression model with ARIMA(0,1,2)(2,0,0)\[12\] error
 
 ### Fitting Manually
 
-We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA/SARIMA model for the residuals.
+We first fit a linear regression model predicting arrests using unemployment rate. The we will fit a SARIMA model for the residuals.
 
 ```{r}
 fit.reg <- lm(arrests ~ unrate, data = dd)
 summary(fit.reg)
 ```
 
+::: panel-tabset
+
+
+#### Residuals
 ```{r, echo = TRUE}
 res.fit <- ts(residuals(fit.reg), start = c(2006, 1), frequency = 12)
 ggtsdisplay(res.fit)
+```
+
+#### Differenced Residuals
+```{r, echo = TRUE}
 ggtsdisplay(res.fit %>% diff())
+```
+
+#### Seasonally Differenced Residuals
+```{r, echo = TRUE}
 ggtsdisplay(res.fit %>% diff() %>% diff(12))
 ```
+
+:::
 
 We will try the following parameters:
 
@@ -112,6 +134,8 @@ We will try the following parameters:
 -   Q: 1, 2, 3
 
 ```{r}
+#| code-fold: true
+#| code-summary: Fitting Model
 i <- 1
 
 temp <- data.frame()
@@ -146,27 +170,19 @@ names(temp) <- c("p","d","q","P", "D", "Q", "AIC","BIC","AICc")
 
 ### Model Selection and Diagnostics
 
-#### Minimum AIC
+```{r}
+#| layout-ncol: 6
+#| code-fold: true
 
-```{r, echo=FALSE}
-kable(temp[which.min(temp$AIC),])
-```
-
-#### Minimum BIC
-
-```{r, echo = FALSE}
-kable(temp[which.min(temp$BIC),])
-```
-
-#### Minimum AICc
-
-```{r, echo = FALSE}
-kable(temp[which.min(temp$AICc),])
+kable(temp[which.min(temp$AIC),], digits = 2)
+kable(temp[which.min(temp$BIC),], digits = 2)
+kable(temp[which.min(temp$AICc),], digits = 2)
 ```
 
 It is clear that the best model is one with parameters $p=1, d=1, q=1, P=1, D=1, Q=3$. We now check the model diagnostics.
 
-```{r, echo = FALSE}
+```{r}
+#| code-fold: true
 set.seed(621)
 model_output <- capture.output(sarima(res.fit, 1, 1, 1, 1, 1, 3, 12))
 ```
@@ -175,16 +191,20 @@ The Ljung-Box statistic p-values suggest that there is no correlation between re
 
 #### Fitted vs. Actual
 
-```{r, echo=FALSE}
+```{r}
+#| code-fold: true
 model_fit <- Arima(res.fit, order = c(1, 1, 1), seasonal = c(1, 1, 3))
 plot(res.fit, col = "blue")
 lines(fitted(model_fit), col = "green")
 legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
 ```
 
+The the fitted model looks fairly similar to the actual model.
+
 ### Cross Validation
 
-```{r}
+```{r, warning=FALSE}
+#| code-fold: true
 # minimum data length for fitting
 k <- 48
 n <- length(res.fit)
@@ -195,7 +215,7 @@ st <- tsp(res.fit)[1] + (k - 2)/12 # ending point: October 2009
 rmse1 <- matrix(NA,n-k,12)
 rmse2 <- matrix(NA,n-k,12)
 
-for(i in 1:(n - k)) {
+for(i in seq(10, n - k, by = 5)) {
   tryCatch({
     xtrain <- window(res.fit, end = st + i/12)
     xtest <- window(res.fit, start = st + (i + 1)/12, end = st + (i + 12)/12)
@@ -226,17 +246,23 @@ lines(1:12, colMeans(rmse2,na.rm=TRUE), type="l", col=3, xlab="horizon", ylab="R
 legend("topleft",legend=c("manual fit","auto fit"),col=2:3,lty=1)
 ```
 
+The manual fit looks slightly better, we will continue and forecast with that model.
+
 ### Forecasting
 
-```{r, echo = FALSE}
+```{r}
+#| code-fold: true
 model_fit %>% forecast %>% autoplot()
 ```
 
 ## Total Arrests \~ Election Year
 
+insert model here
+
 ## Murder \~ Unemployment Rate
 
 ```{r}
+#| code-fold: true
 month <- as.Date(arrests_by_crime$month)
 dd <- data.frame(month, murder = murder_ts, unrate = unrate_ts) %>% 
   rename(murder = Series.1)
@@ -245,6 +271,7 @@ kable(head(dd))
 ```
 
 ```{r}
+#| code-fold: true
 dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
 
 autoplot(dd.ts[,c(2,3)], facets = TRUE) +
@@ -257,6 +284,7 @@ There looks to be some relation between these two variables, though we should fi
 ### Fitting Using auto.arima
 
 ```{r}
+#| code-fold: true
 xreg <- cbind(unrate = dd.ts[,"unrate"])
 
 auto_model <- auto.arima(dd.ts[,"murder"], xreg = xreg)
@@ -268,18 +296,27 @@ We have an ARIMAX model, a regression model with ARIMA(0,1,1) errors.
 
 ### Fitting Manually
 
-We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA/SARIMA model for the residuals.
+We first fit a linear regression model predicting arrests using unemployment rate. The we will fit an ARIMA model for the residuals.
 
 ```{r}
 fit.reg <- lm(murder ~ unrate, data = dd)
 summary(fit.reg)
 ```
 
-```{r, echo = TRUE}
+::: panel-tabset
+
+#### Residuals
+```{r}
 res.fit <- ts(residuals(fit.reg), start = c(2006, 1), frequency = 12)
 ggtsdisplay(res.fit)
+```
+
+#### Differenced Residuals
+```{r}
 ggtsdisplay(res.fit %>% diff())
 ```
+
+:::
 
 We will try the following parameters:
 
@@ -288,6 +325,7 @@ We will try the following parameters:
 -   q: 1
 
 ```{r}
+#| code-fold: true
 i <- 1
 
 temp <- data.frame()
@@ -315,46 +353,47 @@ names(temp) <- c("p","d","q", "AIC","BIC","AICc")
 ```
 
 ### Model Selection and Diagnostics
+```{r}
+#| layout-ncol: 6
+#| code-fold: true
 
-#### Minimum AIC
-
-```{r, echo=FALSE}
-kable(temp[which.min(temp$AIC),])
-```
-
-#### Minimum BIC
-
-```{r, echo = FALSE}
-kable(temp[which.min(temp$BIC),])
-```
-
-#### Minimum AICc
-
-```{r, echo = FALSE}
-kable(temp[which.min(temp$AICc),])
+kable(temp[which.min(temp$AIC),], digits = 2)
+kable(temp[which.min(temp$BIC),], digits = 2)
+kable(temp[which.min(temp$AICc),], digits = 2)
 ```
 
 It is clear that the best model is one with parameters $p=1, d=1, q=1$. We now check the model diagnostics.
 
 ```{r, echo = FALSE}
+#| code-fold: true
 set.seed(621)
 model_output <- capture.output(sarima(res.fit, 1, 1, 1))
 ```
 
+The Ljung-Box statistic p-values suggest there may be some correlation between residuals, thoug the normal Q-Q plot looks fairly linear. We can proceed with the model build process. 
+
 #### Fitted vs. Actual
 
-```{r, echo=FALSE}
+```{r}
+#| code-fold: true
+
 model_fit <- Arima(res.fit, order = c(1, 1, 1))
 plot(res.fit, col = "blue")
 lines(fitted(model_fit), col = "green")
 legend(x = "topright", legend = c("res.fit", "fit1"), fill = 4:1)
 ```
 
+The the fitted model looks fairly similar to the actual model.
+
 ### Cross Validation
+
+Insert cross validation
 
 ### Forecasting
 
-```{r, echo = FALSE}
+```{r}
+#| code-fold: true
+
 model_fit %>% forecast %>% autoplot()
 ```
 
@@ -363,6 +402,7 @@ Adding unemployment rate resulted in little change from the previous model, sugg
 ## Robbery \~ Unemployment Rate
 
 ```{r}
+#| code-fold: true
 month <- as.Date(arrests_by_crime$month)
 dd <- data.frame(month, robbery = robbery_ts, unrate = unrate_ts) %>% 
   rename(robbery = Series.1)
@@ -371,6 +411,7 @@ kable(head(dd))
 ```
 
 ```{r}
+#| code-fold: true
 dd.ts <- ts(dd, start = c(2006, 1), frequency = 12)
 
 autoplot(dd.ts[,c(2,3)], facets = TRUE) +
@@ -383,12 +424,15 @@ There looks to be some relation between these two variables, with the spike in 2
 ### Fitting Using VARSelect
 
 ```{r}
+#| code-fold: true
 VARselect(dd[,c(2,3)], lag.max = 10, type = "both")
 ```
 
 Clearly p = 3 is a good parameter, we will also try VAR(1) in addition to VAR(3)
 
 ```{r}
+#| layout-ncol: 2
+#| code-fold: true
 summary(vars::VAR(dd[, c(2,3)], p = 1, type = "both"))
 summary(vars::VAR(dd[, c(2,3)], p = 3, type = "both"))
 ```
@@ -396,6 +440,8 @@ summary(vars::VAR(dd[, c(2,3)], p = 3, type = "both"))
 ### Cross Validation
 
 ```{r}
+#| code-fold: true
+#| code-summary: Cross Validation
 ts <- ts(dd[,c(2,3)], start = c(2006, 1), frequency = 12)
 
 k <- 72
@@ -461,6 +507,8 @@ for(i in 1:11) {
 ```
 
 ```{r}
+#| code-fold: true
+#| code-summary: Plot Results
 yr = rep(c(2012:2022),each =12) #year
 m = rep(paste0(1:12),11) #month
 
@@ -501,8 +549,13 @@ The models are very close in performance, but it looks like VAR(3) is slightly b
 ### Forecast
 
 ```{r}
+#| code-fold: true
 fit <- VAR(ts, p = 3, type = "both")
 plot(forecast(fit, 24))
 ```
 
 ## Controlled Substance Possession \~ Marijuana Possession
+
+Insert model here
+
+:::
