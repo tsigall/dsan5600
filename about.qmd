@@ -2,6 +2,8 @@
 title: "About"
 ---
 
-# Thomas Sigall
+Thomas Sigall is a graduate student at Georgetown University currently pursuing a Masters of Science in Data Science and Analytics. He graduated from Villanova University in 2023 with a B.A. in Philosophy and Minors in Computer Science and Statistics. Originally from Redmond, Washington, he enjoys studying a wide range of topics, as evidenced by his diverse academic background. Outside of academics, he enjoys running and loves to follow sports.
 
-Georgetown DSAN
+LinkedIn: <https://www.linkedin.com/in/thomas-sigall-496544224/>
+
+GitHub: <https://github.com/tsigall/>

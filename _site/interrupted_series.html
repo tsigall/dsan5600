@@ -270,6 +270,11 @@ div.csl-indent {
   <li><a href="#observing-treatment" id="toc-observing-treatment" class="nav-link" data-scroll-target="#observing-treatment">Observing Treatment</a></li>
   <li><a href="#fitting-y-and-counterfactuals" id="toc-fitting-y-and-counterfactuals" class="nav-link" data-scroll-target="#fitting-y-and-counterfactuals">Fitting Y and Counterfactuals</a></li>
   </ul></li>
+  <li><a href="#stop-and-frisk" id="toc-stop-and-frisk" class="nav-link" data-scroll-target="#stop-and-frisk">Stop-and-Frisk</a>
+  <ul class="collapse">
+  <li><a href="#robbery" id="toc-robbery" class="nav-link" data-scroll-target="#robbery">Robbery</a></li>
+  <li><a href="#assault" id="toc-assault" class="nav-link" data-scroll-target="#assault">Assault</a></li>
+  </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -513,6 +518,393 @@ div.csl-indent {
 </div>
 </div>
 <p>We can confidently say that intervention resulted in a change in marijuana possession arrests. They decreasing before, but the change resulted in a short and long term decrease in arrests.</p>
+</section>
+</section>
+<section id="stop-and-frisk" class="level1">
+<h1>Stop-and-Frisk</h1>
+<p>The next interruption we will look at will be crimes related to the controversial stop-and-frisk program, which allowed New York City police officers to stop and question people on the street, and if they had reasonable suspicion to do so they could frisk those individuals. In 2013, a lawsuit was filed in relation to these practices, Floyd v. City of New York. As a result of this lawsuit, officers are still able to conduct these practices, though officers now have to thoroughly justify why they made the stop. This resulted in the number of stops to decrease dramatically, from 685,724 at its height in 2011, to 45,787 one year after the lawsuit in 2014, and just 13,459 in 2019. Because of this dramatic change, we can use August 12, 2013, the date that case was decided as the date of our interruption.</p>
+<p>We will follow the same process as before, this time looking at the effect this change of the stop-and-frisk policy had on robbery and assault arrests. Because the number of people stopped as a result of this program decreased so quickly and so dramatically, we can observe the effects of effectively repealing the program.</p>
+<p>Did dramatically decreasing the number of stops from the stop-and-frisk program change the number of robbery and assault arrests?</p>
+<section id="robbery" class="level2">
+<h2 class="anchored" data-anchor-id="robbery">Robbery</h2>
+<p>First, lets look again at robbery arrests over time, this time with policy interventions labelled on the graph.</p>
+<div class="cell" width="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(robbery_ts,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2005</span>,<span class="dv">2023</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">2013.667</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2013.8</span>, <span class="fl">1.7</span>, <span class="st">"Floyd v. City of New York</span><span class="sc">\n</span><span class="st">(Aug. 2013)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Robbery Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="interrupted_series_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There does not appear to be much difference in robbery arrests before and after treatment.</p>
+<p>Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.</p>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(robbery_ts) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Y =</span> Series<span class="fl">.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">"T"</span> <span class="ot">=</span> <span class="fu">row_number</span>())</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"T"</span> <span class="ot">=</span> <span class="fu">row_number</span>(),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"D"</span> <span class="ot">=</span> <span class="fu">if_else</span>(df<span class="sc">$</span><span class="st">"T"</span> <span class="sc">&gt;</span> <span class="dv">92</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">"P"</span> <span class="ot">=</span> <span class="fu">if_else</span>(df<span class="sc">$</span><span class="st">"T"</span> <span class="sc">&gt;</span> <span class="dv">92</span>, <span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">92</span>, <span class="dv">0</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Y <span class="ot">&lt;-</span> <span class="fu">round</span>(df<span class="sc">$</span>Y, <span class="dv">3</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df.temp <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">head</span>(df, <span class="dv">3</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                 df[<span class="dv">90</span><span class="sc">:</span><span class="dv">92</span>,],</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"Start"</span>,<span class="st">"Treatment"</span>,<span class="st">"-"</span>,<span class="st">"-"</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                 df[<span class="dv">93</span><span class="sc">:</span><span class="dv">95</span>,],</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">tail</span>(df, <span class="dv">3</span>))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(df.temp) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(df.temp) <span class="sc">%&gt;%</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_paper</span>(<span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="lightable-paper table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Y</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">T</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1.297</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.081</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1.357</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.295</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.389</td>
+<td style="text-align: left;">91</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.736</td>
+<td style="text-align: left;">92</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Start</td>
+<td style="text-align: left;">Treatment</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-0.099</td>
+<td style="text-align: left;">93</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1.043</td>
+<td style="text-align: left;">94</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-0.273</td>
+<td style="text-align: left;">95</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.355</td>
+<td style="text-align: left;">202</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.228</td>
+<td style="text-align: left;">203</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-0.593</td>
+<td style="text-align: left;">204</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">112</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>regTS <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> T <span class="sc">+</span> D <span class="sc">+</span> P, <span class="at">data =</span> df)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="at">T =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">:</span> <span class="dv">365</span>), <span class="at">D =</span> <span class="fu">rep</span>(<span class="dv">0</span>), <span class="at">P =</span> <span class="fu">rep</span>(<span class="dv">0</span>)))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df2)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>T, df<span class="sc">$</span>Y,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">204</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Time"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">92</span>), pred1[<span class="dv">1</span><span class="sc">:</span><span class="dv">92</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>), pred1[<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>), pred2[<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"darkorange2"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">5</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># interruption line</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">92</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">93</span>, <span class="fl">1.7</span>, <span class="st">"Floyd v. City of New York</span><span class="sc">\n</span><span class="st">(Aug. 2013)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Robbery Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="interrupted_series_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There was a slight immediate decrease in arrests, but the long-term trend was the same. This means that the stop-and-frisk policy had little to no effect on robbery arrests, meaning it did not do what it was supposed to do. Reducing stop-and-frisk stops significantly had no effect on robbery arrests, meaning the same number of crimes were committed regardless of the presence of the policy.</p>
+</section>
+<section id="assault" class="level2">
+<h2 class="anchored" data-anchor-id="assault">Assault</h2>
+<p>First, lets look again at assault arrests over time, this time with policy interventions labelled on the graph.</p>
+<div class="cell" width="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(assault_ts,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2005</span>,<span class="dv">2023</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Year"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fl">2013.667</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2013.8</span>, <span class="sc">-</span><span class="fl">2.3</span>, <span class="st">"Floyd v. City of New York</span><span class="sc">\n</span><span class="st">(Aug. 2013)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Assault Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="interrupted_series_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There does appear to be a slight difference in assault arrests before and after treatment.</p>
+<p>Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.</p>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(assault_ts) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Y =</span> Series<span class="fl">.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">"T"</span> <span class="ot">=</span> <span class="fu">row_number</span>())</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"T"</span> <span class="ot">=</span> <span class="fu">row_number</span>(),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"D"</span> <span class="ot">=</span> <span class="fu">if_else</span>(df<span class="sc">$</span><span class="st">"T"</span> <span class="sc">&gt;</span> <span class="dv">92</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">"P"</span> <span class="ot">=</span> <span class="fu">if_else</span>(df<span class="sc">$</span><span class="st">"T"</span> <span class="sc">&gt;</span> <span class="dv">92</span>, <span class="fu">row_number</span>() <span class="sc">-</span> <span class="dv">92</span>, <span class="dv">0</span>))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Y <span class="ot">&lt;-</span> <span class="fu">round</span>(df<span class="sc">$</span>Y, <span class="dv">3</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>df.temp <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">head</span>(df, <span class="dv">3</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                 df[<span class="dv">90</span><span class="sc">:</span><span class="dv">92</span>,],</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"Start"</span>,<span class="st">"Treatment"</span>,<span class="st">"-"</span>,<span class="st">"-"</span>),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                 df[<span class="dv">93</span><span class="sc">:</span><span class="dv">95</span>,],</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>,<span class="st">"..."</span>),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">tail</span>(df, <span class="dv">3</span>))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(df.temp) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(df.temp) <span class="sc">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_paper</span>(<span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<table class="lightable-paper table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Y</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">T</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">D</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">P</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">-0.514</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-1.266</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1.306</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1.904</td>
+<td style="text-align: left;">91</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1.223</td>
+<td style="text-align: left;">92</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Start</td>
+<td style="text-align: left;">Treatment</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.717</td>
+<td style="text-align: left;">93</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.797</td>
+<td style="text-align: left;">94</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.002</td>
+<td style="text-align: left;">95</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+<td style="text-align: left;">...</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-0.255</td>
+<td style="text-align: left;">202</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-0.665</td>
+<td style="text-align: left;">203</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-0.857</td>
+<td style="text-align: left;">204</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">112</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>regTS <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> T <span class="sc">+</span> D <span class="sc">+</span> P, <span class="at">data =</span> df)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(<span class="at">T =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">:</span> <span class="dv">365</span>), <span class="at">D =</span> <span class="fu">rep</span>(<span class="dv">0</span>), <span class="at">P =</span> <span class="fu">rep</span>(<span class="dv">0</span>)))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(regTS, df2)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>T, df<span class="sc">$</span>Y,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">bty=</span><span class="st">"n"</span>, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">"gray"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">204</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Time"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">92</span>), pred1[<span class="dv">1</span><span class="sc">:</span><span class="dv">92</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>), pred1[<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"dodgerblue4"</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">rep</span>(<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>), pred2[<span class="dv">93</span><span class="sc">:</span><span class="dv">204</span>], <span class="at">col =</span> <span class="st">"darkorange2"</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">5</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># interruption line</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">92</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">93</span>, <span class="sc">-</span><span class="fl">2.3</span>, <span class="st">"Floyd v. City of New York</span><span class="sc">\n</span><span class="st">(Aug. 2013)"</span>, <span class="at">col=</span><span class="st">"firebrick"</span>, <span class="at">cex=</span><span class="dv">1</span>, <span class="at">pos=</span><span class="dv">4</span> )</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Assault Arrests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="interrupted_series_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These results are very different from the robbery arrests. There is a short-term decrease here as well, but surprisingly there is significant evidence for a decrease in the long-term trend for assault arrests. Had the changes never happened to the stop-and-frisk policy, we may have seen assault arrests continue to increase rather than decrease as they actually did. Making the changes that the lawsuit did to the policy resulted in fewer assault arrests going forward.</p>
+<p>Information on the stop-and-frisk policy was obtained <a href="https://en.wikipedia.org/wiki/Stop-and-frisk_in_New_York_City">here</a>.</p>
 </section>
 </section>
 <section id="references" class="level1">

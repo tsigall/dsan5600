@@ -378,16 +378,16 @@ Chi-squared = 4.7167, df = 1, p-value = 0.02987</code></pre>
 <div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<pre><code>  p d q      AIC      BIC    AICc
-4 1 1 3 2672.796 2704.603 2672.81</code></pre>
+<pre><code>  p d q      AIC      BIC     AICc
+4 1 1 3 2672.798 2704.604 2672.812</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <pre><code>  p d q      AIC      BIC     AICc
-2 1 1 1 2680.338 2699.422 2680.344</code></pre>
+2 1 1 1 2680.339 2699.423 2680.345</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<pre><code>  p d q      AIC      BIC    AICc
-4 1 1 3 2672.796 2704.603 2672.81</code></pre>
+<pre><code>  p d q      AIC      BIC     AICc
+4 1 1 3 2672.798 2704.604 2672.812</code></pre>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -396,7 +396,7 @@ Chi-squared = 4.7167, df = 1, p-value = 0.02987</code></pre>
 ARIMA(0,1,0) 
 
 sigma^2 = 0.1095:  log likelihood = -1338.85
-AIC=2679.69   AICc=2679.69   BIC=2686.05</code></pre>
+AIC=2679.69   AICc=2679.69   BIC=2686.06</code></pre>
 </div>
 </div>
 </div>
@@ -431,17 +431,15 @@ Call:
 garch(x = arima.res, order = c(q, p), trace = FALSE)
 
 Coefficient(s):
-       a0         a1         b1         b2         b3         b4         b5  
-2.071e-03  1.732e-01  1.211e-01  9.809e-02  3.180e-01  4.843e-14  3.079e-02  
-       b6         b7  
-2.219e-01  3.947e-02  </code></pre>
+       a0         a1         b1         b2         b3  
+1.879e-03  1.509e-01  1.538e-01  4.013e-15  6.978e-01  </code></pre>
 </div>
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AIC:"</span>, <span class="fu">min</span>(ARCH_AIC))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>AIC: 1552.66</code></pre>
+<pre><code>AIC: 1532.499</code></pre>
 </div>
 </div>
 <div>
@@ -465,10 +463,10 @@ sigma^2 = 0.1092:  log likelihood = -1331.4
 AIC=2672.8   AICc=2672.81   BIC=2704.6
 
 Training set error measures:
-                      ME      RMSE       MAE       MPE     MAPE     MASE
-Training set 0.001000185 0.3302726 0.2127011 -0.023513 1.611635 1.000054
+                      ME      RMSE       MAE         MPE     MAPE     MASE
+Training set 0.001000185 0.3302727 0.2127011 -0.02351301 1.611635 1.000054
                      ACF1
-Training set 0.0002234626</code></pre>
+Training set 0.0002234516</code></pre>
 </div>
 <div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <pre><code>
@@ -480,7 +478,7 @@ Call:
 
 Mean and Variance Equation:
  data ~ garch(1, 7)
-&lt;environment: 0x1211ae8c0&gt;
+&lt;environment: 0x143d682b0&gt;
  [data = arima.res]
 
 Conditional Distribution:
@@ -488,9 +486,9 @@ Conditional Distribution:
 
 Coefficient(s):
         mu       omega      alpha1       beta1       beta2       beta3  
-0.01000185  0.00224949  0.14429636  0.01865167  0.00050029  0.83022373  
+0.01000185  0.00224950  0.14429568  0.01865167  0.00050336  0.83022406  
      beta4       beta5       beta6       beta7  
-0.00000001  0.00318593  0.00000001  0.00000001  
+0.00000001  0.00318294  0.00000001  0.00000001  
 
 Std. Errors:
  based on Hessian 
@@ -501,37 +499,37 @@ mu     1.000e-02   3.933e-03    2.543    0.011 *
 omega  2.249e-03   4.814e-04    4.673 2.97e-06 ***
 alpha1 1.443e-01   2.421e-02    5.960 2.52e-09 ***
 beta1  1.865e-02   4.865e-02    0.383    0.701    
-beta2  5.003e-04   3.330e-02    0.015    0.988    
-beta3  8.302e-01   1.866e-01    4.450 8.58e-06 ***
+beta2  5.034e-04   3.330e-02    0.015    0.988    
+beta3  8.302e-01   1.866e-01    4.450 8.57e-06 ***
 beta4  1.000e-08   8.599e-02    0.000    1.000    
-beta5  3.186e-03   3.162e-02    0.101    0.920    
+beta5  3.183e-03   3.162e-02    0.101    0.920    
 beta6  1.000e-08   1.610e-01    0.000    1.000    
 beta7  1.000e-08   4.504e-02    0.000    1.000    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Log Likelihood:
- -784.9991    normalized:  -0.1834539 
+ -785.0003    normalized:  -0.1834541 
 
 Description:
- Fri Dec  1 14:02:03 2023 by user:  
+ Wed Dec  6 18:44:48 2023 by user:  
 
 
 Standardised Residuals Tests:
                                    Statistic    p-Value
- Jarque-Bera Test   R    Chi^2  3.525303e+04 0.00000000
- Shapiro-Wilk Test  R    W      9.239471e-01 0.00000000
- Ljung-Box Test     R    Q(10)  1.675212e+01 0.08003197
- Ljung-Box Test     R    Q(15)  2.138543e+01 0.12496000
- Ljung-Box Test     R    Q(20)  2.673261e+01 0.14295581
- Ljung-Box Test     R^2  Q(10)  8.988129e+00 0.53323057
- Ljung-Box Test     R^2  Q(15)  1.024198e+01 0.80424880
- Ljung-Box Test     R^2  Q(20)  1.298826e+01 0.87788720
- LM Arch Test       R    TR^2   9.394395e+00 0.66892564
+ Jarque-Bera Test   R    Chi^2  3.525312e+04 0.00000000
+ Shapiro-Wilk Test  R    W      9.239469e-01 0.00000000
+ Ljung-Box Test     R    Q(10)  1.675236e+01 0.08002651
+ Ljung-Box Test     R    Q(15)  2.138564e+01 0.12495389
+ Ljung-Box Test     R    Q(20)  2.673299e+01 0.14294460
+ Ljung-Box Test     R^2  Q(10)  8.988293e+00 0.53321494
+ Ljung-Box Test     R^2  Q(15)  1.024215e+01 0.80423754
+ Ljung-Box Test     R^2  Q(20)  1.298845e+01 0.87787892
+ LM Arch Test       R    TR^2   9.394547e+00 0.66891239
 
 Information Criterion Statistics:
       AIC       BIC       SIC      HQIC 
-0.3715817 0.3864484 0.3715708 0.3768336 </code></pre>
+0.3715823 0.3864490 0.3715714 0.3768341 </code></pre>
 </div>
 </div>
 </div>

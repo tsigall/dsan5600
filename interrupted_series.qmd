@@ -103,9 +103,168 @@ text(108, 1.5, "Possession Fines Begin\n(Nov. 2014)", col="firebrick", cex=1, po
 title("Marijuana Possession Arrests")
 ```
 
-We can confidently say that intervention resulted in a change in marijuana possession arrests. They decreasing before, but the change resulted in a short and long term decrease in arrests. 
+We can confidently say that intervention resulted in a change in marijuana possession arrests. They decreasing before, but the change resulted in a short and long term decrease in arrests.
+
+# Stop-and-Frisk
+
+The next interruption we will look at will be crimes related to the controversial stop-and-frisk program, which allowed New York City police officers to stop and question people on the street, and if they had reasonable suspicion to do so they could frisk those individuals. In 2013, a lawsuit was filed in relation to these practices, Floyd v. City of New York. As a result of this lawsuit, officers are still able to conduct these practices, though officers now have to thoroughly justify why they made the stop. This resulted in the number of stops to decrease dramatically, from 685,724 at its height in 2011, to 45,787 one year after the lawsuit in 2014, and just 13,459 in 2019. Because of this dramatic change, we can use August 12, 2013, the date that case was decided as the date of our interruption.
+
+We will follow the same process as before, this time looking at the effect this change of the stop-and-frisk policy had on robbery and assault arrests. Because the number of people stopped as a result of this program decreased so quickly and so dramatically, we can observe the effects of effectively repealing the program. 
+
+Did dramatically decreasing the number of stops from the stop-and-frisk program change the number of robbery and assault arrests?
+
+## Robbery
+
+First, lets look again at robbery arrests over time, this time with policy interventions labelled on the graph.
+
+```{r width=5}
+#| code-fold: true
+
+plot(robbery_ts,
+    bty="n", pch=19, col="gray",
+    xlim = c(2005,2023),
+    xlab = "Year",
+    ylab = "")
+abline(v = 2013.667, col = "firebrick", lty = 2)
+text(2013.8, 1.7, "Floyd v. City of New York\n(Aug. 2013)", col="firebrick", cex=1, pos=4 )
+title("Robbery Arrests")
+```
+
+There does not appear to be much difference in robbery arrests before and after treatment. 
+
+Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.
+
+```{r}
+#| code-fold: true
+#| layout-ncol: 2
+
+df <- data.frame(robbery_ts) %>%
+    rename(Y = Series.1) %>%
+    mutate("T" = row_number())
+
+df <- df %>% 
+  mutate("T" = row_number(),
+         "D" = if_else(df$"T" > 92, 1, 0),
+         "P" = if_else(df$"T" > 92, row_number() - 92, 0))
+
+df$Y <- round(df$Y, 3)
+
+df.temp <- rbind(head(df, 3),
+                 c("...","...","...","..."),
+                 df[90:92,],
+                 c("Start","Treatment","-","-"),
+                 df[93:95,],
+                 c("...","...","...","..."),
+                 tail(df, 3))
+
+row.names(df.temp) <- NULL
+kbl(df.temp) %>%
+    kable_paper(full_width = F)
+```
 
 
+```{r}
+#| code-fold: true
+regTS <- lm(Y ~ T + D + P, data = df)
+pred1 <- predict(regTS, df)
 
+df2 <- as.data.frame(cbind(T = rep(1 : 365), D = rep(0), P = rep(0)))
+pred2 <- predict(regTS, df2)
+
+plot(df$T, df$Y,
+    bty="n", pch=19, col="gray",
+    xlim = c(0,204),
+    xlab = "Time",
+    ylab = "")
+
+lines(rep(1:92), pred1[1:92], col = "dodgerblue4", lwd = 3)
+lines(rep(93:204), pred1[93:204], col = "dodgerblue4", lwd = 3)
+lines(rep(93:204), pred2[93:204], col = "darkorange2", lwd = 3, lty = 5)
+
+# interruption line
+abline(v = 92, col = "firebrick", lty = 2)
+text(93, 1.7, "Floyd v. City of New York\n(Aug. 2013)", col="firebrick", cex=1, pos=4 )
+title("Robbery Arrests")
+```
+
+There was a slight immediate decrease in arrests, but the long-term trend was the same. This means that the stop-and-frisk policy had little to no effect on robbery arrests, meaning it did not do what it was supposed to do. Reducing stop-and-frisk stops significantly had no effect on robbery arrests, meaning the same number of crimes were committed regardless of the presence of the policy. 
+
+## Assault
+
+First, lets look again at assault arrests over time, this time with policy interventions labelled on the graph.
+
+```{r width=5}
+#| code-fold: true
+
+plot(assault_ts,
+    bty="n", pch=19, col="gray",
+    xlim = c(2005,2023),
+    xlab = "Year",
+    ylab = "")
+abline(v = 2013.667, col = "firebrick", lty = 2)
+text(2013.8, -2.3, "Floyd v. City of New York\n(Aug. 2013)", col="firebrick", cex=1, pos=4 )
+title("Assault Arrests")
+```
+
+There does appear to be a slight difference in assault arrests before and after treatment. 
+
+Here we can see exactly when the treatment was applied, whether or not each point occured when the treatment was active, and the time since the treatment was applied for those variables that were under the influence of that treatment. This is important in determining if the effects of the treatment are short or long term effects.
+
+```{r}
+#| code-fold: true
+#| layout-ncol: 2
+
+df <- data.frame(assault_ts) %>%
+    rename(Y = Series.1) %>%
+    mutate("T" = row_number())
+
+df <- df %>% 
+  mutate("T" = row_number(),
+         "D" = if_else(df$"T" > 92, 1, 0),
+         "P" = if_else(df$"T" > 92, row_number() - 92, 0))
+
+df$Y <- round(df$Y, 3)
+
+df.temp <- rbind(head(df, 3),
+                 c("...","...","...","..."),
+                 df[90:92,],
+                 c("Start","Treatment","-","-"),
+                 df[93:95,],
+                 c("...","...","...","..."),
+                 tail(df, 3))
+
+row.names(df.temp) <- NULL
+kbl(df.temp) %>%
+    kable_paper(full_width = F)
+```
+
+
+```{r}
+#| code-fold: true
+regTS <- lm(Y ~ T + D + P, data = df)
+pred1 <- predict(regTS, df)
+
+df2 <- as.data.frame(cbind(T = rep(1 : 365), D = rep(0), P = rep(0)))
+pred2 <- predict(regTS, df2)
+
+plot(df$T, df$Y,
+    bty="n", pch=19, col="gray",
+    xlim = c(0,204),
+    xlab = "Time",
+    ylab = "")
+
+lines(rep(1:92), pred1[1:92], col = "dodgerblue4", lwd = 3)
+lines(rep(93:204), pred1[93:204], col = "dodgerblue4", lwd = 3)
+lines(rep(93:204), pred2[93:204], col = "darkorange2", lwd = 3, lty = 5)
+
+# interruption line
+abline(v = 92, col = "firebrick", lty = 2)
+text(93, -2.3, "Floyd v. City of New York\n(Aug. 2013)", col="firebrick", cex=1, pos=4 )
+title("Assault Arrests")
+```
+
+These results are very different from the robbery arrests. There is a short-term decrease here as well, but surprisingly there is significant evidence for a decrease in the long-term trend for assault arrests. Had the changes never happened to the stop-and-frisk policy, we may have seen assault arrests continue to increase rather than decrease as they actually did. Making the changes that the lawsuit did to the policy resulted in fewer assault arrests going forward. 
+
+Information on the stop-and-frisk policy was obtained [here](https://en.wikipedia.org/wiki/Stop-and-frisk_in_New_York_City).
 
 # References

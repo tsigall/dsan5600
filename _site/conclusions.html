@@ -203,7 +203,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#single-variable-models" id="toc-single-variable-models" class="nav-link active" data-scroll-target="#single-variable-models">Single-Variable Models</a></li>
+  <li><a href="#multi-variable-models" id="toc-multi-variable-models" class="nav-link" data-scroll-target="#multi-variable-models">Multi-Variable Models</a></li>
+  <li><a href="#financial-time-series-models" id="toc-financial-time-series-models" class="nav-link" data-scroll-target="#financial-time-series-models">Financial Time Series Models</a></li>
+  <li><a href="#deep-learning-models" id="toc-deep-learning-models" class="nav-link" data-scroll-target="#deep-learning-models">Deep Learning Models</a></li>
+  <li><a href="#interrupted-time-series" id="toc-interrupted-time-series" class="nav-link" data-scroll-target="#interrupted-time-series">Interrupted Time Series</a></li>
+  <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final Thoughts</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -225,8 +236,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>This extensive time series analysis of crime in New York City yielded a variety of conclusions. Some crimes exhibited clear trends while others did not. Here we will go through each section of the project and evaluate some of the most important takeaways from each.</p>
+<section id="single-variable-models" class="level1">
+<h1>Single-Variable Models</h1>
+<p>The initial, single variable modelling yielded a variety of useful conclusions. The total arrests time series, despite the significant dip due to COVID in the early 2020’s and subsequent rise, was forecasted to continue its pre-COVID trend of a slight decrease. Other models are forecasting at a similar rate as the present, showing that we are back to pre-COVID trends there as well. The two most stationary crimes were motor vehicle theft and murder, as their forecasts did not show much change compared to current rates. These crimes seemed to be the ones least affected by COVID. Overall, all models that were fit outperformed our benchmark models, meaning we can effectively model arrest rates in New York City at rates better than the benchmarks we observed.</p>
+</section>
+<section id="multi-variable-models" class="level1">
+<h1>Multi-Variable Models</h1>
+<p>Adding exogenous variables to our models also yielded interesting conclusions. Unemployment rate did not seem to affect our total arrests forecasts, as forecasting with that as an exogenous variable yielded similar results to the model without it. Unsurprisingly, this was also observed when looking at the relationship between unemployment rate and a specific crime, such as murder arrests. Similar results were seen when using election years as an exogenous variable.</p>
+<p>Modelling the relationship between two time series also yielded interesting conclusions. When modelling the relationship between robbery and unemployment rate using a VAR model, we found that robbery was a better predictor of unemployment rate than vice versa. We also fit a model looking at a similar relationship between controlled substance arrests and marijuana arrests. This VAR model showed us that both variables are excellent predictors of each other, suggesting that they are closely related. Statistics concerning arrests for one type of controlled substance can give us great information about statistics concerning all controlled substances.</p>
+</section>
+<section id="financial-time-series-models" class="level1">
+<h1>Financial Time Series Models</h1>
+<p>Our modelling of CoreCivic stock yielded interesting results, particularly in its volatility clustering. As mentioned in that analysis, the volatility of that asset showed unusual patterns, especially in the early 2020’s. When many stocks were exhibitng periods of great change due to the global pandemic, CoreCivic was experiencing relatively low volatility compared to the rest of the market. Rather, it had large volatility in the late 2010’s. This may show the strength of these assets that are closely related to crime, as they were able to stay consistent even in periods of otherwise high volatility.</p>
+</section>
+<section id="deep-learning-models" class="level1">
+<h1>Deep Learning Models</h1>
+<p>Our deep learning models did a reasonable job of forecasting, though their performance was not so much better than traditional models that it would warrant a switch, especially considering the higher computing cost. The most interesting conclusion from that analysis was when forecasting the total arrests time series using our GRU model, we could see that the predicted values were much higher than our actual values, something that we did not see when using our traditional models. This may suggest an increase in crime rates in the coming months and years.</p>
+</section>
+<section id="interrupted-time-series" class="level1">
+<h1>Interrupted Time Series</h1>
+<p>The final and, in my opinion, most interesting part of analysis was seen in looking at interrupted time series. Both events that were looked at yielded interesting results. The more obvious case was the change in marijuana laws in New York City. The decriminalization of marijuana led to a decrease in arrests, something that would not have happened were it not for the change in the laws.</p>
+<p>A more interesting conclusion, however, was the changes seen in assault and robbery arrests as a result of the changes to the stop-and-frisk laws in 2013. Despite the significant decrease in stops as a result of the stop-and-frisk policy, there was no change in robbery arrests, suggesting that those policies did little to prevent those crimes from happening. The opposite was seen in assault arrests, as after the change to the law was made, assault arrests decreased significantly. Had the changes not been made, assault arrests would have continued to increase. A sustained, long-term change to a decreasing trend suggests that the stop-and-frisk policy was related to increased assaults in New York City, the opposite of the desired effect.</p>
+</section>
+<section id="final-thoughts" class="level1">
+<h1>Final Thoughts</h1>
+<p>Overall, we can see that crime in New York City can be accurately forecasted using these models, and valuable information was gained as a result. A natural next step in this analysis would be to apply this work to other large cities, and maybe even smaller cities to see what their data look like. Do all cities have similar data to New York City? Are east coast cities different than west coast cities? What affect does the size of the city have on crime rate? I would also like to expand my intervention analysis to account for more sophisticated models, as right now I am only using linear regression as my predictive model. These steps would result in an excellent improvement upon what is already very informative analysis, and hopefully would provide useful information to those attempting to make important policy decisions on what to do to keep us safe and prosperous.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
